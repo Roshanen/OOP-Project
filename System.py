@@ -2,9 +2,9 @@ from Community import *
 
 class System:
     def __init__(self) -> None:
-        self.boards = []
-        self.product_catalog = []
-        self.user_account = {} # id:password
+        self.__boards = []
+        self.__product_catalog = []
+        self.__user_account = {} # id:password
 
     def ceate_user(self):
         pass
