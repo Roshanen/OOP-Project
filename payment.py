@@ -6,3 +6,7 @@ class Payment:
         self.__status = "Not paid"
         self.__date_stamp = time.time()
         self.__payment_id = ""
+    def payment_method(self,price,product):
+        pass
+    def authenticate_user(self,name,user_id):
+        pass
