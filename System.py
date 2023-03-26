@@ -77,6 +77,7 @@ class System:
         return True
 
     def verify_password(self,pass1,pass2):
+        # use regex to check password
         reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
         if pass1 != pass2:
             return "not_match"
