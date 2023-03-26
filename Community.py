@@ -18,7 +18,7 @@ class Rating:
     def add_rating(self):
         pass
     
-    def de_rating(self):
+    def dis_rating(self):
         pass
 
 class Comment:
