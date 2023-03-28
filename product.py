@@ -28,3 +28,8 @@ class Product:
     
     def get_id(self):
         return self.__product_id
+    
+    def change_info(self,new_info):
+        for key in new_info:
+            if new_info[key] != None:
+                self.__info[key] = new_info[key]
