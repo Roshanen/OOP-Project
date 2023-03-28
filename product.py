@@ -1,7 +1,9 @@
 class Product:
-    def __init__(self,name,price,os_support,system_req,tags,cover_image,lang_sup,ban_country,exc_country,age_rate,discount,description,release_date):
+    def __init__(self, name, price, product_id, os_support=None, system_req=None, tags=None, cover_image=None, lang_sup=None, ban_country=None, exc_country=None, age_rate=None, discount=None, description=None, release_date=None):
+        self.__info = {'name':name,'price':price}
         self.__name = name
         self.__price = price
+        self.__product_id = product_id
         self.__os_support = os_support
         self.__system_req = system_req
         self.__tags = tags
@@ -13,7 +15,16 @@ class Product:
         self.__discount = discount
         self.__description = description
         self.__release_date = release_date
-    def add_to_wishlist(self,name):
-        pass
-    def add_to_cart(self,name,price,discount):
-        pass
+        # catalog.add_product(self)
+
+    def get_info(self, key):
+        return self.__info[key]
+    
+    def get_name(self):
+        return self.__info['name']
+
+    def get_price(self):
+        return self.__price
+    
+    def get_id(self):
+        return self.__product_id
