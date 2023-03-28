@@ -1,15 +1,32 @@
-from Community import *
 from fuzzywuzzy import process
+from enum import Enum
 import re
+import hashlib
+
+class LoginStatus(Enum):
+    EMAILNOTFOUND = False
+    PASSNOTCORRECT = False
+    NOPROBLEM = True
+
+class RegistStatus(Enum):
+    PASSNOTMATCH = False
+    PASSNOTSECURE = False
+    PASSAVAILABLE = True
+
+class IdGenerator:
+    @staticmethod
+    def generate_id(username):
+        user_id = hashlib.md5(username.encode()).hexdigest()
+        return user_id
 
 class System:
-    def __init__(self) -> None:
+    def __init__(self,id_generator) -> None:
         self.__boards = []
         self.__product_catalog = {}
-        self.__user_account = {} # email:password
+        self.__user_account = {}  # email:password
         self.__user_by_id = {}
         self.__user_by_name = {}
-        self.current_user = None
+        self.__id_generator = id_generator
 
     def add_product(self,product):
         self.__product_catalog[product.get_name()] = product
@@ -18,42 +35,8 @@ class System:
         self.__user_by_name[user.get_name()] = user
         self.__user_by_id[user.get_id()] = user
 
-    def search_profile(self,**kwargs):
-        # get id and name that user want to search
-        search_id = kwargs["search_id"]
-        search_name = kwargs["search_name"]
-
-        if search_id:  # if there is id to search
-            try:
-                return self.__user_by_id[search_id]
-            except KeyError:
-                return None
-        elif search_name:  # if there is name to search
-            # the extract return tuple -> (str,similarity)
-            found_user_name = process.extract(search_name, self.__user_by_name.keys())
-            # keep the user that have similarity 55 percent or more
-            found_user = [self.__user_by_name[user[0]] for user in found_user_name if user[1] >= 55]
-            # if there occur some user
-            if found_user:
-                return found_user
-        # if there are no id or name to search
-        return None
-
-    def search_product(self,search_name = ""):
-        if search_name != "":
-            found_product_name = process.extract(search_name, self.__user_by_name.keys())
-            found_product = [self.__user_by_name[user[0]] for user in found_product_name if user[1] > 55]
-
-            if found_product:
-                return found_product
-
-        return None
-
     def verify_payment(self):
         return True
-
-    def verify_login(self,username,password):
-        pass
 
     def register(self,**kwargs):
         email = kwargs["email"]
@@ -63,27 +46,69 @@ class System:
 
         if email in self.__user_account:
             return "email already exist"
-        pass_status = self.verify_password(pass1,pass2)
-        if pass_status == "not_match":
+
+        pass_status = self.password_available(pass1,pass2)
+        if pass_status == RegistStatus.PASSNOTMATCH:
             return "password not match"
-        elif pass_status == "not_secure":
+        elif pass_status == RegistStatus.PASSNOTSECURE:
             return "password not secure"
 
         self.__user_account[email] = pass1
 
+        # this will add user to self.user
         # user = User()
         # self.add_user(User)
 
         return True
 
-    def verify_password(self,pass1,pass2):
+    def login(self,email,password):
+        if email not in self.__user_account:
+            return LoginStatus.EMAILNOTFOUND
+        elif password != self.__user_account[email]:
+            return LoginStatus.PASSNOTCORRECT
+        return LoginStatus.NOPROBLEM
+
+    def password_available(self,pass1,pass2):
         # use regex to check password
         reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
         if pass1 != pass2:
-            return "not_match"
+            return RegistStatus.PASSNOTMATCH
         elif not re.match(reg, pass1):
-            return "not_secure"
-        return True
+            return RegistStatus.PASSNOTSECURE
+        return RegistStatus.PASSAVAILABLE
 
-    def generate_id(self):
-        pass
+    def search_profile(self,**kwargs):
+        # get id and name that user want to search
+        search_id = kwargs["search_id"]
+        search_name = kwargs["search_name"]
+
+        if search_id:  # if there is id to search
+            try:
+                return [self.__user_by_id[search_id]]
+            except KeyError:
+                return []
+        elif search_name:  # if there is name to search
+            # the extract return tuple -> (str,similarity)
+            found_user_name = process.extract(search_name, self.__user_by_name.keys())
+            # keep the user that have similarity 55 percent or more
+            found_user = [self.__user_by_name[user[0]] for user in found_user_name if user[1] >= 55]
+            # if there occur some user
+            if found_user:
+                return found_user
+        # if there are no id or name to search
+        return []
+
+    def search_product(self,search_name=""):
+        if search_name != "":
+            found_product_name = process.extract(search_name, self.__product_catalog.keys())
+            found_product = [self.__product_catalog[product[0]] for product in found_product_name if product[1] > 55]
+
+            if found_product:
+                return found_product
+        return []
+
+    def view_profile(self,user_id):
+        return self.__user_by_id[user_id].get_info()
+
+    def view_product(self,prood_id):
+        return self.__product_catalog[prood_id].get_info()
