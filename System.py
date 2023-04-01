@@ -1,14 +1,22 @@
+import hashlib
+import re
+from User import *
 from fuzzywuzzy import process
 from enum import Enum
-import re
-import hashlib
+
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = False
     PASSNOTCORRECT = False
     NOPROBLEM = True
 
+class UserStatus(Enum):
+    GUEST = 0
+    LOGEDIN = 1
+    PUBLISHER = 2
+
 class RegistStatus(Enum):
+    EMAILALREADYEXIST = False
     PASSNOTMATCH = False
     PASSNOTSECURE = False
     PASSAVAILABLE = True
@@ -20,13 +28,13 @@ class IdGenerator:
         return user_id
 
 class System:
-    def __init__(self,id_generator) -> None:
+    def __init__(self):
         self.__boards = []
         self.__product_catalog = {}
         self.__user_account = {}  # email:password
         self.__user_by_id = {}
         self.__user_by_name = {}
-        self.__id_generator = id_generator
+        self.__current_user_status = UserStatus.GUEST
 
     def add_product(self,product):
         self.__product_catalog[product.get_name()] = product
@@ -39,26 +47,27 @@ class System:
         return True
 
     def register(self,**kwargs):
+        # kwargs have to have these fixed argument
         email = kwargs["email"]
         pass1 = kwargs["pass1"]
         pass2 = kwargs["pass2"]
         user_name = kwargs["user_name"]
 
         if email in self.__user_account:
-            return "email already exist"
+            return RegistStatus.EMAILALREADYEXIST
 
         pass_status = self.password_available(pass1,pass2)
         if pass_status == RegistStatus.PASSNOTMATCH:
-            return "password not match"
+            return RegistStatus.PASSNOTMATCH
         elif pass_status == RegistStatus.PASSNOTSECURE:
-            return "password not secure"
+            return RegistStatus.PASSNOTSECURE
 
         self.__user_account[email] = pass1
 
         # this will add user to self.user
-        # user = User()
-        # self.add_user(User)
-
+        user = User(user_name,IdGenerator.generate_id(user_name),pass1)
+        self.add_user(user)
+        self.__current_user_status = UserStatus.LOGEDIN
         return True
 
     def login(self,email,password):
@@ -66,6 +75,8 @@ class System:
             return LoginStatus.EMAILNOTFOUND
         elif password != self.__user_account[email]:
             return LoginStatus.PASSNOTCORRECT
+
+        self.__current_user_status = UserStatus.LOGEDIN
         return LoginStatus.NOPROBLEM
 
     def password_available(self,pass1,pass2):
