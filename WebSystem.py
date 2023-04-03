@@ -3,7 +3,7 @@ import re
 from User import *
 from fuzzywuzzy import process
 from enum import Enum
-
+from product import *
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = False
@@ -36,8 +36,8 @@ class System:
         self.__user_by_name = {}
         self.__current_user_status = UserStatus.GUEST
 
-    def add_product(self,product):
-        self.__product_catalog[product.get_name()] = product
+    def add_product(self,product_info):
+        self.__product_catalog[product_info["name"]] = Product(product_info)
 
     def add_user(self,user):
         self.__user_by_name[user.get_name()] = user
