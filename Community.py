@@ -1,9 +1,8 @@
 import time
-from System import *
+from WebSystem import *
 
 class Post:
-    def __init__(self,u_id,poster,media) -> None:
-        self.__id = u_id
+    def __init__(self,poster,media):
         self.__poster = poster
         self.__media_link = media
         self.__rating = Rating()
@@ -11,7 +10,6 @@ class Post:
 
     def get_info(self):
         info = {
-            "id" : self.__id,
             "poster" : self.__poster,
             "media" : self.__media_link,
             "rating" : self.__rating,
