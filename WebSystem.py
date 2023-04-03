@@ -49,33 +49,40 @@ class System:
     def register(self,**kwargs):
         # kwargs have to have these fixed argument
         email = kwargs["email"]
-        pass1 = kwargs["pass1"]
-        pass2 = kwargs["pass2"]
+        pass1 = kwargs["password1"]
+        pass2 = kwargs["password2"]
         user_name = kwargs["user_name"]
 
         if email in self.__user_account:
+            print("Email already exist")
             return RegistStatus.EMAILALREADYEXIST
 
         pass_status = self.password_available(pass1,pass2)
         if pass_status == RegistStatus.PASSNOTMATCH:
+            print("Password not match")
             return RegistStatus.PASSNOTMATCH
         elif pass_status == RegistStatus.PASSNOTSECURE:
+            print("Password not secure must contain 1 lowercase, 1 uppercase, 1 number, 1 special character")
             return RegistStatus.PASSNOTSECURE
 
         self.__user_account[email] = pass1
 
         # this will add user to self.user
-        user = User(user_name,IdGenerator.generate_id(user_name),pass1)
+        user = User(user_name,pass1)
         self.add_user(user)
         self.__current_user_status = UserStatus.LOGEDIN
+        print("Register success")
         return True
 
     def login(self,email,password):
         if email not in self.__user_account:
+            print("Email not found")
             return LoginStatus.EMAILNOTFOUND
         elif password != self.__user_account[email]:
+            print("Password incorrect")
             return LoginStatus.PASSNOTCORRECT
 
+        print("Login succes")
         self.__current_user_status = UserStatus.LOGEDIN
         return LoginStatus.NOPROBLEM
 
@@ -123,3 +130,6 @@ class System:
 
     def view_product(self,prood_id):
         return self.__product_catalog[prood_id].get_info()
+
+    def change_info(self,new_info):
+        self.__product_catalog[new_info["name"]].change_info(new_info)
