@@ -6,9 +6,9 @@ from enum import Enum
 from product import *
 
 class LoginStatus(Enum):
-    EMAILNOTFOUND = False
-    PASSNOTCORRECT = False
-    NOPROBLEM = True
+    EMAILNOTFOUND = "e-mail not found"
+    PASSNOTCORRECT = "password incorrect"
+    NOPROBLEM = "login success"
 
 class UserStatus(Enum):
     GUEST = 0
@@ -16,10 +16,11 @@ class UserStatus(Enum):
     PUBLISHER = 2
 
 class RegistStatus(Enum):
-    EMAILALREADYEXIST = False
-    PASSNOTMATCH = False
-    PASSNOTSECURE = False
-    PASSAVAILABLE = True
+    EMAILALREADYEXIST = "e-mail already exist"
+    PASSNOTMATCH = "password not match"
+    PASSNOTSECURE = "password not secure"
+    SUCCESS = "register success"
+    PASSAVAILABLE = "password available"
 
 class IdGenerator:
     @staticmethod
@@ -46,12 +47,19 @@ class System:
     def verify_payment(self):
         return True
 
+    # view profile
+    def view_user_profile(self,user_id):
+        user = self.__user_by_id[user_id]
+        return user
+
+    # LOGIN and REGISTER
+
     def register(self,**kwargs):
         # kwargs have to have these fixed argument
+        user_name = kwargs["user_name"]
         email = kwargs["email"]
         pass1 = kwargs["password1"]
         pass2 = kwargs["password2"]
-        user_name = kwargs["user_name"]
 
         if email in self.__user_account:
             print("Email already exist")
@@ -72,7 +80,7 @@ class System:
         self.add_user(user)
         self.__current_user_status = UserStatus.LOGEDIN
         print("Register success")
-        return True
+        return RegistStatus.SUCCESS
 
     def login(self,email,password):
         if email not in self.__user_account:
@@ -88,12 +96,15 @@ class System:
 
     def password_available(self,pass1,pass2):
         # use regex to check password
-        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
         if pass1 != pass2:
             return RegistStatus.PASSNOTMATCH
         elif not re.match(reg, pass1):
             return RegistStatus.PASSNOTSECURE
         return RegistStatus.PASSAVAILABLE
+
+
+    # Searching
 
     def search_profile(self,**kwargs):
         # get id and name that user want to search
@@ -116,7 +127,7 @@ class System:
         # if there are no id or name to search
         return []
 
-    def search_product(self,search_name=""):
+    def search_product(self,search_name="",):
         if search_name != "":
             found_product_name = process.extract(search_name, self.__product_catalog.keys())
             found_product = [self.__product_catalog[product[0]] for product in found_product_name if product[1] > 55]
@@ -131,5 +142,5 @@ class System:
     def view_product(self,prood_id):
         return self.__product_catalog[prood_id].get_info()
 
-    def change_info(self,new_info):
+    def change_product_info(self,new_info):
         self.__product_catalog[new_info["name"]].change_info(new_info)
