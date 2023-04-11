@@ -1,12 +1,17 @@
-import datetime
 from WebSystem import *
 from Community import *
-from User import *
-from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+
+css_dir = "Style"  # folder that contain css file
+css_path = "/" + css_dir
+css_folder_name = "Style"
+
+app.mount(css_path, StaticFiles(directory=css_dir), name=css_folder_name)
 
 steen_system = System()
 
@@ -43,21 +48,11 @@ steen_system.add_product({
             "release_date": datetime.datetime.now()
             })
 
+template = Jinja2Templates("Template")
+
 @app.get("/",response_class=HTMLResponse)
-async def show_default():
-    return \
-    """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        Hello world
-    </body>
-    </html>
-    """
+async def show_default(request : Request):
+    return template.TemplateResponse("index.html",{"request" : request})
 
 @app.get("/search_profile")
 async def search_profile(name = None,id = None):
@@ -83,4 +78,14 @@ async def register(email,password):
 async def register(email,password):
     status = steen_system.login(email=email,password=password)
     return status
+
+# DEBUGGING ZONE
+
+@app.get("/see_current_user")
+async def see_current_user():
+    return steen_system.get_current_user()
+
+@app.get("/see_all_user")
+async def see_all_user():
+    return steen_system.get_all_user()
 
