@@ -1,7 +1,10 @@
-from User import *
+import re
+from User import User
 from fuzzywuzzy import process
 from enum import Enum
 from product import *
+from Utilities import IdGenerator
+from productCatalog import ProductCatalog
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
@@ -23,14 +26,29 @@ class RegistStatus(Enum):
 class System:
     def __init__(self):
         self.__boards = []
-        self.__product_catalog = {}
+        self.__product_catalog = ProductCatalog()
         self.__user_account = {}  # email:password
         self.__user_by_id = {}
         self.__user_by_name = {}
-        self.__current_user_status = UserStatus.GUEST
+        self.__current_user = None
 
-    def add_product(self,product_info):
-        self.__product_catalog[product_info["name"]] = Product(product_info)
+    def get_current_user(self):
+        return self.__current_user
+
+    def get_all_user(self):
+        return self.__user_by_id
+
+    def add_product(self,product):
+        self.__product_catalog.add_product(product)
+
+    def get_product(self,prod_id):
+        return self.__product_catalog.get_product(prod_id)
+
+    def get_discount_product(self, n = 10, discount = 0.1):
+        return self.__product_catalog.get_discounted_product(n, discount)
+
+    def get_recommend_product(self):
+        return self.__product_catalog.get_recommend_product()
 
     def add_user(self,user):
         self.__user_by_name[user.get_name()] = user
@@ -68,10 +86,11 @@ class System:
         self.__user_account[email] = pass1
 
         # this will add user to self.user
-        user = User(user_name,pass1)
+        user = User(user_name, email, pass1)
         self.add_user(user)
-        self.__current_user_status = UserStatus.LOGEDIN
+        self.__current_user = UserStatus.LOGEDIN
         print("Register success")
+        print(user.get_name(),user.get_id())
         return RegistStatus.SUCCESS
 
     def login(self,email,password):
@@ -82,8 +101,9 @@ class System:
             print("Password incorrect")
             return LoginStatus.PASSNOTCORRECT
 
-        print("Login succes")
-        self.__current_user_status = UserStatus.LOGEDIN
+        print("Login success")
+        # since user ID is a hash using email then we can hash the email to get user instead of ID
+        self.__current_user = self.__user_by_id[IdGenerator.generate_id(email)]
         return LoginStatus.NOPROBLEM
 
     def password_available(self,pass1,pass2):
@@ -95,13 +115,18 @@ class System:
             return RegistStatus.PASSNOTSECURE
         return RegistStatus.PASSAVAILABLE
 
-
     # Searching
 
     def search_profile(self,**kwargs):
         # get id and name that user want to search
-        search_id = kwargs["search_id"]
-        search_name = kwargs["search_name"]
+        try:
+            search_id = kwargs["search_id"]
+        except KeyError:
+            search_id = None
+        try:
+            search_name = kwargs["search_name"]
+        except KeyError:
+            search_name = None
 
         if search_id:  # if there is id to search
             try:

@@ -1,27 +1,65 @@
 from WebSystem import *
 from Community import *
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from MockingData import *
 
 app = FastAPI()
 
-css_dir = "Style"  # folder that contain css file
-css_path = "/" + css_dir
-css_folder_name = "Style"
+# don't forget this -> from fastapi.staticfiles import StaticFiles
+css_folder = "Style"  # folder that contain your css file
+css_path = "/" + css_folder  # MAJIK
 
-app.mount(css_path, StaticFiles(directory=css_dir), name=css_folder_name)
+app.mount(css_path, StaticFiles(directory=css_folder), name=css_folder)
 
 steen_system = System()
 
 steen_system.register(user_name="Paul",email="dark97975@gmail.com",password1="123Paul!",password2="123Paul!")
 
-template = Jinja2Templates("Template")
+dota_2 = Product(dota_2)
+let_build_a_zoo = Product(let_build_a_zoo)
+tribes_of_midgard = Product(tribes_of_midgard)
+
+steen_system.add_product(dota_2)
+steen_system.add_product(let_build_a_zoo)
+steen_system.add_product(tribes_of_midgard)
+
+TEMPLATE = Jinja2Templates("HTML")
+
+# @app.get('/favicon.ico')
+# async def favicon():
+#     file_name = "logo.png"
+#     file_path = "Icon/"
+#     return FileResponse(path=file_path, headers={"Content-Disposition": "attachment; filename=" + file_name})
 
 @app.get("/",response_class=HTMLResponse)
-async def show_default(request : Request):
-    return template.TemplateResponse("index.html",{"request" : request})
+async def index(request : Request):
+    data_for_index_page = {"request" : request}
+
+    recommend_product = steen_system.get_recommend_product()
+    discount_product = steen_system.get_discount_product()
+
+    data_for_index_page["discount_product"] = discount_product
+    data_for_index_page["recommend_product"] = recommend_product
+
+    return TEMPLATE.TemplateResponse("index.html",data_for_index_page)
+
+@app.get("/product/{prod_id}",response_class=HTMLResponse)
+async def view_product(request : Request, prod_id):
+    product = steen_system.get_product(prod_id)
+    data_for_index_page = {"request" : request, "product":product.get_info()}
+
+    return TEMPLATE.TemplateResponse("product.html",data_for_index_page)
+
+@app.get("/view_user_profile/{search_id}",response_class=HTMLResponse)
+async def view_profile(request : Request, search_id):
+    user = steen_system.search_profile(search_id = search_id)[0]
+    data_for_index_page = {"request": request, "user": user}
+
+    return TEMPLATE.TemplateResponse("profile.html",data_for_index_page)
+
 
 @app.get("/search_profile")
 async def search_profile(name = None,id = None):
@@ -39,11 +77,6 @@ async def register(username,email,pass1,pass2):
     return status
 
 @app.post("/login")
-async def register(email,password):
-    status = steen_system.login(email=email,password=password)
-    return status
-
-@app.post("/view_user_profile")
 async def register(email,password):
     status = steen_system.login(email=email,password=password)
     return status
