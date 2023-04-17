@@ -1,9 +1,9 @@
-from Order import *
-from ShoppingCart import *
-from Library import *
-from System import *
-from Chat import *
-from Factory import *
+from Order import Order
+from ShoppingCart import ShoppingCart
+from Library import Library
+from System import System
+from Chat import Chat
+from Factory import Factory
 
 import datetime
 
@@ -27,19 +27,19 @@ class User:
 
     def get_id(self):
         return self.__id
-    
+
     @property
     def profile_picture(self):
         return self.__profile_picture
-    
+
     @profile_picture.setter
-    def picture_profile(self,picture):
+    def picture_profile(self, picture):
         self.__profile_picture = picture
-        
+
     @property
     def description(self):
         return self.__description
-    
+
     @property
     def level(self, level):
         self.__level = level
@@ -62,7 +62,7 @@ class User:
 
     def request_item(self, factory):
         factory.check_condition(self)
-        
+
     def add_badge(self, badge):
         if badge != None:
             self.__badge.append(badge)
