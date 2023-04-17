@@ -1,4 +1,7 @@
-class Publisher:
- def __init__(self,prfile_picture,links_to_other_site):
-  self.__profile_picture = profile_picture
-  self.__links_to_other_site = links_to_other_site
+from User import User
+
+
+class Publisher(User):
+    def __init__(self, system, name, password, game_owned, profile_picture=None, description=None, level=0):
+        super().__init__(system, name, password, profile_picture, description, level)
+        self.__game_owned = []
