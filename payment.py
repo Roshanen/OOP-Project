@@ -1,0 +1,12 @@
+import time
+
+class Payment:
+    def __init__(self,shopping_cart):
+        self.__price = shopping_cart.products
+        self.__status = "Not paid"
+        self.__date_stamp = time.time()
+        self.__payment_id = ""
+    def payment_method(self,price,product):
+        pass
+    def authenticate_user(self,name,user_id):
+        pass
