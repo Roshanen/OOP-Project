@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Payment</title>
+        <link rel="stylesheet" href="../Style/payment.css">
+        <link rel="stylesheet" href="{{ url_for('Style', path='payment.css')
+            }}">
+        <link rel="icon" type="image/png" href="../Icon/favicon.png">
+    </head>
+    <body>
+        <div class="container">
+            <form class="form">
+                <a>PAYMENT METHOD</a>
+                <div>
+                    <span>Please select a payment method</span>
+                    <select class="payment">
+                        <option value="Visa">Visa</option>
+                        <option value="Paypal">Paypal</option>
+                    </select>
+                </div>
+                <div>
+                    <span>Card number</span>
+                    <input type="text">
+                </div>
+                <div>
+                    Expiration date
+                    <span>
+                        <select class="month">
+                            <option value="--">--</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </span>
+                    <span>
+                        <input type="text">
+                    </span>
+                    <span>
+                        <input type="text">
+                    </span>
+                </div>
+                <a>BILLING INFORMATION<br></a>
+                <span>First name</span>
+                <input type="text">
+                <span>Last name</span>
+                <input type="text">
+                <span>Billing address</span>
+                <input type="text">
+                <span>Billing address, line 2</span>
+                <input type="text">
+                <span>Country</span>
+                <input type="text">
+                <span>City</span>
+                <input type="text">
+                <span>Zip or postal code</span>
+                <input type="text">
+                <span>Phone number</span>
+                <input type="text">
+                <br><input type="submit">
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,155 @@
+body {
+  background-color: #1b2838;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  --background-color:antiquewhite;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #fff;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  background-color: #23262d;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.search input[type="text"] {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.showcase {
+  box-shadow: 10px 8px 18px -9px rgba(0,0,0,0.66);
+  width: 100%;
+  height: 500px;
+  display: grid;
+  grid-gap: 1%;
+  grid-template-columns: 69% 30%;
+  grid-template-rows: 100%;
+  background-color: #254163;
+}
+
+.descriptions {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+  height: 100%;
+}
+
+.gallery {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 75% 25%;
+  grid-row-gap: 20px;
+}
+
+.gallery .pic{
+  width: 100%;
+  height: 100%;
+}
+
+.gallery iframe{
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.cover img {
+  width: 100%;
+}
+
+.description {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-overflow: ellipsis;
+  overflow:scroll;
+}
+
+.description::-webkit-scrollbar {
+  width: 0.7em;
+}
+
+.description::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.description:hover::-webkit-scrollbar-thumb {
+  outline: 1px solid rgb(255, 255, 255);
+}
+
+.description::-webkit-scrollbar-corner{
+  background: transparent;
+}
+
+.buytab {
+  width: 100%;
+  height: 70px;
+  background-color: #254163;
+  box-shadow: 10px 8px 18px -9px rgba(0,0,0,0.66);
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: 100%;
+  margin-top: 35px;
+}
+
+.buytab h3{
+  margin: 20px;
+
+}
+
+.addtocart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  background-color: #23262d;
+  text-align: center;
+}
+
+.prod {
+  align-self: center;
+}
+
+.addbtn {
+  width: 200%;
+  height: 100%;
+  background-color: rgb(95, 190, 0);
+  color: #fff;
+  text-shadow: #23262d 1px;
+  border: none;
+}
+
+.addbtn:hover {
+  background-color: rgb(55, 150, 0);
+
+}
+
+.sysreq {
+  width: 100px;
+  height: 100px;
+  background-color: #254163;
+}

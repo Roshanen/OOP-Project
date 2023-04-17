@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+	<link rel="stylesheet" href="../Style/profile.css" >
+	<link rel="stylesheet" href="{{ url_for('Style', path='profile.css') }}" >
+    <link rel="icon" type="image/png" href="../Icon/favicon.png">
+</head>
+<body>
+    <div class="container">
+        <div class="profile_header">
+            <div class="bio_container">
+                <div class="profile_pic">
+                    <img src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/650330/658d7a42b02f59a94b0ea2a97ee46b4323b66c78.gif">
+                </div>
+                <div class="info_container">
+                    <div class="name">Eczemuth</div>
+                    <div class="bio">nothing to see here</div>
+                </div>
+            </div>
+            <div class="level_container">
+                <div class="level_info_container">
+                    <h2>Level</h2>
+                    <div class="level">9</div>
+                </div>
+                <div class="show_achieve_ment"></div>
+                <div class="profile_setting"></div>
+            </div>
+        </div>
+
+        <div class="profile_content">
+            <div class="proflie_left_col">
+                <div class="last_bought_product tab">
+                    <div class="heading">
+                        Last bought product
+                    </div>
+                    <div class="time">17 April 2023</div>
+                </div>
+                
+                {% for _ in range(3) %}
+                    {% include "/Templates/last_bought.html" %}
+                {% endfor %}
+
+            </div>
+            <div class="proflie_right_col">
+                <div class="badge heading">Badge</div>
+                <div class="badge_container">
+                    {% for _ in range(4) %}
+                        <img src="https://community.akamai.steamstatic.com/public/images/badges/01_community/community02_54.png">
+                    {% endfor %}
+                </div>
+                <div class="product heading">Product</div>
+                <div class="inventory heading">Inventory</div>
+                <div class="screenshot heading">Screenshot</div>
+                <div class="friends heading">Friends</div>
+                <div class="friend_container">
+                    {% for _ in range(6) %}
+                        {% include "Templates/friend_block.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

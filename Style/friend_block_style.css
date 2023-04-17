@@ -1,0 +1,37 @@
+.friend_block {
+    color: #fff;
+    background-color:#252525;
+    height: 50px;
+    width: 300px;
+    display: grid;
+    grid-template-columns: 50px 180px 50px;
+    grid-gap: 10px;
+}
+.friend_block .profile {
+    height: 50px;
+}
+.friend_block .profile img{
+    height: 44px;
+    margin: 3px;
+}
+.friend_block .name{
+    margin-top: 3px;
+    margin-left: 3px;
+}
+.friend_block .level_container{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend_block .level{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    outline: solid 2px rgb(255, 255, 255);
+}
