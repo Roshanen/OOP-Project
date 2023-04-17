@@ -147,3 +147,9 @@ body {
   background-color: rgb(55, 150, 0);
 
 }
+
+.sysreq {
+  width: 100px;
+  height: 100px;
+  background-color: #254163;
+}
