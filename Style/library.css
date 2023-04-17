@@ -1,0 +1,40 @@
+body {
+    background-color: #171a21;
+    color: #fff;
+    font-family: Arial, sans-serif;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #292838;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li a{
+    display: block;
+    padding: 8px 16px;
+}
+
+.box1,.box2 span {
+    padding: 5px 10px;
+}
+
+.container {
+    max-width: 900px;
+    padding: 10px;
+    margin-left:25%;
+    height:1000px;
+    --background-color:antiquewhite;
+}
+
+.box1 {
+    display: flex;
+    height: 20%;
+    background-color: #354875;
+}

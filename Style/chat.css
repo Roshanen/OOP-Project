@@ -1,0 +1,33 @@
+body {
+    background-color: #171a21;
+    color: #fff;
+    font-family: Arial, sans-serif;
+
+}
+
+img{
+    height: 50px;
+    width: 50px;
+}
+
+.user-display{
+    padding: 5px;
+    background-color: gray;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    --background-color:antiquewhite;
+}
+
+.chat-box{
+    height: 500px;
+    min-height: 80%;
+    background-color: rgb(59, 59, 59);
+}
+
+.top-display .active-display{
+    height: 10%;
+}

@@ -1,0 +1,144 @@
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background-color: #1B2838;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    --background-color:antiquewhite;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #fff;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    background-color: #23262d;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.search input[type="text"] {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.recommend {
+    margin-top: 20px;
+    background-position: center;
+    width: 100%;
+    height: 400px;
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+    grid-template-rows: 1fr;
+    background-color:#0E141B;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.special-offers {
+    display: grid;  
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin-top: 20px;
+}
+
+.find-by-tags {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 5px;
+}
+
+.find-by-tag {
+    max-width: 100%;
+    background-color: #23262d;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+}
+
+.find-by-tag img {
+    max-width: 100%;
+}
+
+.find-by-tag h3 {
+    position:absolute;
+    top: 0;
+}
+
+.quick-searches {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    width: 100%;
+    height: 70px;
+}
+
+.quick-search {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+    width: 100%;
+    height: 70px;
+    background-color: #23262d;
+    background-position: center;
+}
+
+.quick-search img{
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================= For spotlight ========================= */
+/* ========================= For spotlight ========================= */
+/* ========================= For spotlight ========================= */
+/* ========================= For spotlight ========================= */
+/* ========================= For spotlight ========================= */
+
+.spotlight {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 10px 6px 20px -14px rgba(0,0,0,0.71);
+}
+
+
+.spotlight .image {
+    width: 100%;
+    height: 150px;
+}
+
+.spotlight .image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ========================= End spotlight ========================= */
+/* ========================= End spotlight ========================= */
+/* ========================= End spotlight ========================= */
+/* ========================= End spotlight ========================= */
+/* ========================= End spotlight ========================= */

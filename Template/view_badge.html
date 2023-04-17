@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>View badge</title>
+        <link rel="stylesheet" href="../Style/view_badge.css">
+        <link rel="stylesheet" href="{{ url_for('Style', path='view_badge.css')
+            }}">
+        <link rel="icon" type="image/png" href="../Icon/favicon.png">
+    </head>
+    <body>
+        <div class="container">
+            <div class="display-profile">
+                <img
+                    src="https://avatars.cloudflare.steamstatic.com/7481d552fb63de33f29b9be9936ff1dafadf877f_full.jpg">
+                <span>{{profilename}}</span>
+            </div>
+            <div class="top-bar">Badges</div>
+            <div class="badge-collection">
+                <div class="display-box">
+                    <div class="game=name">{{gamename}}</div>
+                    <div class="display-badges">
+                        <img src="None">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
