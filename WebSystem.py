@@ -1,5 +1,3 @@
-import hashlib
-import re
 from User import *
 from fuzzywuzzy import process
 from enum import Enum
@@ -21,12 +19,6 @@ class RegistStatus(Enum):
     PASSNOTSECURE = "password not secure"
     SUCCESS = "register success"
     PASSAVAILABLE = "password available"
-
-class IdGenerator:
-    @staticmethod
-    def generate_id(username):
-        user_id = hashlib.md5(username.encode()).hexdigest()
-        return user_id
 
 class System:
     def __init__(self):
