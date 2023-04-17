@@ -1,4 +1,4 @@
-from System import *
+from System import System
 
 class Order:
     def __init__(self, id, total_price=0, date=None):
