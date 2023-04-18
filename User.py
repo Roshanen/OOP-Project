@@ -1,9 +1,9 @@
-from Order import Order
-from ShoppingCart import ShoppingCart
-from Library import Library
-from System import System
-from Chat import Chat
-from Factory import Factory
+from order import Order
+from shoppingCart import ShoppingCart
+from library import Library
+from webSystem import System
+from chat import Chat
+from factory import Factory
 
 import datetime
 

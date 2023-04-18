@@ -1,4 +1,4 @@
-from User import *
+from user import *
 from fuzzywuzzy import process
 from enum import Enum
 from product import *

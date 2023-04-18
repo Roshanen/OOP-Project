@@ -1,5 +1,5 @@
 from product import Product
-from User import User
+from user import User
 
 let_build_a_zoo = {
             "name": "Let's Build a Zoo",
