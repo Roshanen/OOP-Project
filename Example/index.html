@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Steam-like Website</title>
+	<link rel="stylesheet" href="../Style/style.css" >
+	<link href="{{ url_for('Style', path='style.css') }}" rel="stylesheet">
+	<link rel="icon" type="image/png" href="../Icon/favicon.png">
+</head>
+<body>
+	<div class="container">
+		<div class="navbar">
+			<div class="logo">My Steam-like Website</div>
+			<div class="search"></div>
+            <form class="search">
+                <input type="text" placeholder="Search for games...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+		<h2>Recommend</h2>
+        <div class="featured">
+			<img src="https://dummyimage.com/900x400/000/fff" alt="Game 1">
+        </div>
+		<h2>Special offer</h2>
+        <div class="special-offers">
+            <div class="special-offer">
+                <img src="https://dummyimage.com/300x400/000/fff" alt="Game 1">
+                <h3>Game 1</h3>
+            </div>
+            <div class="special-offer">
+                <img src="https://dummyimage.com/300x400/000/fff" alt="Game 2">
+                <h3>Game 2</h3>
+            </div>
+            <div class="special-offer">
+                <img src="https://dummyimage.com/300x400/000/fff" alt="Game 3">
+                <h3>Game 3</h3>
+            </div>
+            <div class="special-offer">
+                <img src="https://dummyimage.com/300x400/000/fff" alt="Game 4">
+                <h3>Game 4</h3>
+            </div>
+        </div>
+		<h2>Find by tag</h2>
+		<div class="find-by-tags">
+			<div class="find-by-tag tag1">
+				<img src="https://dummyimage.com/250x250/000/fff" alt = "Tag 1">
+			</div>
+			<div class="find-by-tag tag2">
+				<img src="https://dummyimage.com/250x250/000/fff" alt = "Tag 2">
+			</div>
+			<div class="find-by-tag tag3">
+				<img src="https://dummyimage.com/250x250/000/fff" alt = "Tag 3">
+			</div>
+			<div class="find-by-tag tag4">
+				<img src="https://dummyimage.com/250x250/000/fff" alt = "Tag 4">
+			</div>
+		</div>
+		<h2>Find these on Steen</h2>
+		
+		<div class="quick-searches">
+			<button class="quick-search">
+				<img src="https://dummyimage.com/250x70/000/fff" alt = "Tag 4">
+			</button>
+			<button class="quick-search">
+				<img src="https://dummyimage.com/250x70/000/fff" alt = "Tag 4">
+			</button>
+			<button class="quick-search">
+				<img src="https://dummyimage.com/250x70/000/fff" alt = "Tag 4">
+			</button>
+			<button class="quick-search">
+				<img src="https://dummyimage.com/250x70/000/fff" alt = "Tag 4">
+			</button>
+		</div>
+    </div>
+</body>
+</html>
