@@ -36,58 +36,84 @@ TEMPLATE = Jinja2Templates("HTML")
 
 @app.get("/",response_class=HTMLResponse)
 async def index(request : Request):
-    data_for_index_page = {"request" : request}
+    page_data = {"request" : request}
 
     recommend_product = steen_system.get_recommend_product()
     discount_product = steen_system.get_discount_product()
 
-    data_for_index_page["discount_product"] = discount_product
-    data_for_index_page["recommend_product"] = recommend_product
+    page_data["discount_product"] = discount_product
+    page_data["recommend_product"] = recommend_product
+    page_data["user"] = None
 
-    return TEMPLATE.TemplateResponse("index.html",data_for_index_page)
+    return TEMPLATE.TemplateResponse("index.html",page_data)
 
 @app.get("/product/{prod_id}",response_class=HTMLResponse)
 async def view_product(request : Request, prod_id):
     product = steen_system.get_product(prod_id)
-    data_for_index_page = {"request" : request, "product":product.get_info()}
 
-    return TEMPLATE.TemplateResponse("product.html",data_for_index_page)
+    page_data = {"request" : request, "product":product.get_info()}
+    return TEMPLATE.TemplateResponse("product.html",page_data)
 
-@app.get("/view_user_profile/{search_id}",response_class=HTMLResponse)
-async def view_profile(request : Request, search_id):
-    user = steen_system.search_profile(search_id = search_id)[0]
-    data_for_index_page = {"request": request, "user": user}
+@app.get("/profile/{user_id}",response_class=HTMLResponse)
+async def view_profile(request : Request, user_id):
+    user = steen_system.search_profile(search_id = user_id)
 
-    return TEMPLATE.TemplateResponse("profile.html",data_for_index_page)
+    page_data = {"request": request, "user": user}
+    return TEMPLATE.TemplateResponse("profile.html",page_data)
 
+@app.get("/login",response_class=HTMLResponse)
+async def login(request: Request):
+    page_data = {"request": request}
+    return TEMPLATE.TemplateResponse("login.html",page_data) # new front-end
 
-@app.get("/search_profile")
-async def search_profile(name = None,id = None):
-    found_user = steen_system.search_profile(search_name=name,search_id=id)
-    return found_user
+@app.post("/verify_login",response_class=HTMLResponse)
+async def register(request: Request, email,password):
+    status, user = steen_system.login(email=email,password=password)
 
-@app.get("/search_product")
-async def search_product(name = None):
-    found_products = steen_system.search_product(search_name=name)
-    return found_products
+    page_data = {"request": request}
+    if status == LoginStatus.SUCCES:
+        page_data["user"] = user
+        return TEMPLATE.TemplateResponse("index.html", page_data)
+    else:
+        page_data["login_status"] = status
+        return TEMPLATE.TemplateResponse("login.html", page_data) # new front-end
 
-@app.post("/register")
-async def register(username,email,pass1,pass2):
+@app.get("/register",response_class=HTMLResponse)
+async def register(request : Request):
+    page_data = {"request": request}
+    return TEMPLATE.TemplateResponse("register.html",page_data) # new front-end
+
+@app.post("/verify_register",response_class=HTMLResponse)
+async def register(request: Request, username,email,pass1,pass2):
     status = steen_system.register(user_name=username,email=email,password1=pass1,password2=pass2)
-    return status
 
-@app.post("/login")
-async def register(email,password):
-    status = steen_system.login(email=email,password=password)
-    return status
+    page_data = {"request": request}
+    if status == LoginStatus.SUCCES:
+        # this is the same as index function maybe find some alt
+        recommend_product = steen_system.get_recommend_product()
+        discount_product = steen_system.get_discount_product()
 
-# DEBUGGING ZONE
+        page_data["discount_product"] = discount_product
+        page_data["recommend_product"] = recommend_product
+        page_data["user"] = None
 
-@app.get("/see_current_user")
-async def see_current_user():
-    return steen_system.get_current_user()
+        return TEMPLATE.TemplateResponse("index.html", page_data)
+        # end index function
 
-@app.get("/see_all_user")
-async def see_all_user():
-    return steen_system.get_all_user()
+    else:
+        page_data["register_status"] = status
+        return TEMPLATE.TemplateResponse("register.html", page_data) # new front-end
 
+@app.get("/search_product/result/search_name={name}",response_class=HTMLResponse)
+async def search_product(request: Request, name = None):
+    found_products = steen_system.search_product(search_name=name)
+
+    page_data = {"request": request}
+    return TEMPLATE.TemplateResponse("show_search_result.html",page_data) # new front-end
+
+@app.get("/cart/{user_id}",response_class=HTMLResponse)
+async def cart(request: Request, user_id):
+    user = steen_system.search_profile(search_id=user_id)
+    page_data = {"request": request, "user": user}
+
+    return TEMPLATE.TemplateResponse("cart.html", page_data) # new front-end
