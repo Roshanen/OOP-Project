@@ -31,3 +31,8 @@ img{
 .top-display .active-display{
     height: 10%;
 }
+
+.friend-block{
+    display: flex;
+    /* grid-template-columns: 2px; */
+}

@@ -2,6 +2,7 @@ from user import *
 from fuzzywuzzy import process
 from enum import Enum
 from product import *
+import re
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
@@ -136,3 +137,9 @@ class System:
 
     def change_product_info(self,new_info):
         self.__product_catalog[new_info["name"]].change_info(new_info)
+
+    def get_user_by_id(self, user_id):
+        return self.__user_by_id[user_id]
+    
+    def get_products_name(self):
+        return list(self.__product_catalog.keys())

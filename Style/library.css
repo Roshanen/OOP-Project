@@ -23,6 +23,7 @@ li a{
 
 .box1,.box2 span {
     padding: 5px 10px;
+    height: auto;
 }
 
 .container {
@@ -37,4 +38,12 @@ li a{
     display: flex;
     height: 20%;
     background-color: #354875;
+}
+
+.box2{
+    height: fit-content;
+}
+
+image{
+    size: 40px;
 }

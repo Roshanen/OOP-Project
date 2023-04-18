@@ -9,10 +9,10 @@
     </head>
     <body>
         <ul>
-            <!-- list of games -->
-            <li><a>game1</a></li>
-            <li><a>game2</a></li>
-            <li><a>game3</a></li>
+            {% for product in library %}
+            {% set product_info = product.get_info() %}
+            <li><a>{{ product_info["name"] }}</a></li>
+            {% endfor %}
         </ul>
         <div class="container">
             <div class="box1">
@@ -24,7 +24,10 @@
             <div class="box2">
                 <span>ALL GAMES</span>
                 <div>
-                    <!-- all game -->
+                    {% for item in library %}
+                {% set product = item.get_info() %}
+                {% include "Templates/simple_block.html" %}
+                {% endfor %}
                 </div>
             </div>
         </div>

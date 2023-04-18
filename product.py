@@ -1,34 +1,50 @@
+from utilities import IdGenerator
+from community import Rating
 class Product:
-    def __init__(self, name, price, product_id, os_support=None, system_req=None, tags=None, cover_image=None, lang_sup=None, ban_country=None, exc_country=None, age_rate=None, discount=None, description=None, release_date=None):
-        self.__info = {'name':name,'price':price}
-        self.__name = name
-        self.__price = price
-        self.__product_id = product_id
-        self.__os_support = os_support
-        self.__system_req = system_req
-        self.__tags = tags
-        self.__cover_image = cover_image
-        self.__lang_sup = lang_sup
-        self.__ban_country = ban_country
-        self.__exc_country = exc_country
-        self.__age_rate = age_rate
-        self.__discount = discount
-        self.__description = description
-        self.__release_date = release_date
-        # catalog.add_product(self)
+    def __init__(self, info):
+            self.__info = {
+            "id" : IdGenerator.generate_id(info["name"]),
+            "name": info["name"],
+            "price": info["price"],
+            "os_support": info["os_support"],
+            "system_req": info["system_req"],
+            "pre_vid" : info["pre_vid"],
+            "cover_image": info["cover_image"],
+            "lang_sup": info["lang_sup"],
+            "ban_country": info["ban_country"],
+            "exc_country": info["exc_country"],
+            "age_rate": info["age_rate"],
+            "discount": info["discount"],
+            "description": info["description"],
+            "release_date": info["release_date"]
+            }
 
-    def get_info(self, key):
-        return self.__info[key]
-    
+            self.__rating = Rating()
+
+    def __repr__(self):
+        return self.__info["name"]
+
+    def get_info(self):
+        return self.__info
+
     def get_name(self):
         return self.__info['name']
 
+    def get_cover(self):
+        return self.__info["cover_image"]
+
     def get_price(self):
-        return self.__price
+        return self.__info['price']
     
     def get_id(self):
-        return self.__product_id
-    
+        return self.__info['id']
+
+    def get_discount(self):
+        return self.__info["discount"]
+
+    def get_rating(self):
+        return self.__rating.get_rating()
+
     def change_info(self,new_info):
         for key in new_info:
             if new_info[key] != None:

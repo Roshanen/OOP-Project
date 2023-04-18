@@ -2,7 +2,7 @@ from order import Order
 from shoppingCart import ShoppingCart
 from library import Library
 from chat import Chat
-from Utilities import IdGenerator
+from utilities import IdGenerator
 # from factory import Factory
 
 import datetime
