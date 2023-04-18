@@ -1,26 +1,25 @@
 from order import Order
 from shoppingCart import ShoppingCart
 from library import Library
-from webSystem import System
 from chat import Chat
-from factory import Factory
+from Utilities import IdGenerator
+# from factory import Factory
 
 import datetime
 
 
 class User:
-    def __init__(self, system, name, profile_picture=None, description=None, level=0):
+    def __init__(self, name, profile_picture=None, description=None, level=0):
         self.__name = name
-        self.__id = system.generate_id(name)
+        self.__id = IdGenerator.generate_id(name)
         self.__profile_picture = profile_picture
         self.__description = description
         self.__level = level
         self.__order = Order(self.__id)
         self.__cart = ShoppingCart(self.__id)
         self.__library = Library()
-        self.__chats = {}
+        self.__chats = Chat(User)
         self.__badge = []
-        system.add_user(self)
 
     def get_name(self):
         return self.__name
@@ -57,8 +56,11 @@ class User:
     def get_library(self):
         return self.__library
 
-    def add_chat(self, chat):
-        self.__chats[chat.get_id()] = chat
+    # def add_chat(self, chat):
+    #     self.__chats[chat.get_id()] = chat
+    
+    def get_chat(self):
+        return self.__chats
 
     def request_item(self, factory):
         factory.check_condition(self)
