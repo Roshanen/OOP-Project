@@ -1,4 +1,4 @@
-from Order import Order
+from order import Order
 
 class purchaseHistory:
     def __init__(self):

@@ -1,5 +1,5 @@
-from WebSystem import *
-from Community import *
+from webSystem import *
+from community import *
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles

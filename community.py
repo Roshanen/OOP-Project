@@ -1,6 +1,6 @@
 import datetime
 import json
-from Utilities import IdGenerator
+from utilities import IdGenerator
 
 class Post:
     def __init__(self,poster,media):
