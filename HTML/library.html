@@ -21,14 +21,14 @@
                     <!-- news -->
                 </div>
             </div>
+            <span>ALL GAMES</span>
             <div class="box2">
-                <span>ALL GAMES</span>
-                <div>
+                
                     {% for item in library %}
                 {% set product = item.get_info() %}
                 {% include "Templates/simple_block.html" %}
                 {% endfor %}
-                </div>
+                
             </div>
         </div>
     </body>
