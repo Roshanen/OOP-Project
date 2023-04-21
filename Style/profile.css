@@ -15,7 +15,6 @@ body {
     grid-template-rows: 200px 1000px;
     grid-gap: 10px;
     background-color:#101822;
-
 }
 
 .bio_container {
@@ -25,6 +24,14 @@ body {
 
 .bio_container .profile_pic img {
     outline: solid 3px grey;
+}
+
+.info_container {
+    margin-left: 20px;
+}
+
+.info_container .name {
+    font-size: 42px;
 }
 
 .level_info_container {

@@ -1,0 +1,100 @@
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background-color: #1B2838;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    --background-color:antiquewhite;
+}
+
+.in_cart_container {
+    width: 100%;
+    height: 100%;
+}
+/* ///////////////////// */
+
+.product_in_cart {
+    width: 100%;
+    height: 100px;
+    background-color: #23262E;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prod_container {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.in_cart_container .prod_name {
+    font-size: 24px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.in_cart_container .cover img{
+    height: 100%;
+}
+
+.in_cart_container .prod_price_container {
+    margin-top: 10px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+/* ////////////////////////// */
+
+.summary_container {
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+    display: grid;
+    grid-template-rows: 50px 50px;
+    font-size: 18px;
+    background-color: #23262E;
+}
+
+.price_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.price_container .price_header {
+    margin-left: 10px;
+}
+
+.price_container .sum {
+    margin-right: 10px;
+}
+
+.summary_container .button_container {
+    position: relative;
+}
+
+.summary_container .button_container button{
+    position: absolute;
+    right: 10px; 
+    bottom: 10px;
+}
+
+.button_container button {
+    width: 100px;
+    height: 25px;
+    background-color: rgb(95, 190, 0);
+    color: #fff;
+    text-shadow: #23262d 1px;
+    border: none;
+  }
+  
+.button_container button:hover {
+    background-color: rgb(55, 150, 0);
+  
+  }

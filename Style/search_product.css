@@ -1,0 +1,19 @@
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background-color: #1B2838;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    --background-color:antiquewhite;
+}
+
+.search_result_header {
+    font-size: 24px;
+    margin: 10px 0;
+}
