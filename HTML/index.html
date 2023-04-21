@@ -10,17 +10,11 @@
 <body>
 	<div class="container">
 		
-		<div class="navbar">
-			<div class="logo">My Steam-like Website</div>
-			<div class="search"></div>
-            <form class="search">
-                <input type="text" placeholder="Search for games...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
+		{% include "Templates/navbar.html" %}
 
 		<h2>Recommend</h2>
         <div class="recommend">
+			<!-- {{ something }} -->
 			{% include "Templates/recommend.html" %}
         </div>
 

@@ -8,13 +8,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="navbar">
-			<div class="logo">My Steam-like Website</div>
-			<div class="search"></div>
-            <form class="search">
-                <input type="text" placeholder="Search for games...">
-                <button type="submit">Search</button>
-            </form>
+    {% include "Templates/navbar.html" %}
     </div>
     <!--============================================================= Showcase ============================================================= -->
     <!--============================================================= Showcase ============================================================= -->
@@ -50,10 +44,10 @@
     <!--============================================================= Buy Tab ============================================================= -->
     <div class="buytab">
       <h3>Play {{ product["name"] }}</h3>
-      <div class="addtocart">
+      <div class="addtocart" action="/add_to_cart/182d3775462d4639a40c4214c50ee225/{{ product['id'] }}" method="post">
         <div class="prod price">{{ product["price"] * product["discount"] }} THB</div>
         <div class="prod discount">-{{  100 * product["discount"] }}%</div>
-        <button class="prod addbtn">Add to cart</button>
+        <button type="submit" class="prod addbtn">Add to cart</button>
       </div>
     </div>
     <!--============================================================= Sys req ============================================================= -->
@@ -63,9 +57,9 @@
     <!--============================================================= Sys req ============================================================= -->
 
     <div class="sysreq_tab">
-      {% for lang in product["lang_sup"] %}
+      <!-- {% for lang in product["lang_sup"] %}
           <h2>{{lang}}</h2>
-      {% endfor %}
+      {% endfor %} -->
     </div>
 
   </div>
