@@ -1,0 +1,26 @@
+<head>
+    <link rel="stylesheet" href="../../Style/navbar.css">
+</head>
+
+<div class="navbar">
+    <div class="logo" onclick="parent.location='/'">
+        <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016" href="/">
+    </div>
+    <div class="navigate">
+        <a href="/">Store</a>
+        <a href="/libray">Library</a>
+        <a href="/communuty">Community</a>
+        {% if user %}
+            <a href="/cart/{{ user.get_id() }}">Viewcart</a>
+            <a href="/profile/{{ user.get_id() }}">Profile</a>
+        {% endif %}
+    </div>
+
+    <div class="profile">
+        {% if user == None %}
+            <a class="login" href="/login">Login</a>
+        {% else %}    
+            <a href="/">Logout</a>
+        {% endif %}
+    </div>
+</div>
