@@ -1,0 +1,16 @@
+body {
+	font-family: 'Noto Sans Thai', sans-serif;
+    background-color: #1b2838;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+  
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.community_bar_container {
+	margin: 30px 0 30px 0;
+}

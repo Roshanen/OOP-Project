@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Style/search_product.css" >
+	<link rel="stylesheet" href="{{ url_for('Style', path='search_product.css') }}" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="search_bar_container">
+            <form action="/search_product/result">
+                <input name="keyword">
+                <button type="submit">Search</button>
+            </form> 
+        </div>
+        <div class="search_result_header">
+            Search result for " {{ kw }} "
+        </div>
+
+        <div class="search_result_container">
+            {% if found_products|length > 0 %}
+                {% for product in found_products %}
+                    {% set product = product.get_info() %}
+                    {% include "Templates/horizon_spotlight.html" %}
+                {% endfor %}
+            {% else %}
+                No product found with " {{ kw }} "
+            {% endif %}
+        </div>
+    </div>
+    
+</body>
+</html>

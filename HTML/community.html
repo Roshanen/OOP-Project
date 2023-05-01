@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Steam Community</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../Style/community.css">
+</head>
+<body>
+	{% include "/Templates/navbar.html" %}
+	<div class="container">
+		<div class="community_bar_container">
+			{% include "/Templates/community_bar.html" %}
+		</div>
+		<div class="post_container">
+			{% for post in board.get_post() %}
+				{% include "/Templates/community_display.html" %}
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>

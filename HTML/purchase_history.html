@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Style/purchase_history.css?v=1">
+        <link rel="stylesheet" href="{{ url_for('Style',
+            path='purchase_history.css?v=1')
+            }}">
+        <link rel="icon" type="image/png" href="../Icon/favicon.png">
+        <title>Purchase History</title>
+    </head>
+    <body>
+        {% include "Templates/navbar.html" %}
+        <div class="container">
+            <h2>Purchase History</h2>
+            {% set history_obj = user.get_purchase_history() %}
+            {% for order in history_obj.get_history_list() %}
+            <div class="each-order">
+                <div>date: {{ order.get_paid_date() }}</div>
+                {% for product in order.get_products() %}
+                <div>name: {{ product.get_name() }}</div>
+                {% endfor %}
+                <div>total: {{ order.get_total_cost() }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<style>
+.display {
+	max-width: 445px;
+}
+
+.display .picture {
+	width: 100%;
+	height: 100%;
+}
+
+.display .picture img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.display .rating_bar {
+	padding: 10px 10px 0 10px;
+	width: 100%;
+	height: 70px;
+	background-color: #0c131b;
+	display: grid;
+	grid-template-columns: 70% 10% 20%;
+	
+}
+
+.display .rating_bar .score {
+	color: #464646;
+}
+
+.display .poster_container {
+	background-color: #0c131b;
+	width: 100%;
+	height: 30px;
+	display: grid;
+	align-items: center;
+	padding-left: 10px;
+}
+
+.display:hover .poster_container{
+	background-color: #1a2e46;
+}
+
+.display:hover{
+	outline: solid 2px rgb(56, 117, 192)
+}
+</style>
+
+<div class="display">
+    <div class="picture">
+        <img src="{{ post.get_media() }}">
+    </div>
+    <div class="rating_bar">
+        <div class="score">{{ post.get_rating() }} Score</div>
+        <div class="comment_number">{{ post.get_comment_number() }}</div>
+        <div class="gamename">{{ post.get_game_name() }}</div>
+    </div>
+    <div class="poster_container">
+        <div class="poster">{{ post.get_poster() }}</div>
+    </div>
+</div>

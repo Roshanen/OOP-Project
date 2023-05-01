@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Payment</title>
+        <link rel="stylesheet" href="../Style/payment.css?v=1">
+        <link rel="stylesheet" href="{{ url_for('Style', path='payment.css?v=1')
+            }}">
+        <link rel="icon" type="image/png" href="../Icon/favicon.png">
+    </head>
+    <body>
+        <div class="container">
+            <form class="form" action="/confirmation/{{ user.get_id() }}" method="get">
+                <h2>PAYMENT METHOD</h2>
+                <div class="form-container">
+                    <div>
+                        <span>Please select a payment method</span>
+                        <select class="payment" name="method">
+                            <option value="Visa">Visa</option>
+                            <option value="Paypal">Paypal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span>Card number</span>
+                        <input type="text" name="card_number" >
+                    </div>
+                    <div>
+                        Expiration date
+                        <span>
+                            <select class="month" name="expiration_month">
+                                <option value="--">--</option>
+                                {% for index in range(1,13) %}
+                                <option value="{{ index }}">{{ index }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <span>
+                            <select class="year" name="expiration_year">
+                                <option value="--">--</option>
+                                {% for index in range(2023,2049) %}
+                                <option value="{{ index }}">{{ index }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <span>
+                            <input type="text" placeholder="CV">
+                        </span>
+                    </div>
+                </div>
+                <h2>BILLING INFORMATION<br></h2>
+                <div class="form-container">
+                    <div>
+                        <span>First name</span>
+                        <input type="text" name="first_name">
+                    </div>
+                    <div>
+                        <span>Last name</span>
+                        <input type="text" name="last_name">
+                    </div>
+                    <div>
+                        <span>Billing address</span>
+                        <input type="text" name="billing_address1">
+                    </div>
+                    <div>
+                        <span>Billing address, line 2</span>
+                        <input type="text" name="billing_address2">
+                    </div>
+                    <div>
+                        <span>Country</span>
+                        <input type="text" name="country">
+                    </div>
+                    <div>
+                        <span>City</span>
+                        <input type="text" name="city">
+                    </div>
+                    <div>
+                        <span>Zip or postal code</span>
+                        <input type="text" name="postal_code">
+                    </div>
+                    <div>
+                        <span>Phone number</span>
+                        <input type="text" name="phone_number">
+                    </div>
+                </div>
+                <br><a><button>submit</button></a>
+            </form>
+            <br><a href="/"><button>cancel</button></a>
+        </div>
+    </body>
+</html>

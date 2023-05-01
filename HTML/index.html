@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Steam-like Website</title>
+		<link rel="stylesheet" href="../Style/style.css?v=1">
+		<link href="{{ url_for('Style', path='style.css?v=1') }}" rel="stylesheet">
+		<link rel="icon" type="image/png" href="../Icon/favicon.png">
+		<script type="text/javascript" src="../Script/spotlight.js"></script>
+	</head>
+	<body>
+		{% include "Templates/navbar.html" %}
+		<div class="container">
+			<h2>Recommend</h2>
+			<div class="recommend">
+				<!-- {{ something }} -->
+				{% include "Templates/recommend.html" %}
+			</div>
+
+			<h2>Special offer</h2>
+			<div class="special-offers">
+				{% for product in discount_product %}
+				{% set product_info = product.get_info() %}
+				{% include "Templates/vertical-spotlight.html" %}
+				{% endfor %}
+			</div>
+
+		</div>
+	</body>
+</html>

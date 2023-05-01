@@ -1,0 +1,42 @@
+<style>
+.community_bar {
+    position: relative;
+	display: flex;
+	flex-direction: row;
+	padding-left: 20px;
+	grid-gap: 30px;
+}
+
+.underline {
+	width: 100%;
+	height: 3px;
+	background-color: #fff;
+}
+
+.type {
+    width: 100px;
+    height: 100%;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.add_post {
+    position: absolute;
+    right: 0;
+    text-decoration: none;
+    color: #000;
+    background-color: #fff;
+    padding: 0 12px;
+    border-radius: 5px 5px 0 0;
+}
+
+</style>
+<div class="community_bar">
+    <a class="type type1" href="/community/all">all</a>
+    <a class="type type2" href="/community/artwork">artwork</a>
+    <a class="type type3" href="/community/news">news</a>
+    <a class="type type4" href="/community/manual">manual</a>
+    <a class="add_post" href="/add_post">Add Post</a>
+</div>
+<div class="underline"></div>

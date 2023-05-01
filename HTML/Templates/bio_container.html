@@ -1,0 +1,14 @@
+<head>
+  <link rel="stylesheet" href="../../Style/bio_container.css?v=1" />
+</head>
+<body>
+  <div class="bio_container">
+    <div class="profile_pic">
+      <img src="{{ user.get_picture_profile() }}" />
+    </div>
+    <div class="info_container">
+      <div class="name">{{ user.get_name() }}</div>
+      <div class="bio">{{ user.get_description() }}</div>
+    </div>
+  </div>
+</body>

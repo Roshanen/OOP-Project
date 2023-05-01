@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Steam Wish List</title>
+    <style>
+      body {
+        background-color: #171a21;
+        background-image: url("https://cdn.pixabay.com/photo/2022/03/25/15/03/gaming-7137828_960_720.jpg");
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #0c0f16;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 36px;
+        font-weight: 600;
+      }
+
+      .game {
+        background-color: #0c0f16;
+        border: 1px solid #333;
+        margin-bottom: 20px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .game img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-right: 20px;
+      }
+
+      .game-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-right: 20px;
+      }
+
+      .game-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .game-description {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .game-price {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .game-remove {
+        background-color: #2c303a;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .game-remove:hover {
+        background-color: #4d4f54;
+      }
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>My Steam Wish List</h1>
+      <a href="#">View My Wishlist</a>
+    </header>
+    <div class="game">
+      <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg" alt="Game image">
+      <div class="game-details">
+        <div>
+          <div class="game-title">Game Title 1</div>
+          <div class="game-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum metus quis nisl vestibulum dapibus.</div>
+        </div>
+        <div class="game-price">$19.99</div>
+      </div>
+      <button class="game-remove">Remove</button>
+    </div>
+    <div class="game">
+      <img src="https://cdn.pixabay.com/photo/2021/07/19/09/19/starry-sky-6479729_960_720.jpg" alt="Game image">
+      <div class="game-details">
+        <div>
+          <div
