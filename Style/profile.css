@@ -22,12 +22,13 @@ a{
     background-color:#101822;
 }
 
-/* .bio_container {
+.bio_container {
     display: grid;
     grid-template-columns: 184px 466px;
 }
 
 .bio_container .profile_pic img {
+    width: 160px;
     outline: solid 3px grey;
 }
 
@@ -37,7 +38,7 @@ a{
 
 .info_container .name {
     font-size: 42px;
-} */
+}
 
 .level_info_container {
     display: flex;

@@ -26,6 +26,7 @@ class Post:
         self.__rating = Rating()
         self.__game_name = game_name
         self.__comment = []
+        self.__like_user = []
 
     def get_game_name(self):
         return self.__game_name
@@ -40,7 +41,18 @@ class Post:
         return self.__poster
 
     def get_comment_number(self):
-        return "36"
+        return len(self.__comment)
+
+    def get_id(self):
+        return self.__id
+
+    def rate_up(self, user):
+        if user not in self.__like_user:
+            self.__like_user.append(user)
+            self.__rating.add_rating()
+        else:
+            self.__like_user.remove(user)
+            self.__rating.minus_rating()
 
 class Rating:
     def __init__(self) -> None:
@@ -54,7 +66,10 @@ class Rating:
 
     def add_rating(self):
         self.__good_rating += 1
-    
+
+    def minus_rating(self):
+        self.__good_rating -= 1
+
     def dis_rating(self):
         self.__bad_rating += 1
 
@@ -84,8 +99,17 @@ class Board:
     def add_post(self,new_post):
         self.__post.append(new_post)
 
-    def get_post(self):
+    def get_all_post(self):
         return self.__post
+
+    def get_post(self, post_id):
+        post = None
+        for each_post in self.__post:
+            if each_post.get_id() == post_id:
+                post = each_post
+                break
+
+        return post
 
     def get_name(self):
         return self.__name

@@ -9,7 +9,8 @@
     </head>
     <body>
         <div class="container">
-            <form class="form" action="/confirmation/{{ user.get_id() }}" method="get">
+            <form class="form" action="/confirmation/{{ user.get_id() }}"
+                method="get">
                 <h2>PAYMENT METHOD</h2>
                 <div class="form-container">
                     <div>
@@ -21,7 +22,7 @@
                     </div>
                     <div>
                         <span>Card number</span>
-                        <input type="text" name="card_number" >
+                        <input type="text" name="card_number">
                     </div>
                     <div>
                         Expiration date

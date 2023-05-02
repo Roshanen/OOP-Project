@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Payment</title>
+        <link rel="stylesheet" href="../Style/payment.css?v=1">
+        <link rel="stylesheet" href="{{ url_for('Style', path='payment.css?v=1')
+            }}">
+        <link rel="icon" type="image/png" href="../Icon/favicon.png">
+    </head>
+    <body>
+        <div class="container">
+
+            <div>date: {{ order.get_paid_date() }}</div>
+            {% for product in order.get_products() %}
+            <div>name: {{ product.get_name() }}, price: {{ product.get_price()}} B</div>
+            {% endfor %}
+            <div>total: {{ order.get_total_cost() }} B</div>
+
+            <div>Payment method: {{ order.get_shiping_detail(method) }}</div>
+            <div>First name: {{ order.get_shipping_address(first_name) }}</div>
+            <div>Last name: {{ order.get_shipping_address(last_name) }}</div>
+            <div>Billing address: {{ order.get_shipping_address(billing_address1) }}</div>
+            <div>Billing address line2: {{ order.get_shipping_address(billing_address2) }}</div>
+            <div>Country: {{ order.get_shipping_address(country)}}</div>
+            <div>City: {{ order.get_shipping_address(city) }}</div>
+            <div>Zip or postal code: {{ order.get_shipping_address(postal_code) }}</div>
+            <div>Phone number: {{ order.get_shipping_address(phone_number) }}</div>
+
+            <br><a href="/purchase_history/{{ user.get_id() }}"><button>back</button></a>
+        </div>
+    </body>
+</html>

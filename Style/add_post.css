@@ -1,0 +1,43 @@
+body {
+	font-family: 'Noto Sans Thai', sans-serif;
+    background-color: #1b2838;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+  
+.container {
+    max-width: 900px;
+    height: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #121b25;
+}
+
+.community_bar_container {
+	margin: 30px 0 30px 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    grid-gap: 10px;
+}
+
+.form h2, .form h3 {
+    margin: 0;
+}
+
+.image_link {
+    width: 100ch;
+}
+
+.image_link:focus, .game_name:focus {
+    outline: none;
+}
+
+.page_type {
+    text-align: center;
+}

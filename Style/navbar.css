@@ -7,7 +7,7 @@ body {
     background-color:#171a21;
     display: grid;
     grid-template-columns: 180px 400px 100px;
-    grid-gap: 30px;
+    grid-gap: 40px;
     align-items: center;
     justify-content: center;
 }
@@ -27,7 +27,7 @@ body {
     width: 400px;
     height: 100%;
     display: flex;
-    grid-gap: 20px;
+    grid-gap: 10px;
 }
 
 .navbar a {

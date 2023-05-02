@@ -1,11 +1,11 @@
 <head>
-    <link rel="stylesheet" href="../../Style/last_bought_style.css">
+    <link rel="stylesheet" href="../../Style/last_bought_style.css?v=1">
 </head>
 
 <div class="last_bought_product_block tab">
-    <img src="https://cdn.akamai.steamstatic.com/steam/apps/381210/capsule_231x87.jpg">
-    <div class="name">Dead by Daylight</div>
+    <img src="{{ product[0].get_cover() }}">
+    <div class="name">{{ product[0].get_name() }}</div>
     <div class="bought_time_container">
-        <div class="time">16 Arpil 2023</div>
+        <div class="time">{{ product[1] }}</div>
     </div>
 </div>

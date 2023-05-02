@@ -1,14 +1,12 @@
-# import datetime
+import datetime
 
 
 class Order:
-    def __init__(self, product_list=None, date=None):
-        # self.__id = id
-        self.__products = product_list
-        # self.__create_date = datetime.date.today()
-        self.__paid_date = date
+    def __init__(self, total_cost=0):
+        self.__products = []
+        self.__paid_date = datetime.date.today()
         self.__shipping_detail = {}
-        self.__total_cost = 0
+        self.__total_cost = total_cost
 
     def receive_shipping_detail(self, method, card_number, expiration_month, expiration_year, first_name, last_name,
                                 billing_address1, billing_address2, country, city, postal_code, phone_number):
@@ -28,32 +26,32 @@ class Order:
     def update_paid(self):
         self.__paid_date = datetime.date.today()
 
-    def add_in_products(self, product):
+    def add_product(self, product):
         self.__products.append(product)
 
-    def delete_in_products(self, product):
+    def delete_product(self, product):
         self.__products.remove(product)
 
     def get_products(self):
         return self.__products
 
-    def get_id(self):
-        return self.__id
-
-    def get_create_date(self):
-        return self.__create_date
-
     def get_paid_date(self):
         return self.__paid_date
 
     def get_shipping_detail(self, key):
-        return self.__shipping_detail[key] 
-    
+        return self.__shipping_detail[key]
+
     def get_total_cost(self):
         return self.__total_cost
-    
+
     def calculate_total_cost(self):
         temp_cost = 0
         for product in self.__products:
             temp_cost += product.get_price()
         self.__total_cost = temp_cost
+
+    def finalize(self,method, card_number, expiration_month, expiration_year, first_name, last_name,
+                                  billing_address1, billing_address2, country, city, postal_code, phone_number):
+        self.receive_shipping_detail(method, card_number, expiration_month, expiration_year, first_name, last_name,
+                                  billing_address1, billing_address2, country, city, postal_code, phone_number)
+        self.calculate_total_cost()

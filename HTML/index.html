@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>My Steam-like Website</title>
-		<link rel="stylesheet" href="../Style/style.css?v=1">
-		<link href="{{ url_for('Style', path='style.css?v=1') }}" rel="stylesheet">
-		<link rel="icon" type="image/png" href="../Icon/favicon.png">
-		<script type="text/javascript" src="../Script/spotlight.js"></script>
-	</head>
-	<body>
-		{% include "Templates/navbar.html" %}
-		<div class="container">
-			<h2>Recommend</h2>
-			<div class="recommend">
-				<!-- {{ something }} -->
-				{% include "Templates/recommend.html" %}
-			</div>
-
-			<h2>Special offer</h2>
-			<div class="special-offers">
-				{% for product in discount_product %}
-				{% set product_info = product.get_info() %}
-				{% include "Templates/vertical-spotlight.html" %}
-				{% endfor %}
-			</div>
-
+<head>
+	<link rel="stylesheet" href="../Style/index.css?v=1" >
+	<link href="{{ url_for('Style', path='index.css?v=1') }}" rel="stylesheet">
+	<link rel="icon" type="image/png" href="../Icon/favicon.png">
+	<script type = "text/javascript" src="../Script/spotlight.js"></script>
+	<title>Steam</title>
+</head>
+<body>
+	{% include "Templates/navbar.html" %}
+	<div class="container">
+		<div class="search_box_container">
+			<form action="/search_product/result">
+				<input type="text" name="keyword" placeholder="search product">
+				<button>Search</button>
+			</form>
+			<form action="/search_profile/result">
+				<input type="text" name="keyword" placeholder="search profile">
+				<button>Search</button>
+			</form>
 		</div>
-	</body>
+		<h2>Recommend</h2>
+		{% include "Templates/recommend.html" %}
+
+		<h2>Special offer</h2>
+        <div class="special-offers">
+			{% for product in discount_product %}
+				{% set product_info = product.get_info() %}
+            	{% include "Templates/vertical-spotlight.html" %}
+			{% endfor %}
+        </div>
+    </div>
+</body>
 </html>

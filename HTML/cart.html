@@ -39,9 +39,12 @@
                         <div class="price_header">Summary</div>
                         <div class="sum">{{ user.get_cart().calculate_total() }}</div>
                     </div>
+                    {% if user.get_cart().get_products() != [] %}
                     <div class="button_container">
                         <a href="/payment/{{ user.get_id() }}"><button>Buy</button></a>
                     </div>
+                    {% endif %}
+
                 </div>
 
             </div>

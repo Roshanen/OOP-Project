@@ -14,3 +14,9 @@ body {
 .community_bar_container {
 	margin: 30px 0 30px 0;
 }
+
+.post_container {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 10px;
+}

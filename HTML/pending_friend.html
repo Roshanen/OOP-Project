@@ -11,16 +11,20 @@
         <div class="container">
             <div class="display-profile">
                 <img
-                    src="https://avatars.cloudflare.steamstatic.com/7481d552fb63de33f29b9be9936ff1dafadf877f_full.jpg">
-                <span>129000souls</span>
+                    src="{{ user.get_picture_profile() }}">
+                <span>{{ user.get_name() }}</span>
             </div>
             <div class="received">
                 <div classs="top-bar">
                     <span class="content">
                         <form class="search">
                             <span>RECEIVED INVITES</span>
-                            <input type="text" placeholder="Search received
-                                invites by name">
+                            {% for _ in user.get_received_invites() %}
+                            <div>{{ _.get_picture_profile() }}</div>
+                            <div>{{ _.get_name() }}</div>
+                            <button type="button">Accept</button>
+                            <button type="button">Cancel</button>
+                            {% endfor %}
                             <span>IGNORE ALL</span>
                         </form>
                     </span>

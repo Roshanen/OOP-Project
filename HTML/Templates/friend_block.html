@@ -1,12 +1,12 @@
 <head>
     <link rel="stylesheet" href="../../Style/friend_block_style.css">
 </head>
-<div class="friend_block">
+<a class="friend_block" href="/profile/{{ user.get_id() }}">
     <div class="profile">
-        <img src="https://avatars.akamai.steamstatic.com/7481d552fb63de33f29b9be9936ff1dafadf877f_full.jpg">
+        <img src="{{ user.get_profile() }}">
     </div>
-    <div class="name">129000soulsกูหละวะ</div>
+    <div class="name">{{ user.get_name() }}</div>
     <div class="level_container">
-        <div class="level">24</div>
+        <div class="level">{{ user.get_level() }}</div>
     </div>
-</div>
+</a>

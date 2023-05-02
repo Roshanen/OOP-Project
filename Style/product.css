@@ -108,13 +108,22 @@ body {
 .addbtn {
   width: 200%;
   height: 100%;
-  background-color: rgb(95, 190, 0);
   color: #fff;
   text-shadow: #23262d 1px;
   border: none;
 }
 
-.addbtn:hover {
+.green_addbtn{
+  background-color: rgb(95, 190, 0);
+
+}
+
+.grey_addbtn{
+  background-color: rgb(180, 180, 180);
+
+}
+
+.green_addbtn:hover {
   background-color: rgb(55, 150, 0);
 
 }

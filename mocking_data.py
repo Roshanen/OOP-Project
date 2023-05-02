@@ -1,3 +1,11 @@
+from module.product import Product
+from module.user import User
+
+
+keys = ["name", "price", "os_support", "system_req",
+        "pre_vid", "cover_image", "lang_sup",
+        "age_rate", "discount", "description"]
+
 fifa_23 = {
             "name": "EA SPORTS™ FIFA 23",
             "price": 1899.00,
@@ -14,7 +22,7 @@ fifa_23 = {
             "cover_image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1811260/header.jpg?t=1682117049",
             "lang_sup": ["English", "French", "Italian", "German", "Spanish - Spain", "Arabic", "Czech", "Danish", "Dutch", "Japanese","Chinese", "Thai"],
             "age_rate": "Pegi 3",
-            "discount": 0.2,
+            "discount": 0,
             "description": "FIFA 23 brings The World Game to the pitch, with HyperMotion2 Technology, mens and womens FIFA World Cup™coming during the season, womens club teams, cross-play features*, and more.",
             "release_date": [29, 9, 2022]
 }
@@ -34,7 +42,7 @@ planet_zoo = {
             "cover_image": "https://cdn.cloudflare.steamstatic.com/steam/apps/703080/header.jpg?t=1680775682",
             "lang_sup": ["English", "French", "Korean", "German", "Spanish - Spain", "Arabic", "Czech", "Danish", "Dutch", "Japanese","Chinese", "Dutch", "Norwegian", "Polish", "Russian", "Swedish"],
             "age_rate": "Pegi 3",
-            "discount": 0.5,
+            "discount": 0,
             "description": "Build a world for wildlife in Planet Zoo. From the developers of Planet Coaster and Zoo Tycoon comes the ultimate zoo sim. Construct detailed habitats, manage your zoo, and meet authentic living animals who think, feel and explore the world you create around them.",
             "release_date": [5, 1, 2019]
 }
@@ -300,7 +308,6 @@ pubg = {
             "description": "Play PUBG: BATTLEGROUNDS for free. Land on strategic locations, loot weapons and supplies, and survive to become the last team standing across various, diverse Battlegrounds. Squad up and join the Battlegrounds for the original Battle Royale experience that only PUBG: BATTLEGROUNDS . ",
             "release_date": [21, 12, 2017]
 }
-
 let_build_a_zoo = {
             "name": "Let's Build a Zoo",
             "price": 249.00,
@@ -379,3 +386,8 @@ Learn the ropes playing co-op vs. bots. Sharpen your skills in the hero demo mod
 be matched with the right players each game.""",
             "release_date": [10, 7, 2013]
 }
+
+all_product_info = [fifa_23, planet_zoo, sea_of_thieves_2023, xcom_2, no_man_sky, contraband_police,
+               football_manager_2023, this_war_of_mine, twelve_minutes, cyberpunk_2077,
+               detroit_become_human, phasmophobia, grand_theft_auto_V, rainbow_six,
+               pubg, let_build_a_zoo, tribes_of_midgard, dota_2]

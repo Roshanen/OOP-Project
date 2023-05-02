@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="../Style/search_product.css" >
 	<link rel="stylesheet" href="{{ url_for('Style', path='search_product.css') }}" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Search Product</title>
 </head>
 <body>
-    
+    {% include "/Templates/navbar.html" %}
     <div class="container">
         <div class="search_bar_container">
             <form action="/search_product/result">
@@ -25,7 +25,6 @@
         <div class="search_result_container">
             {% if found_products|length > 0 %}
                 {% for product in found_products %}
-                    {% set product = product.get_info() %}
                     {% include "Templates/horizon_spotlight.html" %}
                 {% endfor %}
             {% else %}

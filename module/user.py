@@ -18,7 +18,7 @@ class User:
         self.__order = None
         self.__library = Library()
         self.__purchase_history = PurchaseHistory()
-        self.__chat = Chat()
+        self.__chat = Chat(self)
         self.__badge = []
 
     def __repr__(self):
@@ -33,7 +33,7 @@ class User:
     def get_id(self):
         return self.__id
 
-    def add_friend_list(self, user):
+    def add_friend(self, user):
         self.__friend_list.append(user)
         
     def get_friend_list(self):
@@ -42,7 +42,7 @@ class User:
     def get_email(self):
         return self.__email
 
-    def get_picture_profile(self):
+    def get_profile(self):
         return self.__profile_picture
 
     def set_picture_profile(self, picture):
@@ -61,7 +61,7 @@ class User:
         return self.__cart
 
     def view_cart(self):
-        return self.__cart.view_products()
+        return self.__cart.get_products()
 
     def add_to_cart(self, products):
         self.__cart.add_products(products)
@@ -70,7 +70,7 @@ class User:
     def get_library(self):
         return self.__library
     
-    def get_purchase_hostory(self):
+    def get_purchase_history(self):
         return self.__purchase_history
     
     def get_chat(self):
@@ -83,5 +83,8 @@ class User:
         if badge != None:
             self.__badge.append(badge)
             
-    def create_order(self, product_list):
-        order = Order(product_list)
+    def create_order(self, product_list=None):
+        self.__order = Order(product_list)
+        
+    def get_order(self):
+        return self.__order

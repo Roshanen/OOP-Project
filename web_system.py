@@ -4,6 +4,7 @@ from enum import Enum
 from utilities import IdGenerator
 from module.productCatalog import ProductCatalog
 from module.user import User
+from module.publisher import Publisher 
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
@@ -70,7 +71,8 @@ class System:
         # kwargs have to have these fixed argument
         user_name = kwargs["user_name"]
         email = kwargs["email"]
-        pass1 = kwargs["password1"]
+        register_as = kwargs["register_as"]
+        pass1 = kwargs["password2"]
         pass2 = kwargs["password2"]
 
         if email in self.__user_account:
@@ -88,11 +90,15 @@ class System:
         self.__user_account[email] = pass1
 
         # this will add user to self.user
-        user = User(user_name, email)
-        self.__add_user(user)
-        self.__current_user = user
-        print("Register success")
-        print(user.get_name(),user.get_id())
+        if register_as == "user":
+            user = User(user_name, email)
+            self.__add_user(user)
+        else:
+            publisher = Publisher(user_name, email)
+            self.__add_user(publisher)
+
+        # print("Register success")
+        # print(user.get_name(),user.get_id())
         return RegistStatus.SUCCESS
 
     def logout(self):

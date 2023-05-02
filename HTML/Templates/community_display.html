@@ -1,6 +1,8 @@
 <style>
 .display {
-	max-width: 445px;
+	display: grid;
+	width: 425px;
+	height: fit-content;
 }
 
 .display .picture {
@@ -9,17 +11,18 @@
 }
 
 .display .picture img {
-	max-width: 100%;
-	max-height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .display .rating_bar {
-	padding: 10px 10px 0 10px;
+	/* padding: 10px 10px 0 10px; */
 	width: 100%;
 	height: 70px;
 	background-color: #0c131b;
 	display: grid;
-	grid-template-columns: 70% 10% 20%;
+	grid-template-columns: 5% 60% 10% 25%;
+	overflow: hidden;
 	
 }
 
@@ -33,7 +36,8 @@
 	height: 30px;
 	display: grid;
 	align-items: center;
-	padding-left: 10px;
+	/* padding-left: 10px; */
+	box-sizing: 100%;
 }
 
 .display:hover .poster_container{
@@ -43,18 +47,56 @@
 .display:hover{
 	outline: solid 2px rgb(56, 117, 192)
 }
+
+.inner_text {
+	margin-left: 10px;
+}
+
+.rating_text {
+	margin-top: 10px;
+}
+
+.rating_bar img {
+	filter: invert(100%);  
+	width: 20px;
+	height: 20px;
+	align-self: center;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
 </style>
 
 <div class="display">
-    <div class="picture">
-        <img src="{{ post.get_media() }}">
-    </div>
-    <div class="rating_bar">
-        <div class="score">{{ post.get_rating() }} Score</div>
-        <div class="comment_number">{{ post.get_comment_number() }}</div>
-        <div class="gamename">{{ post.get_game_name() }}</div>
-    </div>
-    <div class="poster_container">
-        <div class="poster">{{ post.get_poster() }}</div>
-    </div>
+	{% if post %}
+		<div class="picture">
+			<img src="{{ post.get_media() }}">
+		</div>
+		<div class="rating_bar">
+			<a class="rate" href="/rate_up/{{ board }}/{{ post.get_id() }}">
+				<img src="https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/thumbs_up-512.png">
+			</a>
+			<div class="inner_text rating_text score">{{ post.get_rating() }} Score</div>
+			<div class="inner_text rating_text comment_number">{{ post.get_comment_number() }}</div>
+			<div class="inner_text rating_text gamename">{{ post.get_game_name() }}</div>
+		</div>
+		<div class="poster_container">
+			<div class="inner_text poster">{{ post.get_poster() }}</div>
+		</div>
+		{% else %}
+		<div class="picture">
+			<img src="https://dummyimage.com/425x425/000/fff">
+		</div>
+		<div class="rating_bar">
+			<div class="rate"">
+				<img src="https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/thumbs_up-512.png">
+			</div>
+			<div class="inner_text rating_text score">0 Score</div>
+			<div class="inner_text rating_text comment_number">0</div>
+			<div class="inner_text rating_text gamename">Game name</div>
+		</div>
+		<div class="poster_container">
+			<div class="inner_text poster">Poster</div>
+		</div>
+	{% endif %}
 </div>

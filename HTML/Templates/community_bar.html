@@ -37,6 +37,10 @@
     <a class="type type2" href="/community/artwork">artwork</a>
     <a class="type type3" href="/community/news">news</a>
     <a class="type type4" href="/community/manual">manual</a>
-    <a class="add_post" href="/add_post">Add Post</a>
+    {% if user %}
+        <a class="add_post" href="/add_post">Add Post</a>
+    {% else %}
+        <a class="add_post" href="/login">Add Post</a>
+    {% endif %}
 </div>
 <div class="underline"></div>

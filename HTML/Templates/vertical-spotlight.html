@@ -58,8 +58,8 @@
     </div>
     <div class="footer">
         <div class="footer_text">
-            <div class="footer_content discount">-{{ product_info["discount"] * 100 }}%</div>
-            <div class="footer_content price">{{ product_info["price"] * product_info["discount"] }} THB</div>
+            <div class="footer_content discount">-{{ product.get_discount() * 100 }}%</div>
+            <div class="footer_content price">{{ product.get_discounted_price() }} THB</div>
         </div>
     </div>
     <div class="description">
