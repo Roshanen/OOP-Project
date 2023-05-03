@@ -11,3 +11,8 @@ body {
     padding: 20px;
     --background-color:antiquewhite;
 }
+
+.form-container{
+    background-color: #272e3f;
+    padding: 5px;
+}

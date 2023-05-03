@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../Style/view_own_product.css?v=1" >
+	<link href="{{ url_for('Style', path='view_own_product.css?v=1') }}" rel="stylesheet">
+	<link rel="icon" type="image/png" href="../Icon/favicon.png">
+	<title>Steam</title>
+</head>
+<body>
+	{% include "Templates/navbar.html" %}
+	<div class="container">
+        <h2>Own Product</h2>
+        <div class="tool_bar">
+            <a class="add_product" href="/add_product">Add Product</a>
+
+        </div>
+        <div class="own_product_container">
+            {% for product in own_products %}
+                {% include "/Templates/horizon_spotlight.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

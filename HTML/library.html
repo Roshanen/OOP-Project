@@ -2,17 +2,19 @@
 <html lang="en">
     <head>
         <title>Library</title>
-        <link rel="stylesheet" href="../Style/library.css">
-        <link rel="stylesheet" href="{{ url_for('Style', path='library.css')
+        <link rel="stylesheet" href="../Style/library.css?v=1">
+        <link rel="stylesheet" href="{{ url_for('Style', path='library.css?v=1')
             }}">
         <link rel="icon" type="image/png" href="../Icon/favicon.png">
     </head>
     <body>
+        {% include "Templates/navbar.html" %}
+
         <ul>
-            <!-- list of games -->
-            <li><a>game1</a></li>
-            <li><a>game2</a></li>
-            <li><a>game3</a></li>
+            {% for product in user.get_library().get_all_products() %}
+            {% set product_info = product.get_info() %}
+            <li><a>{{ product_info["name"] }}</a></li>
+            {% endfor %}
         </ul>
         <div class="container">
             <div class="box1">
@@ -21,11 +23,14 @@
                     <!-- news -->
                 </div>
             </div>
+            <span>ALL GAMES</span>
             <div class="box2">
-                <span>ALL GAMES</span>
-                <div>
-                    <!-- all game -->
-                </div>
+
+                {% for item in user.get_library().get_all_products() %}
+                {% set product = item.get_info() %}
+                {% include "Templates/simple_block.html" %}
+                {% endfor %}
+
             </div>
         </div>
     </body>

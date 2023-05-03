@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Style/setting_profile.css?v=1">
+        <link rel="stylesheet" href="{{ url_for('Style',
+            path='setting_profile.css?v=1')
+            }}">
+        <link rel="icon" type="image/png" href="../Icon/favicon.png">
+        <title>Setting Profile</title>
+    </head>
+    <body>
+        {% include "Templates/navbar.html" %}
+        <div class="container">
+            {% include "Templates/bio_container.html" %}
+            <form action="/edit_profile/{{ user.get_id() }}" method="get">
+                <h2>Edit your profile</h2>
+                <div>Name </div>
+                <input type="text" placeholder="enter your new name"
+                    name="name">
+                <div>Picture's link </div>
+                <input type="text" placeholder="enter your new picture's link"
+                    name="picture_profile">
+                <div>Description </div>
+                <input type="text" placeholder="enter your new description"
+                    name="description">
+                <div>
+                    <input class="submit" type="submit">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

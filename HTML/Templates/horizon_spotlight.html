@@ -41,7 +41,7 @@
 .horizon_spotlight .discount {
     align-items: center;
     align-self: center;
-    min-width: 24px;
+    /* min-width: 24px; */
 }
 
 .horizon_spotlight .price {
@@ -66,23 +66,21 @@
 
 </style>
 
-<a class="horizon_spotlight spotlight" href="/product/{{ product['id'] }}">
+<a class="horizon_spotlight spotlight" href="/product/{{ product.get_id() }}">
     <div class="image">
-        <img src='{{ product["cover_image"] }}'>
+        <img src='{{ product.get_cover() }}'>
     </div>
     <div class="prod_name">
-        {{ product["name"] }}
+        {{ product.get_name() }}
     </div>
-    {% if product["price"] != 0 %}
-        <div class="discount">
-            -{{ product["discount"] * 100 }}%
-        </div>
-        <div class="price">
-            {{ product["price"] * product["discount"] }}
-        </div>
+    {% if product.get_price() != 0 %}
+    <div class="price">{{ product.get_discounted_price() }} THB</div>
     {% else %}
-        <div class="price">
-            Free
-        </div>
+    <div class="price">Free</div>
+    {% endif %}
+    {% if product.get_discount() != 0 %}
+        <div class="discount">-{{ product.get_discount() * 100 }}%</div>
+    {% else %}
+        <div class="discount"></div>
     {% endif %}
 </a>

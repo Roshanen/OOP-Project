@@ -1,9 +1,13 @@
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
 .navbar {
     height: 100px;
     background-color:#171a21;
     display: grid;
     grid-template-columns: 180px 400px 100px;
-    grid-gap: 10px;
+    grid-gap: 40px;
     align-items: center;
     justify-content: center;
 }
@@ -22,13 +26,12 @@
 .navbar .navigate {
     width: 400px;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
+    display: flex;
     grid-gap: 10px;
 }
 
 .navbar a {
-    font-size: 24px;
+    font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;

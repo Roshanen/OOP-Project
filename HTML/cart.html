@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Style/cart.css" >
-	<link rel="stylesheet" href="{{ url_for('Style', path='cart.css') }}" >
-    <title>Document</title>
-</head>
-<body>
-    <!-- {% include  %} -->
-    <div class="container">
-        <div class="header">
-            <h2>Your cart</h2>
-        </div>
-
-        <div class="in_cart_container">
-            
-            <div class="product_in_cart">
-                <div class="prod_container">
-                    <div class="cover"> <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1621690/capsule_sm_120.jpg?t=1679499536"> </div>
-                    <div class="prod_name">Core Keeper</div>
-                </div>
-                <div class="prod_price_container">
-                    <div class="price">219</div>
-                    <a href="">Delete</a>
-                </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Style/cart.css">
+        <link rel="stylesheet" href="{{ url_for('Style', path='cart.css') }}">
+        <title>Shopping Cart</title>
+    </head>
+    <body>
+        {% include "Templates/navbar.html" %}
+        <div class="container">
+            <div class="header">
+                <h2>Your cart</h2>
             </div>
 
-            <div class="summary_container">
-                <div class="price_container">
-                    <div class="price_header">Summary</div>
-                    <div class="sum">219</div>
+            <div class="in_cart_container">
+
+                <div class="product_in_cart">
+                    {% for item in user.get_cart().get_products() %}
+                    {% set product = item %}
+                    <div class="prod_container">
+                        <div class="cover"> <img
+                                src="{{ product.get_cover() }}">
+                        </div>
+                        <div class="prod_name">{{ product.get_name() }}</div>
+                    </div>
+
+                    <div class="prod_price_container">
+                        <div class="price">{{ product.get_price() }}</div>
+                        <a href="/remove_from_cart/{{ user.get_id() }}/{{ product.get_id() }}">Delete</a>
+                    </div>
+                    {% endfor %}
                 </div>
-                <div class="button_container">
-                    <button> Buy </button>
+
+                <div class="summary_container">
+                    <div class="price_container">
+                        <div class="price_header">Summary</div>
+                        <div class="sum">{{ user.get_cart().calculate_total() }}</div>
+                    </div>
+                    {% if user.get_cart().get_products() != [] %}
+                    <div class="button_container">
+                        <a href="/payment/{{ user.get_id() }}"><button>Buy</button></a>
+                    </div>
+                    {% endif %}
+
                 </div>
+
             </div>
 
         </div>
-        
-    </div>
-</body>
+    </body>
 </html>

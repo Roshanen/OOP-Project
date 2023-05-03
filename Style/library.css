@@ -13,7 +13,7 @@ ul {
     background-color: #292838;
     position: fixed;
     height: 100%;
-    overflow: auto;
+    overflow: auto; 
 }
 
 li a{
@@ -25,13 +25,13 @@ li a{
     padding: 5px 10px;
 }
 
-.container {
+ .container {
     max-width: 900px;
     padding: 10px;
     margin-left:25%;
     height:1000px;
     --background-color:antiquewhite;
-}
+} 
 
 .box1 {
     display: flex;

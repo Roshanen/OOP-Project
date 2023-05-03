@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Style/add_post.css" >
+	<link rel="stylesheet" href="{{ url_for('Style', path='add_post.css') }}" >
+    <title>Add Post</title>
+</head>
+<body>
+    {% include "/Templates/navbar.html" %}
+    <div class="container">
+        <form class="form" action="/submit_post" method="get">
+            <h2>Upload Your Post</h2>
+            <h3>(Preview)</h3>
+            {% include "/Templates/community_display.html" %}
+            <h3>Post Type</h3>
+            <select class="page_type" name="board_name">
+                <option value="all">all</option>
+                <option value="artwork">artwork</option>
+                <option value="news">news</option>
+                <option value="manual">manual</option>
+            </select>
+            <h3>Your Image Link</h3>
+            <input type="text" class="image_link" name="image">
+            <h3>Game name</h3>
+            <input type="text" class="game_name" name="game_name">
+            <input type="submit">
+        </form>
+    </div>
+    
+</body>
+</html>

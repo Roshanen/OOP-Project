@@ -1,15 +1,15 @@
 import re
-from User import User
 from fuzzywuzzy import process
 from enum import Enum
-from product import *
-from Utilities import IdGenerator
-from productCatalog import ProductCatalog
+from utilities import IdGenerator
+from module.productCatalog import ProductCatalog
+from module.user import User
+from module.publisher import Publisher 
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
     PASSNOTCORRECT = "password incorrect"
-    NOPROBLEM = "login success"
+    SUCCES = "login success"
 
 class UserStatus(Enum):
     GUEST = 0
@@ -24,9 +24,9 @@ class RegistStatus(Enum):
     PASSAVAILABLE = "password available"
 
 class System:
-    def __init__(self):
-        self.__boards = []
-        self.__product_catalog = ProductCatalog()
+    def __init__(self, product_catalog, community):
+        self.__community = community
+        self.__product_catalog = product_catalog
         self.__user_account = {}  # email:password
         self.__user_by_id = {}
         self.__user_by_name = {}
@@ -35,6 +35,9 @@ class System:
     def get_current_user(self):
         return self.__current_user
 
+    def get_user_by_id(self, user_id):
+        return self.__user_by_id[user_id]
+
     def get_all_user(self):
         return self.__user_by_id
 
@@ -42,7 +45,7 @@ class System:
         self.__product_catalog.add_product(product)
 
     def get_product(self,prod_id):
-        return self.__product_catalog.get_product(prod_id)
+        return self.__product_catalog.get_product_by_id(prod_id)
 
     def get_discount_product(self, n = 10, discount = 0.1):
         return self.__product_catalog.get_discounted_product(n, discount)
@@ -50,7 +53,7 @@ class System:
     def get_recommend_product(self):
         return self.__product_catalog.get_recommend_product()
 
-    def add_user(self,user):
+    def __add_user(self,user):
         self.__user_by_name[user.get_name()] = user
         self.__user_by_id[user.get_id()] = user
 
@@ -68,7 +71,8 @@ class System:
         # kwargs have to have these fixed argument
         user_name = kwargs["user_name"]
         email = kwargs["email"]
-        pass1 = kwargs["password1"]
+        register_as = kwargs["register_as"]
+        pass1 = kwargs["password2"]
         pass2 = kwargs["password2"]
 
         if email in self.__user_account:
@@ -86,25 +90,34 @@ class System:
         self.__user_account[email] = pass1
 
         # this will add user to self.user
-        user = User(user_name, email, pass1)
-        self.add_user(user)
-        self.__current_user = UserStatus.LOGEDIN
-        print("Register success")
-        print(user.get_name(),user.get_id())
+        if register_as == "user":
+            user = User(user_name, email)
+            self.__add_user(user)
+        else:
+            publisher = Publisher(user_name, email)
+            self.__add_user(publisher)
+
+        # print("Register success")
+        # print(user.get_name(),user.get_id())
         return RegistStatus.SUCCESS
+
+    def logout(self):
+        self.__current_user = None
 
     def login(self,email,password):
         if email not in self.__user_account:
             print("Email not found")
-            return LoginStatus.EMAILNOTFOUND
+            return LoginStatus.EMAILNOTFOUND, None
         elif password != self.__user_account[email]:
             print("Password incorrect")
-            return LoginStatus.PASSNOTCORRECT
+            return LoginStatus.PASSNOTCORRECT, None
 
         print("Login success")
         # since user ID is a hash using email then we can hash the email to get user instead of ID
-        self.__current_user = self.__user_by_id[IdGenerator.generate_id(email)]
-        return LoginStatus.NOPROBLEM
+        login_user = self.__user_by_id[IdGenerator.generate_id(email)]
+        self.__current_user = login_user
+
+        return LoginStatus.SUCCES, login_user
 
     def password_available(self,pass1,pass2):
         # use regex to check password
@@ -128,9 +141,10 @@ class System:
         except KeyError:
             search_name = None
 
+        print("id",kwargs["search_id"])
         if search_id:  # if there is id to search
             try:
-                return [self.__user_by_id[search_id]]
+                return self.__user_by_id[search_id]
             except KeyError:
                 return []
         elif search_name:  # if there is name to search
@@ -146,9 +160,8 @@ class System:
 
     def search_product(self,search_name="",):
         if search_name != "":
-            found_product_name = process.extract(search_name, self.__product_catalog.keys())
-            found_product = [self.__product_catalog[product[0]] for product in found_product_name if product[1] > 55]
-
+            found_product_name = process.extract(search_name, self.__product_catalog.get_all_products()["by_name"].keys())
+            found_product = [self.__product_catalog.get_product_by_name(product[0]) for product in found_product_name if product[1] > 55]
             if found_product:
                 return found_product
         return []
@@ -156,8 +169,16 @@ class System:
     def view_profile(self,user_id):
         return self.__user_by_id[user_id].get_info()
 
-    def view_product(self,prood_id):
-        return self.__product_catalog[prood_id].get_info()
+    def view_product(self,prooduct_id):
+        return self.__product_catalog.get_product_by_id(prooduct_id)
 
-    def change_product_info(self,new_info):
-        self.__product_catalog[new_info["name"]].change_info(new_info)
+    def modify_product(self,new_info, product_id):
+        product = self.get_product(product_id)
+        self.__product_catalog.modify_product(new_info, product)
+
+    def add_to_cart(self, product, user):
+        user.add_to_cart(product)
+
+    # ================== About Board ================== #
+    def get_board(self, board_name):
+        return self.__community.get_board(board_name)

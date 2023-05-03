@@ -1,0 +1,19 @@
+
+  .bio_container {
+    display: grid;
+    grid-template-columns: 184px 466px;
+  }
+
+  .bio_container .profile_pic img {
+    outline: solid 3px grey;
+    width: 184px;
+    height: 184px;
+  }
+
+  .info_container {
+    margin-left: 20px;
+  }
+
+  .info_container .name {
+    font-size: 42px;
+  }

@@ -3,24 +3,28 @@
 </head>
 
 <div class="navbar">
-    <div class="logo" onclick="parent.location='/'">
-        <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016" href="/">
-    </div>
+    <a class="logo" href="/">
+        <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016">
+    </a>
     <div class="navigate">
         <a href="/">Store</a>
-        <a href="/libray">Library</a>
-        <a href="/communuty">Community</a>
+        <a href="/community/all">Community</a>
         {% if user %}
+            {% if is_publisher %}
+                <a style = "text-align: center;" href="/publisher">Shop</a>
+            {% else %}
+                <a href="/library/{{ user.get_id() }}">Library</a>
+            {% endif %}
             <a href="/cart/{{ user.get_id() }}">Viewcart</a>
             <a href="/profile/{{ user.get_id() }}">Profile</a>
         {% endif %}
     </div>
 
     <div class="profile">
-        {% if user == None %}
+        {% if not user %}
             <a class="login" href="/login">Login</a>
         {% else %}    
-            <a href="/">Logout</a>
+            <a href="/logout">Logout</a>
         {% endif %}
     </div>
 </div>
