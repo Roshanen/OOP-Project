@@ -95,7 +95,7 @@ async def index(request: Request):
     page_data["user"] = steam.get_current_user()
     page_data["discount_product"] = discount_product
     page_data["recommend_product"] = recommend_product
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
     page_data["is_publisher"] = isinstance(steam.get_current_user(), Publisher)
 
     return TEMPLATE.TemplateResponse("index.html", page_data)
@@ -109,7 +109,7 @@ async def publisher(request: Request):
     page_data = {"request": request}
     user = steam.get_current_user()
 
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
     page_data["is_publisher"] = True
     if user:
         page_data["own_products"] = user.get_all_own_products()
@@ -122,7 +122,7 @@ async def add_product(request: Request):
     page_data = {"request": request}
     user = steam.get_current_user()
 
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
     page_data["is_publisher"] = True
     page_data["product_info_keys"] = keys
     if user:
@@ -179,7 +179,7 @@ async def library(request: Request):
     user = steam.get_current_user()
 
     page_data["user"] = user
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
 
     return TEMPLATE.TemplateResponse("library.html", page_data)
 
@@ -206,7 +206,7 @@ async def view_product(request: Request, product_id):
     page_data["addable"] = addable
     page_data["user"] = user
     page_data["is_publisher"] = is_publisher
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
 
     return TEMPLATE.TemplateResponse("product.html", page_data)
 
@@ -230,7 +230,7 @@ async def view_product(request: Request, product_id):
         "addable": addable,
         "user": user,
         "is_publisher": is_publisher,
-        "logged_in": steam.get_current_user()
+        "logged_in": steam.is_logged_in()
     }
     return TEMPLATE.TemplateResponse("product.html", page_data)
 
@@ -243,7 +243,7 @@ async def search_product(request: Request, keyword=""):
         "request": request,
         "found_products": found_products,
         "kw": keyword,
-        "logged_in": steam.get_current_user()
+        "logged_in": steam.is_logged_in()
     }
     # new front-end
     return TEMPLATE.TemplateResponse("search_product.html", page_data)
@@ -257,7 +257,7 @@ async def cart(request: Request, user_id):
 
     page_data["user"] = user
     page_data["is_publisher"] = is_publisher
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
 
     return TEMPLATE.TemplateResponse("cart.html", page_data)  # new front-end
 
@@ -288,7 +288,7 @@ async def view_profile(request: Request, user_id):
 
     is_publisher = isinstance(user, Publisher)
 
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
     page_data["own_profile"] = own_profile
     page_data["user"] = user
     page_data["is_publisher"] = is_publisher
@@ -307,7 +307,7 @@ async def search_profile(request: Request, keyword=""):
     page_data["kw"] = keyword
     page_data["is_publisher"] = is_publisher
     page_data["user"] = user
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
 
     # new front-end
     return TEMPLATE.TemplateResponse("search_profile.html", page_data)
@@ -385,7 +385,7 @@ async def payment_detail(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
     page_data = {"request": request,
                  "user": user,
-                 "logged_in": steam.get_current_user()
+                 "logged_in": steam.is_logged_in()
                  }
 
     return TEMPLATE.TemplateResponse("payment.html", page_data)
@@ -451,7 +451,7 @@ async def view_order(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
     page_data = {"request": request,
                  "user": user,
-                 "logged_in": steam.get_current_user()
+                 "logged_in": steam.is_logged_in()
                  }
     return TEMPLATE.TemplateResponse("order_history.html", page_data)
 
@@ -461,7 +461,7 @@ async def setting_profile(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
     page_data = {"request": request,
                  "user": user,
-                 "logged_in": steam.get_current_user()
+                 "logged_in": steam.is_logged_in()
                  }
     return TEMPLATE.TemplateResponse("setting_profile.html", page_data)
 
@@ -480,7 +480,7 @@ async def edit_profile(request: Request, name, picture_profile, description, use
 
     page_data = {"request": request,
                  "user": user,
-                 "logged_in": steam.get_current_user()
+                 "logged_in": steam.is_logged_in()
                  }
     return TEMPLATE.TemplateResponse("profile.html", page_data)
 
@@ -490,7 +490,7 @@ async def pending_friend(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
     page_data = {"request": request,
                  "user": user,
-                 "logged_in": steam.get_current_user()
+                 "logged_in": steam.is_logged_in()
                  }
     return TEMPLATE.TemplateResponse("pending_friend.html", page_data)
 
@@ -549,7 +549,7 @@ async def community(request: Request, board_name="all"):
     page_data["board"] = board
     page_data["user"] = user
     page_data["is_publisher"] = is_publisher
-    page_data["logged_in"] = steam.get_current_user()
+    page_data["logged_in"] = steam.is_logged_in()
 
     return TEMPLATE.TemplateResponse("community.html", page_data)
 
