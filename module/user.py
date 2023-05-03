@@ -41,6 +41,9 @@ class User:
     def add_invite_list(self, user):
         self.__invite_list.append(user)
         
+    def clear_pending_list(self):
+        self.__pending_list = []
+        
     def remove_invite_list(self, user):
         self.__invite_list.remove(user)
         

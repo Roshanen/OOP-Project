@@ -1,12 +1,28 @@
 <head>
-    <link rel="stylesheet" href="../../Style/friend_block_style.css">
+  <link rel="stylesheet" href="../../Style/friend_block_style.css" />
 </head>
-<a class="friend_block" href="/profile/{{ user.get_id() }}">
+{% if user %}
+  <a class="friend_block" href="/profile/{{ found[0].get_id() }}">
     <div class="profile">
-        <img src="{{ user.get_profile() }}">
+      <img src="{{ found[0].get_profile() }}" />
     </div>
-    <div class="name">{{ user.get_name() }}</div>
+    <div class="name">{{ found[0].get_name() }}
+        {% if found[1] == True %}
+        <a class="add_friend" href="/send_invite/{{ user.get_id() }}/{{ found[0].get_id() }}">add friend</a>
+        {% endif %}
+    </div>
     <div class="level_container">
-        <div class="level">{{ user.get_level() }}</div>
+      <div class="level">{{ found[0].get_level() }}</div>
     </div>
-</a>
+  </a>
+{% else %}
+  <a class="friend_block" href="/profile/{{ found.get_id() }}">
+    <div class="profile">
+        <img src="{{ found.get_profile() }}">
+    </div>
+    <div class="name">{{ found.get_name() }}</div>
+    <div class="level_container">
+        <div class="level">{{ found.get_level() }}</div>
+    </div>
+  </a>
+{% endif %}

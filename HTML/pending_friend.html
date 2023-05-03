@@ -42,12 +42,12 @@
         <div classs="top-bar">
           <span class="content">
             <form class="search">
-              <span>SENT INVITES</span>
-              <input type="text" placeholder="Search user" />
+              <span>PENDING INVITES</span>
+              <!-- <input type="text" placeholder="Search user" /> -->
               {% for _ in user.get_pending_list() %}
-              <div>{{ _.get_profile() }}</div>
+              <div><img src="{{ _.get_profile() }}"></div>
               <div>{{ _.get_name() }}</div>
-              <button type="button">Cancel</button>
+              <a href="/reject_invite/{{ user.get_id()}}/{{ _.get_id() }}" >cancel invite</a>
               {% endfor %}
             </form>
           </span>

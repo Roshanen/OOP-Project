@@ -9,6 +9,11 @@
     grid-gap: 10px;
     margin-top: 10px;
 }
+.add_friend{
+    background-color: rgb(115, 216, 14);
+    width: auto;
+}
+
 .friend_block .profile {
     height: 50px;
 }

@@ -32,7 +32,7 @@ class System:
         self.__user_by_name = {}
         self.__current_user = None
 
-    def get_current_user(self):
+    def get_current_user(self) -> User:
         return self.__current_user
 
     def get_user_by_id(self, user_id):

@@ -285,6 +285,7 @@ async def search_profile(request: Request, keyword=""):
     page_data["found_user"] = found_user
     page_data["kw"] = keyword
     page_data["is_publisher"] = is_publisher
+    page_data["user"] = user
     # new front-end
     return TEMPLATE.TemplateResponse("search_profile.html", page_data)
 
@@ -477,28 +478,30 @@ async def send_friend_invite(user_id, target_id):
 async def clear_friend(user_id):
     user = steam.search_profile(search_id=user_id)
     for others in user.get_invite_list():
-        others.remove_pending_list(user)
-    user.clear_invite_list()
+        others.remove_invite_list(user)
+    user.clear_pending_list()
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
 
-
-@app.get("/response_invite/{user_id}/{target_id}")
-async def response_invite(user_id, target_id, value_response):
+@app.get("/reject_invite/{user_id}/{target_id}", tags=["Friend"])
+async def reject_invite(user_id, target_id):
     user = steam.search_profile(search_id=user_id)
     target = steam.search_profile(search_id=target_id)
-    if value_response == "accept":
-        url = app.url_path_for("add_friend", user_id=user_id)
-        user.add_friend(target)
-        user.remove_invite_list(target)
-        target.add_friend(user)
-        target.remove_pending_list(user)
-    elif value_response == "reject":
-        user.remove_invite_list(target)
-        target.remove_pending_list(user)
+    user.remove_pending_list(target)
+    target.remove_invite_list(user)
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
 
+@app.get("/accept_invite/{user_id}/{target_id}", tags=["Friend"])
+async def accept_invite(user_id, target_id):
+    user = steam.search_profile(search_id=user_id)
+    target = steam.search_profile(search_id=target_id)
+    user.remove_pending_list(target)
+    user.add_friend(target)
+    target.remove_invite_list(user)
+    target.add_friend(user)
+    url = app.url_path_for("pending_friend", user_id=user_id)
+    return RedirectResponse(url=url)
 
 # ==================== Community Route ==================== #
 
