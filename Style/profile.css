@@ -76,6 +76,10 @@ a{
     grid-row-gap: 20px;
 }
 
+.profile_right_col *{
+    margin: 100px;
+}
+
 .last_bought_product {
     position: relative;
     height: 100%;

@@ -13,6 +13,8 @@ class User:
         self.__profile_picture = profile_picture
         self.__description = description
         self.__level = level
+        self.__invite_list = []
+        self.__pending_list = []
         self.__friend_list = []
         self.__cart = ShoppingCart()
         self.__order = None
@@ -32,6 +34,30 @@ class User:
 
     def get_id(self):
         return self.__id
+
+    def get_invite_list(self):
+        return self.__invite_list
+    
+    def add_invite_list(self, user):
+        self.__invite_list.append(user)
+        
+    def clear_pending_list(self):
+        self.__pending_list = []
+        
+    def remove_invite_list(self, user):
+        self.__invite_list.remove(user)
+        
+    def clear_invite_list(self):
+        self.__invite_list = []
+        
+    def get_pending_list(self):
+        return self.__pending_list
+    
+    def add_pending_list(self, user):
+        self.__pending_list.append(user)
+        
+    def remove_pending_list(self, user):
+        self.__pending_list.remove(user)
 
     def add_friend(self, user):
         self.__friend_list.append(user)

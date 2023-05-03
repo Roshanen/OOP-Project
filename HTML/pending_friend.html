@@ -1,53 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Pending friend</title>
-        <link rel="stylesheet" href="../Style/pending_friend.css">
-        <link rel="stylesheet" href="{{ url_for('Style', path='pending_friend.css')
-            }}">
-        <link rel="icon" type="image/png" href="../Icon/favicon.png">
-    </head>
-    <body>
-        <div class="container">
-            <div class="display-profile">
-                <img
-                    src="{{ user.get_picture_profile() }}">
-                <span>{{ user.get_name() }}</span>
-            </div>
-            <div class="received">
-                <div classs="top-bar">
-                    <span class="content">
-                        <form class="search">
-                            <span>RECEIVED INVITES</span>
-                            {% for _ in user.get_received_invites() %}
-                            <div>{{ _.get_picture_profile() }}</div>
-                            <div>{{ _.get_name() }}</div>
-                            <button type="button">Accept</button>
-                            <button type="button">Cancel</button>
-                            {% endfor %}
-                            <span>IGNORE ALL</span>
-                        </form>
-                    </span>
-                </div>
-                <div class="received-list">
-                    <!--  -->
-                </div>
-            </div>
-
-            <div class="sent">
-                <div classs="top-bar">
-                    <span class="content">
-                        <form class="search">
-                            <span>SENT INVITES</span>
-                            <input type="text" placeholder="Search sent
-                                invites by name">
-                        </form>
-                    </span>
-                </div>
-                <div class="received-list">
-                    <!--  -->
-                </div>
-            </div>
+  <head>
+    <title>Pending friend</title>
+    <link rel="stylesheet" href="../Style/pending_friend.css?v=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('Style',
+            path='pending_friend.css?v=1')
+            }}"
+    />
+    <link rel="icon" type="image/png" href="../Icon/favicon.png" />
+  </head>
+  <body>
+    {% include "Templates/navbar.html" %}
+    <div class="container">
+      <div class="display-profile">
+        <img src="{{ user.get_profile() }}" />
+        <span>{{ user.get_name() }}</span>
+      </div>
+      <div class="received">
+        <div classs="top-bar">
+          <span class="content">
+            <form class="search">
+              <span>RECEIVED INVITES</span>
+              {% for _ in user.get_invite_list() %}
+              <div>{{ _.get_profile() }}</div>
+              <div>{{ _.get_name() }}</div>
+              <button type="button">Accept</button>
+              <button type="button">Cancel</button>
+              {% endfor %}
+              <a class="ignore-all" href="/clear_invite/{{ user.get_id() }}">IGNORE ALL</a>
+            </form>
+          </span>
         </div>
-    </body>
+        <div class="received-list">
+          <!--  -->
+        </div>
+      </div>
+
+      <div class="sent">
+        <div classs="top-bar">
+          <span class="content">
+            <form class="search">
+              <span>PENDING INVITES</span>
+              <!-- <input type="text" placeholder="Search user" /> -->
+              {% for _ in user.get_pending_list() %}
+              <div><img src="{{ _.get_profile() }}"></div>
+              <div>{{ _.get_name() }}</div>
+              <a href="/reject_invite/{{ user.get_id()}}/{{ _.get_id() }}" >cancel invite</a>
+              {% endfor %}
+            </form>
+          </span>
+        </div>
+        <div class="received-list">
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
