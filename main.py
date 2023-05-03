@@ -35,24 +35,51 @@ community.add_board(all_post, artwork, news, manual)
 steam = System(product_catalog, community)
 
 # ==== register ==== #
-steam.register(user_name="Best", email="best@gmail.com",
-               password1="123Best!", password2="123Best!", register_as="user")
-steam.register(user_name="Boss", email="boss@gmail.com",
-               password1="123Boss!", password2="123Boss!", register_as="user")
-steam.register(user_name="Bass", email="bass@gmail.com",
-               password1="123Bass!", password2="123Bass!", register_as="user")
-steam.register(user_name="Publ", email="publ@gmail.com",
-               password1="123Publ!", password2="123Publ!", register_as="publisher")
+steam.register(
+    user_name="Best",
+    email="best@gmail.com",
+    password1="123Best!",
+    password2="123Best!",
+    register_as="user",
+)
+steam.register(
+    user_name="Boss",
+    email="boss@gmail.com",
+    password1="123Boss!",
+    password2="123Boss!",
+    register_as="user",
+)
+steam.register(
+    user_name="Bass",
+    email="bass@gmail.com",
+    password1="123Bass!",
+    password2="123Bass!",
+    register_as="user",
+)
+steam.register(
+    user_name="Publ",
+    email="publ@gmail.com",
+    password1="123Publ!",
+    password2="123Publ!",
+    register_as="publisher",
+)
 
 # ==== init product ==== #
 for product_info in all_product_info:
     product = Product(product_info)
     steam.add_product(product)
 
-post1 = Post(steam.get_current_user(), "https://steamuserimages-a.akamaihd.net/ugc/2066632296410876700/2AFC974AEFE4A02515EF7245082FEB33A69809FA/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false", "Garry Mod")
+post1 = Post(
+    steam.get_current_user(),
+    "https://steamuserimages-a.akamaihd.net/ugc/2066632296410876700/2AFC974AEFE4A02515EF7245082FEB33A69809FA/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false",
+    "Garry Mod",
+)
 
-post2 = Post(steam.get_current_user(
-), "https://steamuserimages-a.akamaihd.net/ugc/2050870124875593567/D308C2111B90D97E35DB21CA80106A14CA34F12D/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false", "Phoenix")
+post2 = Post(
+    steam.get_current_user(),
+    "https://steamuserimages-a.akamaihd.net/ugc/2050870124875593567/D308C2111B90D97E35DB21CA80106A14CA34F12D/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false",
+    "Phoenix",
+)
 
 all_post.add_post(post1)
 all_post.add_post(post2)
@@ -71,6 +98,7 @@ async def index(request: Request):
     page_data["is_publisher"] = isinstance(steam.get_current_user(), Publisher)
 
     return TEMPLATE.TemplateResponse("index.html", page_data)
+
 
 # about publisher
 
@@ -103,18 +131,38 @@ async def add_product(request: Request):
 
 
 @app.get("/add_product_to_catalog", tags=["Publisher"], response_class=HTMLResponse)
-async def add_product(request: Request, name, price, os_support, system_req,
-                      pre_vid, cover_image, lang_sup, age_rate, discount, description):
+async def add_product(
+    request: Request,
+    name,
+    price,
+    os_support,
+    system_req,
+    pre_vid,
+    cover_image,
+    lang_sup,
+    age_rate,
+    discount,
+    description,
+):
     page_data = {"request": request}
     user = steam.get_current_user()
 
     page_data["user"] = user
     page_data["is_publisher"] = True
 
-    info = {"name": name, "price": int(price), "os_support": os_support, "system_req": system_req,
-            "pre_vid": pre_vid, "cover_image": cover_image, "lang_sup": lang_sup,
-            "age_rate": age_rate, "discount": float(discount), "description": description,
-            "release_date": datetime.datetime.now()}
+    info = {
+        "name": name,
+        "price": int(price),
+        "os_support": os_support,
+        "system_req": system_req,
+        "pre_vid": pre_vid,
+        "cover_image": cover_image,
+        "lang_sup": lang_sup,
+        "age_rate": age_rate,
+        "discount": float(discount),
+        "description": description,
+        "release_date": datetime.datetime.now(),
+    }
 
     product = Product(info)
     print("> ", product)
@@ -130,6 +178,7 @@ async def library(user_id, request: Request):
     page_data = {"request": request, "user": user}
     return TEMPLATE.TemplateResponse("library.html", page_data)
 
+
 # about product
 
 
@@ -141,8 +190,10 @@ async def view_product(request: Request, product_id):
     is_publisher = isinstance(user, Publisher)
     addable = bool(user)
     if addable:
-        if product in user.view_cart() or \
-           product in user.get_library().get_all_products():
+        if (
+            product in user.view_cart()
+            or product in user.get_library().get_all_products()
+        ):
             addable = False
 
     page_data["product"] = product
@@ -160,21 +211,33 @@ async def view_product(request: Request, product_id):
     is_publisher = isinstance(user, Publisher)
     addable = bool(user)
     if addable:
-        if product in user.view_cart() or \
-           product in user.get_library().get_all_products():
+        if (
+            product in user.view_cart()
+            or product in user.get_library().get_all_products()
+        ):
             addable = False
 
-    page_data = {"request": request, "product": product,
-                 "addable": addable, "user": user, "is_publisher": is_publisher}
+    page_data = {
+        "request": request,
+        "product": product,
+        "addable": addable,
+        "user": user,
+        "is_publisher": is_publisher,
+    }
     return TEMPLATE.TemplateResponse("product.html", page_data)
 
 
 @app.get("/search_product/result", tags=["Product"], response_class=HTMLResponse)
-async def search_product(request: Request, keyword=""):
+async def search_product(request: Request, user_id, keyword=""):
+    user = steam.search_profile(search_id=user_id)
     found_products = steam.search_product(search_name=keyword)
     print(found_products, keyword, type(keyword))
-    page_data = {"request": request,
-                 "found_products": found_products, "kw": keyword}
+    page_data = {
+        "request": request,
+        "found_products": found_products,
+        "kw": keyword,
+        "user": user,
+    }
     # new front-end
     return TEMPLATE.TemplateResponse("search_product.html", page_data)
 
@@ -200,6 +263,7 @@ async def add_to_cart(product_id):
     url = app.url_path_for("view_product", product_id=product_id)
     return RedirectResponse(url=url)
 
+
 # about profile
 
 
@@ -208,7 +272,6 @@ async def view_profile(request: Request, user_id):
     page_data = {"request": request}
     user = steam.search_profile(search_id=user_id)
     is_publisher = isinstance(user, Publisher)
-
     page_data["user"] = user
     page_data["is_publisher"] = is_publisher
 
@@ -227,6 +290,7 @@ async def search_profile(request: Request, keyword=""):
     # new front-end
     return TEMPLATE.TemplateResponse("search_profile.html", page_data)
 
+
 # login register
 
 
@@ -244,8 +308,7 @@ async def verify_login(request: Request, email, password):
         redirect_url = request.url_for("index")
         return RedirectResponse(redirect_url)
     else:
-        redirect_url = request.url_for(
-            "login").include_query_params(status=status)
+        redirect_url = request.url_for("login").include_query_params(status=status)
         return RedirectResponse(redirect_url)
 
 
@@ -264,9 +327,16 @@ async def register(request: Request):
 
 
 @app.get("/verify_register", tags=["System"], response_class=HTMLResponse)
-async def verify_register(request: Request, register_as, user_name, email, password1, password2):
-    status = steam.register(user_name=user_name, email=email,
-                            password1=password1, password2=password2, register_as=register_as)
+async def verify_register(
+    request: Request, register_as, user_name, email, password1, password2
+):
+    status = steam.register(
+        user_name=user_name,
+        email=email,
+        password1=password1,
+        password2=password2,
+        register_as=register_as,
+    )
 
     page_data = {"request": request}
     if status == RegistStatus.SUCCESS:
@@ -304,8 +374,22 @@ async def payment_detail(request: Request, user_id):
 
 
 @app.get("/confirmation/{user_id}", response_class=HTMLResponse)
-async def confirm_purchase(request: Request, user_id, method, card_number, expiration_month, expiration_year, first_name, last_name,
-                           billing_address1, billing_address2, country, city, postal_code, phone_number):
+async def confirm_purchase(
+    request: Request,
+    user_id,
+    method,
+    card_number,
+    expiration_month,
+    expiration_year,
+    first_name,
+    last_name,
+    billing_address1,
+    billing_address2,
+    country,
+    city,
+    postal_code,
+    phone_number,
+):
     user = steam.search_profile(search_id=user_id)
     page_data = {"request": request, "user": user}
     cart = user.get_cart()
@@ -317,8 +401,20 @@ async def confirm_purchase(request: Request, user_id, method, card_number, expir
     for product in cart.get_products():
         library.add_product(product)
         order.add_product(product)
-    order.finalize(method, card_number, expiration_month, expiration_year, first_name, last_name,
-                    billing_address1, billing_address2, country, city, postal_code, phone_number)
+    order.finalize(
+        method,
+        card_number,
+        expiration_month,
+        expiration_year,
+        first_name,
+        last_name,
+        billing_address1,
+        billing_address2,
+        country,
+        city,
+        postal_code,
+        phone_number,
+    )
     history.add_to_history(order)
     cart.remove_all_product()
 
@@ -362,13 +458,49 @@ async def edit_profile(request: Request, name, picture_profile, description, use
     return TEMPLATE.TemplateResponse("profile.html", page_data)
 
 
-@app.get("/add_friend/{user_id}/{target_id}", tags=["User"])
-async def add_friend(user_id, target_id):
+@app.get("/pending_friend/{user_id}", tags=["Friend"], response_class=HTMLResponse)
+async def pending_friend(request: Request, user_id):
+    user = steam.search_profile(search_id=user_id)
+    page_data = {"request": request, "user": user}
+    return TEMPLATE.TemplateResponse("pending_friend.html", page_data)
+
+
+@app.get("/send_invite/{user_id}/{target_id}", tags=["Friend"])
+async def send_friend_invite(user_id, target_id):
     user = steam.search_profile(search_id=user_id)
     target = steam.search_profile(search_id=target_id)
-    user.add_friend(target)
-    target.add_friend(user)
-    # return {"user_friend": user.get_friend_list()}
+    target.add_invite_list(user)
+    user.add_pending_list(target)
+    url = app.url_path_for("pending_friend", user_id=user_id)
+    return RedirectResponse(url=url)
+
+
+@app.get("/clear_invite/{user_id}", tags=["Friend"])
+async def clear_friend(user_id):
+    user = steam.search_profile(search_id=user_id)
+    for others in user.get_invite_list():
+        others.remove_pending_list(user)
+    user.clear_invite_list()
+    url = app.url_path_for("pending_friend", user_id=user_id)
+    return RedirectResponse(url=url)
+
+
+@app.get("/response_invite/{user_id}/{target_id}")
+async def response_invite(user_id, target_id, value_response):
+    user = steam.search_profile(search_id=user_id)
+    target = steam.search_profile(search_id=target_id)
+    if value_response == "accept":
+        url = app.url_path_for("add_friend", user_id=user_id)
+        user.add_friend(target)
+        user.remove_invite_list(target)
+        target.add_friend(user)
+        target.remove_pending_list(user)
+    elif value_response == "reject":
+        user.remove_invite_list(target)
+        target.remove_pending_list(user)
+    url = app.url_path_for("pending_friend", user_id=user_id)
+    return RedirectResponse(url=url)
+
 
 # ==================== Community Route ==================== #
 
@@ -403,7 +535,9 @@ async def submit_post(request: Request, board_name, image, game_name):
     return RedirectResponse(url=url)
 
 
-@app.get("/rate_up/{board_name}/{post_id}", tags=["Community"], response_class=HTMLResponse)
+@app.get(
+    "/rate_up/{board_name}/{post_id}", tags=["Community"], response_class=HTMLResponse
+)
 async def rate_up(board_name, post_id):
     user = steam.get_current_user()
     board = steam.get_board(board_name)
@@ -424,7 +558,9 @@ async def view_chat(request: Request, user_id, target_id):
     # return {"message_box": user.get_chat().view_message(target)}
 
 
-@app.get("/send_message/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse)
+@app.get(
+    "/send_message/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse
+)
 async def send_message(user_id, target_id, message):
     user = steam.search_profile(search_id=user_id)
     target = steam.search_profile(search_id=target_id)
