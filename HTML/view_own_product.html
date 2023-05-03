@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="../Style/view_own_product.css?v=1" >
+	<link rel="stylesheet" href="product.css" >
 	<link href="{{ url_for('Style', path='view_own_product.css?v=1') }}" rel="stylesheet">
 	<link rel="icon" type="image/png" href="../Icon/favicon.png">
 	<title>Steam</title>
@@ -11,7 +11,9 @@
 	<div class="container">
         <h2>Own Product</h2>
         <div class="tool_bar">
-            <a class="add_product" href="/add_product">Add Product</a>
+            <a class="btn add_product" href="/add_product">Add Product</a>
+            <a class="btn modifly_product" href="/add_product">Modifly Product</a>
+            <a class="btn delete_product" href="/add_product">Delete Product</a>
 
         </div>
         <div class="own_product_container">
