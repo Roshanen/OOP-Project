@@ -228,15 +228,13 @@ async def view_product(request: Request, product_id):
 
 
 @app.get("/search_product/result", tags=["Product"], response_class=HTMLResponse)
-async def search_product(request: Request, user_id, keyword=""):
-    user = steam.search_profile(search_id=user_id)
+async def search_product(request: Request, keyword=""):
     found_products = steam.search_product(search_name=keyword)
     print(found_products, keyword, type(keyword))
     page_data = {
         "request": request,
         "found_products": found_products,
         "kw": keyword,
-        "user": user,
     }
     # new front-end
     return TEMPLATE.TemplateResponse("search_product.html", page_data)
