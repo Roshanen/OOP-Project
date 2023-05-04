@@ -82,6 +82,9 @@ class User:
 
     def get_level(self):
         return self.__level
+    
+    def level_up(self):
+        self.__level += 1
 
     def get_cart(self):
         return self.__cart

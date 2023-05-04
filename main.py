@@ -400,6 +400,7 @@ async def confirm_purchase(
     for product in cart.get_products():
         library.add_product(product)
         order.add_product(product)
+        user.level_up()
     order.summalize(
         method,
         card_number,
