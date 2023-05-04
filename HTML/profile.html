@@ -36,8 +36,10 @@
                         <div class="heading">
                             Last bought product
                         </div>
-                        {% if user.get_purchase_history().get_history_list()!=[] %}
+                        {% if user.get_purchase_history().get_history_list() != [] %}
                             <div class="time">{{ user.get_purchase_history().get_history_list()[-1].get_paid_date() }}</div>
+                        {% else %}
+                            <div clas="time">None</div>
                         {% endif %}
                     </div>
                     {% set history_list = user.get_purchase_history().get_sorted_history() %}
