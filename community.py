@@ -25,7 +25,7 @@ class Post:
         self.__media_link = media
         self.__rating = Rating()
         self.__game_name = game_name
-        self.__comment = []
+        self.__comments = []
         self.__like_user = []
 
     def get_game_name(self):
@@ -41,7 +41,7 @@ class Post:
         return self.__poster
 
     def get_comment_number(self):
-        return len(self.__comment)
+        return len(self.__comments)
 
     def get_id(self):
         return self.__id
@@ -54,28 +54,23 @@ class Post:
             self.__like_user.remove(user)
             self.__rating.minus_rating()
 
+
 class Rating:
     def __init__(self) -> None:
-        self.__thumbs_up_pic = ""
-        self.__thumbs_down_pic = ""
-        self.__good_rating = 0
-        self.__bad_rating = 0
+        self.__rating = 0
 
     def get_rating(self):
-        return self.__good_rating
+        return self.__rating
 
     def add_rating(self):
-        self.__good_rating += 1
+        self.__rating += 1
 
     def minus_rating(self):
-        self.__good_rating -= 1
-
-    def dis_rating(self):
-        self.__bad_rating += 1
+        self.__rating -= 1
 
 
 class Comment:
-    def __init__(self,comment) -> None:
+    def __init__(self,comment):
         self.__comment = comment
         self.__date = datetime.datetime.now()
         self.__replies = []
