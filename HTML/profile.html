@@ -21,10 +21,12 @@
                         <div class="level">9</div>
                     </div>
                     <div class="show_achieve_ment"></div>
+                    {% if own_profile %}
                     <a href="/setting_profile/{{ user.get_id() }}"
                         class="profile_setting">Edit Profile</a>
                     <a href="/purchase_history/{{ user.get_id() }}"
                         class="purchase_history">Purchase History</a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -35,14 +37,14 @@
                             Last bought product
                         </div>
                         {% if user.get_purchase_history().get_history_list()!=[] %}
-                        <div class="time">{{ user.get_purchase_history().get_history_list()[-1].get_paid_date() }}</div>
+                            <div class="time">{{ user.get_purchase_history().get_history_list()[-1].get_paid_date() }}</div>
                         {% endif %}
                     </div>
                     {% set history_list = user.get_purchase_history().get_sorted_history() %}
                     {% set list_length = history_list|length %}
                     {% for i in range([list_length,3]|min) %}
-                    {% set product = history_list[i] %}
-                    {% include "/Templates/last_bought.html" %}
+                        {% set product = history_list[i] %}
+                        {% include "/Templates/last_bought.html" %}
                     {% endfor %}
 
                 </div>
@@ -62,8 +64,8 @@
                     <div class="friend_container">
                         {% set friend_length = user.get_friend_list()|length %}
                         {% for _ in range([friend_length,6]|min) %}
-                        {% set friend = user.get_friend_list()[_] %}
-                        {% include "Templates/friend_block.html" %}
+                            {% set friend = user.get_friend_list()[_] %}
+                            {% include "Templates/friend_block.html" %}
                         {% endfor %}
                     </div>
                 </div>

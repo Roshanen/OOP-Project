@@ -9,7 +9,7 @@
     <div class="navigate">
         <a href="/">Store</a>
         <a href="/community/all">Community</a>
-        {% if user %}
+        {% if logged_in %}
             {% if is_publisher %}
                 <a style = "text-align: center;" href="/publisher">Shop</a>
             {% else %}
@@ -21,7 +21,7 @@
     </div>
 
     <div class="profile">
-        {% if not user %}
+        {% if not logged_in %}
             <a class="login" href="/login">Login</a>
         {% else %}    
             <a href="/logout">Logout</a>

@@ -119,6 +119,11 @@ class System:
 
         return LoginStatus.SUCCES, login_user
 
+    def is_logged_in(self):
+        if self.__current_user is None:
+            return False
+        return True
+
     def password_available(self,pass1,pass2):
         # use regex to check password
         reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
