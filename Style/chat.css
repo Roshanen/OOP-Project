@@ -6,8 +6,8 @@ body {
 }
 
 img{
-    height: 50px;
-    width: 50px;
+    height: 35px;
+    width: 35px;
 }
 
 .user-display{
@@ -23,11 +23,15 @@ img{
 }
 
 .chat-box{
-    height: 500px;
     min-height: 80%;
     background-color: rgb(59, 59, 59);
 }
 
 .top-display .active-display{
     height: 10%;
+}
+
+.friend_block{
+    display: flex;
+    flex-direction: row;
 }
