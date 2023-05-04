@@ -16,6 +16,7 @@
     {% elif found[1] == 3 %}
         <div>already in friend list</div>
         <a href="/view_chat/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button type="button">Chat</button></a>
+        <a href="/remove_friend/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button>Remove friend</button></a>
     {% elif found[1] == 2 %}
     <div>send friend request to you</div>
     <a href="/accept_invite/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button type="button">Accept</button></a>

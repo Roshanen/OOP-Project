@@ -22,11 +22,12 @@
       </div>
       {% elif user in current_user.get_friend_list()  %}
       <div>
-        <a href="/view_chat/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>chat</button></a>
+        <a href="/view_chat/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>Chat</button></a>
+        <a href="/remove_friend/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>Remove friend</button></a>
       </div>
       {% elif not own_profile %}
       <div>
-        <a class="add_friend" href="/add_friend/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>add friend</button></a>
+        <a class="add_friend" href="/send_invite/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>Add friend</button></a>
       </div>
       {% endif %}
     {% endif %}

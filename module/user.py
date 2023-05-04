@@ -63,6 +63,9 @@ class User:
     def add_friend(self, user):
         self.__friend_list.append(user)
         
+    def remove_friend_list(self, user):
+        self.__friend_list.remove(user)
+        
     def get_friend_list(self):
         return self.__friend_list
     

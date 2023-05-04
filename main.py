@@ -488,6 +488,15 @@ async def remove_pending(user_id, target_id):
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
 
+@app.get("/remove_friend/{user_id}/{target_id}", tags=["Friend"])
+async def remove_friend(user_id, target_id):
+    current_user = steam.search_profile(search_id=user_id)
+    target = steam.search_profile(search_id=target_id)
+    current_user.remove_friend_list(target)
+    target.remove_friend_list(current_user)
+    url = app.url_path_for("view_profile", user_id=target_id)
+    return RedirectResponse(url=url)
+
 # ==================== Community Route ==================== #
 
 
