@@ -1,13 +1,10 @@
-import datetime
-
-from typing import Optional
-from web_system import *
-from community import *
-from fastapi import FastAPI, Request, Cookie
+from module.web_system import *
+from module.community import *
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from mocking_data import *
+from module.mocking_data import *
 from module.product import Product
 from module.publisher import Publisher
 from module.productCatalog import ProductCatalog
@@ -65,6 +62,8 @@ steam.register(
     password2="123Publ!",
     register_as="publisher",
 )
+
+# ==== Add friend ====
 Best = steam.search_profile(search_id=IdGenerator.generate_id("best@gmail.com"))
 Bass = steam.search_profile(search_id=IdGenerator.generate_id("bass@gmail.com"))
 Best.set_profile("https://avatars.akamai.steamstatic.com/b2edbc430cffa963966ebafc9e7844414a9c51c1_full.jpg")
