@@ -24,22 +24,22 @@
 
         <div class="search_result_container">
                 {% if found_user|length > 0 %}
-                    {% if user %}
+                    {% if current_user %}
                         {% set toSend = [] %}
                         {% for found in found_user %}
-                            {% if found == user or found in user.get_friend_list() %}
+                            {% if found == current_user or found in current_user.get_friend_list() %}
                                 {{ toSend.append([found, False]) }}
                             {% else %}
                                 {{ toSend.append([found, True]) }}
                             {% endif %}
                         {% endfor %}
                         {% for found in toSend %}
-                            {% include "Templates/friend_block.html" %}
+                            {% include "Templates/friend_block_search.html" %}
                         {% endfor %}
                     {% else %}
                         {% if found_user|length > 0 %}
                             {% for found in found_user %}
-                                {% include "Templates/friend_block.html" %}
+                                {% include "Templates/friend_block_search.html" %}
                             {% endfor %}
                         {% endif %}
                     {% endif %}

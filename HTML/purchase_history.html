@@ -15,7 +15,7 @@
         {% include "Templates/navbar.html" %}
         <div class="container">
             <h2>Purchase History</h2>
-            {% set history_obj = user.get_purchase_history() %}
+            {% set history_obj = current_user.get_purchase_history() %}
             {% for order in history_obj.get_history_list() %}
             <div class="each-order">
                 <div>date: {{ order.get_paid_date() }}</div>

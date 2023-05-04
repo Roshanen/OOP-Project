@@ -15,7 +15,7 @@
         {% include "Templates/navbar.html" %}
         <div class="container">
             {% include "Templates/bio_container.html" %}
-            <form action="/edit_profile/{{ user.get_id() }}" method="get">
+            <form action="/edit_profile/{{ current_user.get_id() }}" method="get">
                 <h2>Edit your profile</h2>
                 <div>Name </div>
                 <input type="text" placeholder="enter your new name"

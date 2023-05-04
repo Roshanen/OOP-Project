@@ -61,7 +61,9 @@
                     <div class="product heading">Product</div>
                     <div class="inventory heading">Inventory</div>
                     <div class="screenshot heading">Screenshot</div>
+                    {% if own_profile %}
                     <a class="pending heading" href="/pending_friend/{{ user.get_id() }}">Pending Friends</a>
+                    {% endif %}
                     <div class="friends heading">Friends</div>
                     <div class="friend_container">
                         {% set friend_length = user.get_friend_list()|length %}

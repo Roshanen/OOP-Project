@@ -15,8 +15,8 @@
             {% else %}
                 <a href="/library">Library</a>
             {% endif %}
-            <a href="/cart/{{ user.get_id() }}">Viewcart</a>
-            <a href="/profile/{{ user.get_id() }}">Profile</a>
+            <a href="/cart/{{ current_user.get_id() }}">Viewcart</a>
+            <a href="/profile/{{ current_user.get_id() }}">Profile</a>
         {% endif %}
     </div>
 
