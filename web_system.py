@@ -49,9 +49,24 @@ class UserHolder:
         self.__all_id.append(user.get_id())
         self.__all_user_name.append(user.get_name())
 
-    def get_user(self, user_name:list[str] = None, user_id: list[str] = None):
-        pass
+    def get_user_by_name(self, user_name):
+        for user in self.__user:
+            if user.get_name() == user_name:
+                return user
 
+    def get_user_by_id(self, user_id):
+        for user in self.__user:
+            if user.get_id() == user_id:
+                return user
+
+    def get_all_user(self):
+        return self.__user
+
+    def get_all_user_id(self):
+        return self.__all_id
+
+    def get_all_user_name(self):
+        return self.__all_user_name
 
 class System:
     def __init__(self, product_catalog, community, user_holder):
@@ -66,15 +81,13 @@ class System:
     def get_current_user(self) -> User:
         return self.__current_user
 
-    def get_user_by_id(self, user_id):
-        return self.__user_by_id[user_id]
-
     def get_all_user(self):
-        return self.__user_by_id
+        return self.__user_holder.get_all_user()
 
-    def add_product(self,product):
+    def add_product(self, product):
         self.__product_catalog.add_product(product)
 
+    # ==== Product ====
     def get_product(self,prod_id):
         return self.__product_catalog.get_product_by_id(prod_id)
 
@@ -85,16 +98,12 @@ class System:
         return self.__product_catalog.get_recommend_product()
 
     def __add_user(self,user):
-        self.__user_by_name[user.get_name()] = user
-        self.__user_by_id[user.get_id()] = user
+        # self.__user_by_name[user.get_name()] = user
+        # self.__user_by_id[user.get_id()] = user
+        self.__user_holder.add_user(user)
 
     def verify_payment(self):
         return True
-
-    # view profile
-    def view_user_profile(self,user_id):
-        user = self.__user_by_id[user_id]
-        return user
 
     # LOGIN and REGISTER
 
@@ -120,7 +129,6 @@ class System:
 
         self.__user_account[email] = pass1
 
-        # this will add user to self.user
         if register_as == "user":
             user = User(user_name, email)
             self.__add_user(user)
@@ -128,8 +136,6 @@ class System:
             publisher = Publisher(user_name, email)
             self.__add_user(publisher)
 
-        # print("Register success")
-        # print(user.get_name(),user.get_id())
         return RegistStatus.SUCCESS
 
     def logout(self):
@@ -137,13 +143,10 @@ class System:
 
     def login(self,email,password):
         if email not in self.__user_account:
-            print("Email not found")
             return LoginStatus.EMAILNOTFOUND, None
         elif password != self.__user_account[email]:
-            print("Password incorrect")
             return LoginStatus.PASSNOTCORRECT, None
 
-        print("Login success")
         # since user ID is a hash using email then we can hash the email to get user instead of ID
         login_user = self.__user_by_id[IdGenerator.generate_id(email)]
         self.__current_user = login_user
@@ -156,7 +159,7 @@ class System:
         return True
 
     def password_available(self,pass1,pass2):
-        # use regex to check password
+        # one lowercase one uppercase one number one special character at least 8 char long
         reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
         if pass1 != pass2:
             return RegistStatus.PASSNOTMATCH
@@ -165,7 +168,6 @@ class System:
         return RegistStatus.PASSAVAILABLE
 
     # Searching
-
     def search_profile(self,**kwargs):
         # get id and name that user want to search
         try:
@@ -177,17 +179,18 @@ class System:
         except KeyError:
             search_name = None
 
-        print("id",kwargs["search_id"])
         if search_id:  # if there is id to search
             try:
-                return self.__user_by_id[search_id]
+                return self.__user_holder.get_user_by_id(search_id)
             except KeyError:
                 return []
         elif search_name:  # if there is name to search
             # the extract return tuple -> (str,similarity)
-            found_user_name = process.extract(search_name, self.__user_by_name.keys())
+            found_user_name = process.extract(search_name, self.__user_holder.get_all_user_name())
+
             # keep the user that have similarity 55 percent or more
-            found_user = [self.__user_by_name[user[0]] for user in found_user_name if user[1] >= 55]
+            found_user = [self.__user_holder.get_user_by_name(user[0]) for user in found_user_name if user[1] >= 55]
+
             # if there occur some user
             if found_user:
                 return found_user
@@ -201,12 +204,6 @@ class System:
             if found_product:
                 return found_product
         return []
-
-    def view_profile(self,user_id):
-        return self.__user_by_id[user_id].get_info()
-
-    def view_product(self,prooduct_id):
-        return self.__product_catalog.get_product_by_id(prooduct_id)
 
     def modify_product(self,new_info, product_id):
         product = self.get_product(product_id)
