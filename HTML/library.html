@@ -13,7 +13,7 @@
         <ul>
             {% for product in user.get_library().get_all_products() %}
             {% set product_info = product.get_info() %}
-            <li><a>{{ product_info["name"] }}</a></li>
+            <li><a href="/product/{{ product_info["id"] }}">{{ product_info["name"] }}</a></li>
             {% endfor %}
         </ul>
         <div class="container">

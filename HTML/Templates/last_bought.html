@@ -2,10 +2,10 @@
     <link rel="stylesheet" href="../../Style/last_bought_style.css?v=1">
 </head>
 
-<div class="last_bought_product_block tab">
+<a href="/product/{{ product[0].get_id() }}" class="last_bought_product_block tab">
     <img src="{{ product[0].get_cover() }}">
     <div class="name">{{ product[0].get_name() }}</div>
     <div class="bought_time_container">
         <div class="time">{{ product[1] }}</div>
     </div>
-</div>
+</a>
