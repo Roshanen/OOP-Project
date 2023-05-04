@@ -165,7 +165,7 @@ class System:
         return RegistStatus.SUCCESS
 
     def login(self, email, password):
-        status = Authenticator.login(email, password)
+        status = Authenticator.login(self.__account_holder, email, password)
         if status != LoginStatus.SUCCES:
             return status
 
