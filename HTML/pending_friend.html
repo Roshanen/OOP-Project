@@ -14,6 +14,7 @@
   <body>
     {% include "Templates/navbar.html" %}
     <div class="container">
+      <h2>Friend Requests</h2>
       <div class="display-profile">
         <img src="{{ user.get_profile() }}" />
         <span>{{ user.get_name() }}</span>
@@ -22,14 +23,13 @@
         <div classs="top-bar">
           <span class="content">
             <form class="search">
-              <span>RECEIVED INVITES</span>
+              <span>RECEIVED INVITES </span><a class="ignore-all" href="/clear_invite/{{ user.get_id() }}">IGNORE ALL</a>
               {% for _ in user.get_invite_list() %}
-              <div>{{ _.get_profile() }}</div>
+              <div><img src="{{ _.get_profile() }}"></div>
               <div>{{ _.get_name() }}</div>
               <button type="button">Accept</button>
               <button type="button">Cancel</button>
               {% endfor %}
-              <a class="ignore-all" href="/clear_invite/{{ user.get_id() }}">IGNORE ALL</a>
             </form>
           </span>
         </div>
