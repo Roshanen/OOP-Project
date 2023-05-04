@@ -109,13 +109,14 @@ async def index(request: Request):
 # about publisher
 
 
-@app.get("/publisher", tags=["Publisher"], response_class=HTMLResponse)
-async def publisher(request: Request):
+@app.get("/shop", tags=["Publisher"], response_class=HTMLResponse)
+async def shop(request: Request):
     page_data = {"request": request}
     user = steam.get_current_user()
 
     page_data["logged_in"] = steam.is_logged_in()
     page_data["is_publisher"] = True
+    page_data["current_user"] = user
     if user:
         page_data["own_products"] = user.get_all_own_products()
 
