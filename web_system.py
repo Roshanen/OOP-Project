@@ -4,7 +4,39 @@ from enum import Enum
 from utilities import IdGenerator
 from module.productCatalog import ProductCatalog
 from module.user import User
-from module.publisher import Publisher 
+from module.publisher import Publisher
+
+
+class Search:
+    @staticmethod
+    def search_profile(user_holder, kwargs):
+        # get id and name that user want to search
+        found_user = []
+        search_id = kwargs.get("search_id")
+        search_name = kwargs.get("search_name")
+
+        if search_id:  # if there is id to search
+            return user_holder.get_user_by_id(search_id)
+
+        elif search_name:  # if there is name to search
+            # the extract return tuple -> (str,similarity)
+            found_user_name = process.extract(search_name, user_holder.get_all_user_name())
+
+            # keep the user that have similarity 55 percent or more
+            found_user = [user_holder.get_user_by_name(user[0]) for user in found_user_name if user[1] >= 55]
+
+        # if there are no id or name to search
+        return found_user
+
+    @staticmethod
+    def search_product(product_catalog, search_name):
+        if search_name != "":
+            found_product_name = process.extract(search_name, product_catalog.get_all_products()["by_name"].keys())
+            found_product = [product_catalog.get_product_by_name(product[0]) for product in found_product_name if
+                             product[1] > 55]
+            if found_product:
+                return found_product
+        return []
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
@@ -112,17 +144,17 @@ class System:
         return self.__product_catalog.get_recommend_product()
 
     # ==== User ====
-    def add_to_cart(self, product, user):
-        user.add_to_cart(product)
+    def __add_user(self,user):
+        self.__user_holder.add_user(user)
 
     def get_current_user(self) -> User:
         return self.__current_user
 
+    def add_to_cart(self, product, user):
+        user.add_to_cart(product)
+
     def get_all_user(self):
         return self.__user_holder.get_all_user()
-
-    def __add_user(self,user):
-        self.__user_holder.add_user(user)
 
     # ????
     def verify_payment(self):
@@ -161,8 +193,6 @@ class System:
 
         return RegistStatus.SUCCESS
 
-    def logout(self):
-        self.__current_user = None
 
     def login(self, email, password):
         if not self.__account_holder.email_exist(email):
@@ -176,6 +206,9 @@ class System:
         self.__current_user = login_user
 
         return LoginStatus.SUCCES, login_user
+
+    def logout(self):
+        self.__current_user = None
 
     def is_logged_in(self):
         if self.__current_user is None:
@@ -191,43 +224,12 @@ class System:
             return RegistStatus.PASSNOTSECURE
         return RegistStatus.PASSAVAILABLE
 
-    # Searching
-    def search_profile(self,**kwargs):
-        # get id and name that user want to search
-        try:
-            search_id = kwargs["search_id"]
-        except KeyError:
-            search_id = None
-        try:
-            search_name = kwargs["search_name"]
-        except KeyError:
-            search_name = None
+    # ==== Search ====
+    def search_profile(self, **kwargs):
+        return Search.search_profile(self.__user_holder, kwargs)
 
-        if search_id:  # if there is id to search
-            try:
-                return self.__user_holder.get_user_by_id(search_id)
-            except KeyError:
-                return []
-        elif search_name:  # if there is name to search
-            # the extract return tuple -> (str,similarity)
-            found_user_name = process.extract(search_name, self.__user_holder.get_all_user_name())
-
-            # keep the user that have similarity 55 percent or more
-            found_user = [self.__user_holder.get_user_by_name(user[0]) for user in found_user_name if user[1] >= 55]
-
-            # if there occur some user
-            if found_user:
-                return found_user
-        # if there are no id or name to search
-        return []
-
-    def search_product(self,search_name="",):
-        if search_name != "":
-            found_product_name = process.extract(search_name, self.__product_catalog.get_all_products()["by_name"].keys())
-            found_product = [self.__product_catalog.get_product_by_name(product[0]) for product in found_product_name if product[1] > 55]
-            if found_product:
-                return found_product
-        return []
+    def search_product(self, search_name = ""):
+        return Search.search_product(self.__product_catalog, search_name)
 
     # ================== About Board ================== #
     def get_board(self, board_name):
