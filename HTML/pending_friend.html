@@ -23,12 +23,14 @@
         <div classs="top-bar">
           <span class="content">    
               <span>RECEIVED INVITES </span><a class="ignore-all" href="/clear_invite/{{ current_user.get_id() }}">IGNORE ALL</a>
-              {% for _ in current_user.get_invite_list() %}
-              <div><img src="{{ _.get_profile() }}"></div>
-              <div>{{ _.get_name() }}</div>
-              <a href="/accept_invite/{{ current_user.get_id() }}/{{ _.get_id() }}"><button type="button">Accept</button></a>
-              <a href="/reject_invite/{{ current_user.get_id() }}/{{ _.get_id() }}"><button type="button">Cancel</button></a>
-              {% endfor %}
+              <div class="box">
+                {% for _ in current_user.get_invite_list() %}
+                <div><img src="{{ _.get_profile() }}"></div>
+                <div>{{ _.get_name() }}</div>
+                <a href="/accept_invite/{{ current_user.get_id() }}/{{ _.get_id() }}"><button type="button">Accept</button></a>
+                <a href="/reject_invite/{{ current_user.get_id() }}/{{ _.get_id() }}"><button type="button">Cancel</button></a>
+                {% endfor %}
+              </div>
           </span>
         </div>
         <div class="received-list">
@@ -39,15 +41,14 @@
       <div class="sent">
         <div classs="top-bar">
           <span class="content">
-            <form class="search">
               <span>PENDING INVITES</span>
-              <!-- <input type="text" placeholder="Search user" /> -->
-              {% for _ in current_user.get_pending_list() %}
-              <div><img src="{{ _.get_profile() }}"></div>
-              <div>{{ _.get_name() }}</div>
-              <a href="/reject_invite/{{ current_user.get_id()}}/{{ _.get_id() }}" >cancel invite</a>
-              {% endfor %}
-            </form>
+              <div class="box">
+                {% for _ in current_user.get_pending_list() %}
+                <div><img src="{{ _.get_profile() }}"></div>
+                <div>{{ _.get_name() }}</div>
+                <a href="/reject_invite/{{ current_user.get_id()}}/{{ _.get_id() }}"><button type="button">Cancel invite</button></a>
+                {% endfor %}
+              </div>
           </span>
         </div>
         <div class="received-list">
