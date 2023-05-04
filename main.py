@@ -66,6 +66,7 @@ steam.register(
 )
 Best = steam.search_profile(search_id=IdGenerator.generate_id("best@gmail.com"))
 Bass = steam.search_profile(search_id=IdGenerator.generate_id("bass@gmail.com"))
+Best.set_profile("https://avatars.akamai.steamstatic.com/b2edbc430cffa963966ebafc9e7844414a9c51c1_full.jpg")
 Best.add_friend(Bass)
 Bass.add_friend(Best)
 
