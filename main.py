@@ -497,6 +497,11 @@ async def remove_friend(user_id, target_id):
     url = app.url_path_for("view_profile", user_id=target_id)
     return RedirectResponse(url=url)
 
+@app.get("/friend_list/{user_id}", tags=["Friend"])
+async def friend_list(request: Request):
+    page_data = {"request": request, "current_user": steam.get_current_user(), "logged_in": steam.is_logged_in}
+    return TEMPLATE.TemplateResponse("friend_list.html", page_data)
+
 # ==================== Community Route ==================== #
 
 

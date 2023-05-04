@@ -63,8 +63,10 @@
                     <div class="screenshot heading">Screenshot</div>
                     {% if own_profile %}
                     <a class="pending heading" href="/pending_friend/{{ user.get_id() }}">Pending Friends</a>
-                    {% endif %}
+                    <a class="friends heading" href="/friend_list/{{ user.get_id }}">Friends</a>
+                    {% else %}
                     <div class="friends heading">Friends</div>
+                    {% endif %}
                     <div class="friend_container">
                         {% set friend_length = user.get_friend_list()|length %}
                         {% for _ in range([friend_length,6]|min) %}
