@@ -5,6 +5,7 @@ from module.library import Library
 from module.chat import Chat
 from module.purchaseHistory import PurchaseHistory
 
+
 class User:
     def __init__(self, name, email, profile_picture="https://avatars.cloudflare.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg", description=None, level=0):
         self.__name = name
@@ -114,3 +115,34 @@ class User:
         
     def get_order(self):
         return self.__order
+
+
+class UserHolder:
+    def __init__(self):
+        self.__user: list[User] = []
+        self.__all_id = []
+        self.__all_user_name = []
+
+    def add_user(self, user:User):
+        self.__user.append(user)
+        self.__all_id.append(user.get_id())
+        self.__all_user_name.append(user.get_name())
+
+    def get_user_by_name(self, user_name):
+        for user in self.__user:
+            if user.get_name() == user_name:
+                return user
+
+    def get_user_by_id(self, user_id):
+        for user in self.__user:
+            if user.get_id() == user_id:
+                return user
+
+    def get_all_user(self):
+        return self.__user
+
+    def get_all_user_id(self):
+        return self.__all_id
+
+    def get_all_user_name(self):
+        return self.__all_user_name

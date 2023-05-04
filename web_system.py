@@ -1,52 +1,22 @@
 import re
-from fuzzywuzzy import process
 from enum import Enum
-from utilities import IdGenerator
+from utilities import IdGenerator, Search
 from module.productCatalog import ProductCatalog
-from module.user import User
+from module.user import User, UserHolder
 from module.publisher import Publisher
 
-
-class Search:
-    @staticmethod
-    def search_profile(user_holder, kwargs):
-        # get id and name that user want to search
-        found_user = []
-        search_id = kwargs.get("search_id")
-        search_name = kwargs.get("search_name")
-
-        if search_id:  # if there is id to search
-            return user_holder.get_user_by_id(search_id)
-
-        elif search_name:  # if there is name to search
-            # the extract return tuple -> (str,similarity)
-            found_user_name = process.extract(search_name, user_holder.get_all_user_name())
-
-            # keep the user that have similarity 55 percent or more
-            found_user = [user_holder.get_user_by_name(user[0]) for user in found_user_name if user[1] >= 55]
-
-        # if there are no id or name to search
-        return found_user
-
-    @staticmethod
-    def search_product(product_catalog, search_name):
-        if search_name != "":
-            found_product_name = process.extract(search_name, product_catalog.get_all_products()["by_name"].keys())
-            found_product = [product_catalog.get_product_by_name(product[0]) for product in found_product_name if
-                             product[1] > 55]
-            if found_product:
-                return found_product
-        return []
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
     PASSNOTCORRECT = "password incorrect"
     SUCCES = "login success"
 
+
 class UserStatus(Enum):
     GUEST = 0
     LOGEDIN = 1
     PUBLISHER = 2
+
 
 class RegistStatus(Enum):
     EMAILALREADYEXIST = "e-mail already exist"
@@ -85,37 +55,6 @@ class AccountHolder:
         for account in self.__user_account:
             if email == account.get_email():
                 return password == account.get_password()
-
-
-class UserHolder:
-    def __init__(self):
-        self.__user: list[User] = []
-        self.__all_id = []
-        self.__all_user_name = []
-
-    def add_user(self, user:User):
-        self.__user.append(user)
-        self.__all_id.append(user.get_id())
-        self.__all_user_name.append(user.get_name())
-
-    def get_user_by_name(self, user_name):
-        for user in self.__user:
-            if user.get_name() == user_name:
-                return user
-
-    def get_user_by_id(self, user_id):
-        for user in self.__user:
-            if user.get_id() == user_id:
-                return user
-
-    def get_all_user(self):
-        return self.__user
-
-    def get_all_user_id(self):
-        return self.__all_id
-
-    def get_all_user_name(self):
-        return self.__all_user_name
 
 
 class System:
