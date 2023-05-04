@@ -372,7 +372,7 @@ async def payment_detail(request: Request, user_id):
     return TEMPLATE.TemplateResponse("payment.html", page_data)
 
 
-@app.get("/confirmation/{user_id}", response_class=HTMLResponse)
+@app.get("/confirmation/{user_id}", tags=["History"], response_class=HTMLResponse)
 async def confirm_purchase(
     request: Request,
     user_id,
@@ -400,7 +400,7 @@ async def confirm_purchase(
     for product in cart.get_products():
         library.add_product(product)
         order.add_product(product)
-    order.finalize(
+    order.summalize(
         method,
         card_number,
         expiration_month,
@@ -427,10 +427,11 @@ async def purchase_history(request: Request, user_id):
     return TEMPLATE.TemplateResponse("purchase_history.html", page_data)
 
 
-@app.get("/order_history/{order}", tags=["History"], response_class=HTMLResponse)
-async def view_order(request: Request, user_id):
-    user = steam.search_profile(search_id=user_id)
-    page_data = {"request": request, "user": user}
+@app.get("/order_history/{order_id}", tags=["History"], response_class=HTMLResponse)
+async def view_order(request: Request, order_id):
+    user = steam.get_current_user()
+    order = user.get_purchase_history().search_order(order_id)
+    page_data = {"request": request, "user": user, "order": order}
     return TEMPLATE.TemplateResponse("order_history.html", page_data)
 
 
@@ -483,6 +484,7 @@ async def clear_friend(user_id):
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
 
+
 @app.get("/reject_invite/{user_id}/{target_id}", tags=["Friend"])
 async def reject_invite(user_id, target_id):
     user = steam.search_profile(search_id=user_id)
@@ -491,6 +493,7 @@ async def reject_invite(user_id, target_id):
     target.remove_invite_list(user)
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
+
 
 @app.get("/accept_invite/{user_id}/{target_id}", tags=["Friend"])
 async def accept_invite(user_id, target_id):
@@ -502,6 +505,7 @@ async def accept_invite(user_id, target_id):
     target.add_friend(user)
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
+
 
 # ==================== Community Route ==================== #
 
@@ -548,7 +552,7 @@ async def rate_up(board_name, post_id):
     url = app.url_path_for("community", board_name=board_name)
     return RedirectResponse(url=url)
 
-
+# ==================== Chat Route ==================== #
 @app.get("/view_chat/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse)
 async def view_chat(request: Request, user_id, target_id):
     user = steam.search_profile(search_id=user_id)
