@@ -23,10 +23,41 @@ class RegistStatus(Enum):
     SUCCESS = "register success"
     PASSAVAILABLE = "password available"
 
+
+class Account:
+    def __init__(self, email, password):
+        self.__email = email
+        self.password = password
+
+
+class AccountHolder:
+    def __init__(self):
+        self.__user_account: list[Account] = []
+
+    def add_account(self, account):
+        self.__user_account.append(account)
+
+
+class UserHolder:
+    def __init__(self):
+        self.__user: list[User] = []
+        self.__all_id = []
+        self.__all_user_name = []
+
+    def add_user(self, user:User):
+        self.__user.append(user)
+        self.__all_id.append(user.get_id())
+        self.__all_user_name.append(user.get_name())
+
+    def get_user(self, user_name:list[str] = None, user_id: list[str] = None):
+        pass
+
+
 class System:
-    def __init__(self, product_catalog, community):
+    def __init__(self, product_catalog, community, user_holder):
         self.__community = community
         self.__product_catalog = product_catalog
+        self.__user_holder = user_holder
         self.__user_account = {}  # email:password
         self.__user_by_id = {}
         self.__user_by_name = {}
