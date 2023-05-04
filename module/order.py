@@ -1,8 +1,10 @@
 import datetime
+from itertools import count
 
-
+order_id_gen = count()
 class Order:
     def __init__(self, total_cost=0):
+        self.__id = str(next(order_id_gen))
         self.__products = []
         self.__paid_date = datetime.date.today()
         self.__shipping_detail = {}
@@ -23,6 +25,9 @@ class Order:
         self.__shipping_detail["postal_code"] = postal_code
         self.__shipping_detail["phone_number"] = phone_number
 
+    def get_id(self):
+        return self.__id
+    
     def update_paid(self):
         self.__paid_date = datetime.date.today()
 
@@ -50,7 +55,7 @@ class Order:
             temp_cost += product.get_price()
         self.__total_cost = temp_cost
 
-    def finalize(self,method, card_number, expiration_month, expiration_year, first_name, last_name,
+    def summalize(self,method, card_number, expiration_month, expiration_year, first_name, last_name,
                                   billing_address1, billing_address2, country, city, postal_code, phone_number):
         self.receive_shipping_detail(method, card_number, expiration_month, expiration_year, first_name, last_name,
                                   billing_address1, billing_address2, country, city, postal_code, phone_number)

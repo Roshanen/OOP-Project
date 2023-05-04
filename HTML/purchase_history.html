@@ -23,6 +23,7 @@
                 <div>name: {{ product.get_name() }}, price: {{ product.get_price() }} B</div>
                 {% endfor %}
                 <div>total: {{ order.get_total_cost() }} B</div>
+                <a class="view_detail" href="/order_history/{{ order.get_id() }}">view billing address</a>
             </div>
             {% endfor %}
         </div>

@@ -17,3 +17,7 @@ body {
     padding: 5px;
     margin: 10px;
 }
+
+.view_detail {
+    background-color: rgb(115, 216, 14);
+}
