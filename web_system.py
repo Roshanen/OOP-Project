@@ -27,7 +27,13 @@ class RegistStatus(Enum):
 class Account:
     def __init__(self, email, password):
         self.__email = email
-        self.password = password
+        self.__password = password
+
+    def get_email(self):
+        return self.__email
+
+    def get_password(self):
+        return self.__password
 
 
 class AccountHolder:
@@ -36,6 +42,17 @@ class AccountHolder:
 
     def add_account(self, account):
         self.__user_account.append(account)
+
+    def email_exist(self, email):
+        for account in self.__user_account:
+            if email == account.get_email():
+                return True
+        return False
+
+    def password_correct(self, email, password):
+        for account in self.__user_account:
+            if email == account.get_email():
+                return password == account.get_password()
 
 
 class UserHolder:
@@ -68,28 +85,25 @@ class UserHolder:
     def get_all_user_name(self):
         return self.__all_user_name
 
+
 class System:
-    def __init__(self, product_catalog, community, user_holder):
+    def __init__(self, product_catalog: ProductCatalog, community, user_holder: UserHolder, account_holder:AccountHolder):
         self.__community = community
         self.__product_catalog = product_catalog
         self.__user_holder = user_holder
-        self.__user_account = {}  # email:password
-        self.__user_by_id = {}
-        self.__user_by_name = {}
+        self.__account_holder = account_holder
         self.__current_user = None
 
-    def get_current_user(self) -> User:
-        return self.__current_user
-
-    def get_all_user(self):
-        return self.__user_holder.get_all_user()
-
+    # ==== Product ====
     def add_product(self, product):
         self.__product_catalog.add_product(product)
 
-    # ==== Product ====
     def get_product(self,prod_id):
         return self.__product_catalog.get_product_by_id(prod_id)
+
+    def modify_product(self, new_info, product_id):
+        product = self.get_product(product_id)
+        self.__product_catalog.modify_product(new_info, product)
 
     def get_discount_product(self, n = 10, discount = 0.1):
         return self.__product_catalog.get_discounted_product(n, discount)
@@ -97,16 +111,24 @@ class System:
     def get_recommend_product(self):
         return self.__product_catalog.get_recommend_product()
 
+    # ==== User ====
+    def add_to_cart(self, product, user):
+        user.add_to_cart(product)
+
+    def get_current_user(self) -> User:
+        return self.__current_user
+
+    def get_all_user(self):
+        return self.__user_holder.get_all_user()
+
     def __add_user(self,user):
-        # self.__user_by_name[user.get_name()] = user
-        # self.__user_by_id[user.get_id()] = user
         self.__user_holder.add_user(user)
 
+    # ????
     def verify_payment(self):
         return True
 
     # LOGIN and REGISTER
-
     def register(self,**kwargs):
         # kwargs have to have these fixed argument
         user_name = kwargs["user_name"]
@@ -115,7 +137,7 @@ class System:
         pass1 = kwargs["password2"]
         pass2 = kwargs["password2"]
 
-        if email in self.__user_account:
+        if self.__account_holder.email_exist(email):
             print("Email already exist")
             return RegistStatus.EMAILALREADYEXIST
 
@@ -127,7 +149,8 @@ class System:
             print("Password not secure must contain 1 lowercase, 1 uppercase, 1 number, 1 special character")
             return RegistStatus.PASSNOTSECURE
 
-        self.__user_account[email] = pass1
+        account = Account(email, pass1)
+        self.__account_holder.add_account(account)
 
         if register_as == "user":
             user = User(user_name, email)
@@ -141,14 +164,15 @@ class System:
     def logout(self):
         self.__current_user = None
 
-    def login(self,email,password):
-        if email not in self.__user_account:
+    def login(self, email, password):
+        if not self.__account_holder.email_exist(email):
             return LoginStatus.EMAILNOTFOUND, None
-        elif password != self.__user_account[email]:
+        if not self.__account_holder.password_correct(email, password):
             return LoginStatus.PASSNOTCORRECT, None
 
         # since user ID is a hash using email then we can hash the email to get user instead of ID
-        login_user = self.__user_by_id[IdGenerator.generate_id(email)]
+        user_id = IdGenerator.generate_id(email)
+        login_user = self.__user_holder.get_user_by_id(user_id)
         self.__current_user = login_user
 
         return LoginStatus.SUCCES, login_user
@@ -204,13 +228,6 @@ class System:
             if found_product:
                 return found_product
         return []
-
-    def modify_product(self,new_info, product_id):
-        product = self.get_product(product_id)
-        self.__product_catalog.modify_product(new_info, product)
-
-    def add_to_cart(self, product, user):
-        user.add_to_cart(product)
 
     # ================== About Board ================== #
     def get_board(self, board_name):
