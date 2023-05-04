@@ -1,5 +1,5 @@
 from module.shoppingCart import ShoppingCart
-from utilities import IdGenerator
+from module.utilities import IdGenerator
 from module.order import Order
 from module.library import Library
 from module.chat import Chat
