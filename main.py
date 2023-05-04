@@ -535,17 +535,9 @@ async def view_chat(request: Request, target_id):
 
 
 @app.get("/send_message/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse)
-async def send_message(user_id, target_id, message):
+async def send_message(target_id, message):
     current_user = steam.get_current_user()
     target = steam.search_profile(search_id=target_id)
     current_user.get_chat().send_message(message, target, current_user)
-    print("send : ", current_user.get_chat().view_message(target))
-    print("receive : ", target.get_chat().view_message(current_user))
-    url = app.url_path_for("view_chat", user_id=user_id, target_id=target_id)
+    url = app.url_path_for("view_chat",user_id=current_user.get_id(), target_id=target_id)
     return RedirectResponse(url=url)
-
-
-@app.get("/get_chat/{user_id}", tags=["Chat"])
-async def get_chat(user_id):
-    user = steam.search_profile(search_id=user_id)
-    print(user.get_chat().get_message_box())
