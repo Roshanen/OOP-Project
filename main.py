@@ -26,6 +26,7 @@ app.mount(css_path, StaticFiles(directory=css_folder), name="Style")
 community = Community()
 product_catalog = ProductCatalog()
 user_holder = UserHolder()
+account_holder = AccountHolder()
 
 all_post = Board("all")
 artwork = Board("artwork")
@@ -33,7 +34,7 @@ news = Board("news")
 manual = Board("manual")
 
 community.add_board(all_post, artwork, news, manual)
-steam = System(product_catalog, community, user_holder)
+steam = System(product_catalog, community, user_holder, account_holder)
 
 # ==== register ==== #
 steam.register(
