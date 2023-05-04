@@ -18,7 +18,7 @@
             <div class="in_cart_container">
 
                 <div class="product_in_cart">
-                    {% for item in user.get_cart().get_products() %}
+                    {% for item in current_user.get_cart().get_products() %}
                     {% set product = item %}
                     <div class="prod_container">
                         <div class="cover"> <img
@@ -29,7 +29,7 @@
 
                     <div class="prod_price_container">
                         <div class="price">{{ product.get_price() }}</div>
-                        <a href="/remove_from_cart/{{ user.get_id() }}/{{ product.get_id() }}">Delete</a>
+                        <a href="/remove_from_cart/{{ current_user.get_id() }}/{{ product.get_id() }}">Delete</a>
                     </div>
                     {% endfor %}
                 </div>
@@ -37,11 +37,11 @@
                 <div class="summary_container">
                     <div class="price_container">
                         <div class="price_header">Summary</div>
-                        <div class="sum">{{ user.get_cart().calculate_total() }}</div>
+                        <div class="sum">{{ current_user.get_cart().calculate_total() }}</div>
                     </div>
-                    {% if user.get_cart().get_products() != [] %}
+                    {% if current_user.get_cart().get_products() != [] %}
                     <div class="button_container">
-                        <a href="/payment/{{ user.get_id() }}"><button>Buy</button></a>
+                        <a href="/payment/{{ current_user.get_id() }}"><button>Buy</button></a>
                     </div>
                     {% endif %}
 

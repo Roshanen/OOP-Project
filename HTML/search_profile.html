@@ -23,33 +23,31 @@
         </div>
 
         <div class="search_result_container">
-            {% if user %}
                 {% if found_user|length > 0 %}
-                    {% set toSend = [] %}
-                    {% for found in found_user %}
-                        {% if found == user or found in user.get_friend_list() %}
-                            {{ toSend.append([found, False]) }}
-                        {% else %}
-                            {{ toSend.append([found, True]) }}
+                    {% if current_user %}
+                        {% set toSend = [] %}
+                        {% for found in found_user %}
+                            {% if found == current_user or found in current_user.get_friend_list() or 
+                                found in current_user.get_pending_list() or found in current_user.get_invite_list() %}
+                                {{ toSend.append([found, False]) }}
+                            {% else %}
+                                {{ toSend.append([found, True]) }}
+                            {% endif %}
+                        {% endfor %}
+                        {% for found in toSend %}
+                            {% include "Templates/friend_block_search.html" %}
+                        {% endfor %}
+                    {% else %}
+                        {% if found_user|length > 0 %}
+                            {% for found in found_user %}
+                                {% include "Templates/friend_block_search.html" %}
+                            {% endfor %}
                         {% endif %}
-                    {% endfor %}
-                    {% for found in toSend %}
-                        {% include "Templates/friend_block.html" %}
-                    {% endfor %}
+                    {% endif %}
                 {% else %}
                     No user found with " {{ kw }} "
                 {% endif %}
-            {% else %}
-                {% if found_user|length > 0 %}
-                    {% for found in found_user %}
-                        {% include "Templates/friend_block.html" %}
-                    {% endfor %}
-                {% else %}
-            No user found with " {{ kw }} "
-                {% endif %}
-            {% endif %}
         </div>
     </div>
-    
 </body>
 </html>

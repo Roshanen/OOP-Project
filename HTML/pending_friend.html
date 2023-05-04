@@ -14,23 +14,21 @@
   <body>
     {% include "Templates/navbar.html" %}
     <div class="container">
+      <h2>Friend Requests</h2>
       <div class="display-profile">
-        <img src="{{ user.get_profile() }}" />
-        <span>{{ user.get_name() }}</span>
+        <img src="{{ current_user.get_profile() }}" />
+        <span>{{ current_user.get_name() }}</span>
       </div>
       <div class="received">
         <div classs="top-bar">
-          <span class="content">
-            <form class="search">
-              <span>RECEIVED INVITES</span>
-              {% for _ in user.get_invite_list() %}
-              <div>{{ _.get_profile() }}</div>
+          <span class="content">    
+              <span>RECEIVED INVITES </span><a class="ignore-all" href="/clear_invite/{{ current_user.get_id() }}">IGNORE ALL</a>
+              {% for _ in current_user.get_invite_list() %}
+              <div><img src="{{ _.get_profile() }}"></div>
               <div>{{ _.get_name() }}</div>
-              <button type="button">Accept</button>
-              <button type="button">Cancel</button>
+              <a href="/accept_invite/{{ current_user.get_id() }}/{{ _.get_id() }}"><button type="button">Accept</button></a>
+              <a href="/reject_invite/{{ current_user.get_id() }}/{{ _.get_id() }}"><button type="button">Cancel</button></a>
               {% endfor %}
-              <a class="ignore-all" href="/clear_invite/{{ user.get_id() }}">IGNORE ALL</a>
-            </form>
           </span>
         </div>
         <div class="received-list">
@@ -44,10 +42,10 @@
             <form class="search">
               <span>PENDING INVITES</span>
               <!-- <input type="text" placeholder="Search user" /> -->
-              {% for _ in user.get_pending_list() %}
+              {% for _ in current_user.get_pending_list() %}
               <div><img src="{{ _.get_profile() }}"></div>
               <div>{{ _.get_name() }}</div>
-              <a href="/reject_invite/{{ user.get_id()}}/{{ _.get_id() }}" >cancel invite</a>
+              <a href="/reject_invite/{{ current_user.get_id()}}/{{ _.get_id() }}" >cancel invite</a>
               {% endfor %}
             </form>
           </span>

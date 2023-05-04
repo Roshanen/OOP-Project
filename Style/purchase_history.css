@@ -20,4 +20,6 @@ body {
 
 .view_detail {
     background-color: rgb(115, 216, 14);
+    padding: 2px;
+    border-radius: 5px;
 }
