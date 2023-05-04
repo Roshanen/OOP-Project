@@ -63,6 +63,10 @@ steam.register(
     password2="123Publ!",
     register_as="publisher",
 )
+Best = steam.search_profile(search_id=IdGenerator.generate_id("best@gmail.com"))
+Bass = steam.search_profile(search_id=IdGenerator.generate_id("bass@gmail.com"))
+Best.add_friend(Bass)
+Bass.add_friend(Best)
 
 # ==== init product ==== #
 for product_info in all_product_info:
@@ -220,6 +224,7 @@ async def search_product(request: Request, keyword=""):
         "found_products": found_products,
         "kw": keyword,
         "logged_in": steam.is_logged_in(),
+        "current_user": steam.get_current_user()
     }
     # new front-end
     return TEMPLATE.TemplateResponse("search_product.html", page_data)
