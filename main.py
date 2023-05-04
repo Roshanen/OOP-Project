@@ -139,38 +139,17 @@ async def add_product(request: Request):
 
 
 @app.get("/add_product_to_catalog", tags=["Publisher"], response_class=HTMLResponse)
-async def add_product_to_catalog(
-    request: Request,
-    name,
-    price,
-    os_support,
-    system_req,
-    pre_vid,
-    cover_image,
-    lang_sup,
-    age_rate,
-    discount,
-    description,
-):
+async def add_product_to_catalog(request: Request, name, price, os_support, system_req, pre_vid,
+                                 cover_image, lang_sup, age_rate, discount, description):
     page_data = {"request": request}
     user = steam.get_current_user()
 
     page_data["user"] = user
     page_data["is_publisher"] = True
 
-    info = {
-        "name": name,
-        "price": int(price),
-        "os_support": os_support,
-        "system_req": system_req,
-        "pre_vid": pre_vid,
-        "cover_image": cover_image,
-        "lang_sup": lang_sup,
-        "age_rate": age_rate,
-        "discount": float(discount),
-        "description": description,
-        "release_date": datetime.datetime.now(),
-    }
+    info = {"name": name, "price": int(price), "os_support": os_support, "system_req": system_req, "pre_vid": pre_vid,
+            "cover_image": cover_image, "lang_sup": lang_sup, "age_rate": age_rate, "discount": float(discount),
+            "description": description, "release_date": datetime.datetime.now()}
 
     product = Product(info)
     print("> ", product)
@@ -192,8 +171,6 @@ async def library(request: Request):
 
 
 # about product
-
-
 @app.get("/product/{product_id}", tags=["Product"], response_class=HTMLResponse)
 async def view_product(request: Request, product_id):
     page_data = {"request": request}
@@ -227,7 +204,7 @@ async def search_product(request: Request, keyword=""):
         "found_products": found_products,
         "kw": keyword,
         "logged_in": steam.is_logged_in(),
-        "current_user": steam.get_current_user()
+        "current_user": steam.get_current_user(),
     }
     # new front-end
     return TEMPLATE.TemplateResponse("search_product.html", page_data)
@@ -316,7 +293,8 @@ async def verify_login(request: Request, email, password):
         redirect_url = request.url_for("index")
         return RedirectResponse(redirect_url)
     else:
-        redirect_url = request.url_for("login").include_query_params(status=status)
+        redirect_url = request.url_for(
+            "login").include_query_params(status=status)
         return RedirectResponse(redirect_url)
 
 
@@ -335,16 +313,9 @@ async def register(request: Request):
 
 
 @app.get("/verify_register", tags=["System"], response_class=HTMLResponse)
-async def verify_register(
-    request: Request, register_as, user_name, email, password1, password2
-):
-    status = steam.register(
-        user_name=user_name,
-        email=email,
-        password1=password1,
-        password2=password2,
-        register_as=register_as,
-    )
+async def verify_register(request: Request, register_as, user_name, email, password1, password2):
+    status = steam.register(user_name=user_name, email=email,
+                            password1=password1, password2=password2, register_as=register_as)
 
     page_data = {"request": request}
     if status == RegistStatus.SUCCESS:
@@ -369,54 +340,31 @@ async def remove_from_cart(product_id, user_id):
 @app.get("/payment/{user_id}", tags=["Payment"], response_class=HTMLResponse)
 async def payment_detail(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
-    page_data = {"request": request, "user": user, "logged_in": steam.is_logged_in()}
+    page_data = {"request": request, "user": user,
+                 "logged_in": steam.is_logged_in()}
 
     return TEMPLATE.TemplateResponse("payment.html", page_data)
 
 
 @app.get("/confirmation/{user_id}", tags=["History"])
-async def confirm_purchase(
-    user_id,
-    method,
-    card_number,
-    expiration_month,
-    expiration_year,
-    first_name,
-    last_name,
-    billing_address1,
-    billing_address2,
-    country,
-    city,
-    postal_code,
-    phone_number,
-):
-    user = steam.search_profile(search_id=user_id)
-    cart = user.get_cart()
-    library = user.get_library()
-    history = user.get_purchase_history()
-    user.create_order()
-    order = user.get_order()
+async def confirm_purchase(user_id, method, card_number, expiration_month, expiration_year, first_name, last_name,
+                           billing_address1, billing_address2, country, city, postal_code, phone_number):
+    if steam.verify_payment():
+        user = steam.search_profile(search_id=user_id)
+        cart = user.get_cart()
+        library = user.get_library()
+        history = user.get_purchase_history()
+        user.create_order()
+        order = user.get_order()
 
-    for product in cart.get_products():
-        library.add_product(product)
-        order.add_product(product)
-        user.level_up()
-    order.summalize(
-        method,
-        card_number,
-        expiration_month,
-        expiration_year,
-        first_name,
-        last_name,
-        billing_address1,
-        billing_address2,
-        country,
-        city,
-        postal_code,
-        phone_number,
-    )
-    history.add_to_history(order)
-    cart.remove_all_product()
+        for product in cart.get_products():
+            library.add_product(product)
+            order.add_product(product)
+            user.level_up()
+        order.summalize(method, card_number, expiration_month, expiration_year, first_name, last_name,
+                        billing_address1, billing_address2, country, city, postal_code, phone_number)
+        history.add_to_history(order)
+        cart.remove_all_product()
 
     url = app.url_path_for("library")
     return RedirectResponse(url=url)
@@ -476,7 +424,11 @@ async def edit_profile(name, picture_profile, description, user_id):
 @app.get("/pending_friend/{user_id}", tags=["Friend"], response_class=HTMLResponse)
 async def pending_friend(request: Request):
     current_user = steam.get_current_user()
-    page_data = {"request": request, "current_user": current_user, "logged_in": steam.is_logged_in()}
+    page_data = {
+        "request": request,
+        "current_user": current_user,
+        "logged_in": steam.is_logged_in(),
+    }
     return TEMPLATE.TemplateResponse("pending_friend.html", page_data)
 
 
@@ -494,8 +446,8 @@ async def send_friend_invite(user_id, target_id):
 async def clear_friend(user_id):
     current_user = steam.get_current_user()
     for others in current_user.get_invite_list():
-        others.remove_invite_list(current_user)
-    current_user.clear_pending_list()
+        others.remove_pending_list(current_user)
+    current_user.clear_invite_list()
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
 
@@ -571,24 +523,22 @@ async def rate_up(board_name, post_id):
 
 # ==================== Chat Route ==================== #
 @app.get("/view_chat/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse)
-async def view_chat(request: Request, user_id, target_id):
-    user = steam.search_profile(search_id=user_id)
+async def view_chat(request: Request, target_id):
+    current_user = steam.get_current_user()
     target = steam.search_profile(search_id=target_id)
-    page_data = {"request": request, "user": user, "target": target}
-    # return TEMPLATE.TemplateResponse("Chat.html", page_data)
-    print(user.get_chat().view_message(target))
-    # return {"message_box": user.get_chat().view_message(target)}
+    chat = current_user.get_chat().view_message(target)
+    page_data = {"request": request, "current_user": current_user,
+                 "target": target, "chat": chat, "logged_in": steam.is_logged_in()}
+    return TEMPLATE.TemplateResponse("chat.html", page_data)
 
 
-@app.get(
-    "/send_message/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse
-)
+@app.get("/send_message/{user_id}/{target_id}", tags=["Chat"], response_class=HTMLResponse)
 async def send_message(user_id, target_id, message):
-    user = steam.search_profile(search_id=user_id)
+    current_user = steam.get_current_user()
     target = steam.search_profile(search_id=target_id)
-    user.get_chat().send_message(message, target, user)
-    print("send : ", user.get_chat().view_message(target))
-    print("receive : ", target.get_chat().view_message(user))
+    current_user.get_chat().send_message(message, target, current_user)
+    print("send : ", current_user.get_chat().view_message(target))
+    print("receive : ", target.get_chat().view_message(current_user))
     url = app.url_path_for("view_chat", user_id=user_id, target_id=target_id)
     return RedirectResponse(url=url)
 
