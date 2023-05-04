@@ -26,6 +26,46 @@ class RegistStatus(Enum):
     PASSAVAILABLE = "password available"
 
 
+class Authenticator:
+    @staticmethod
+    def password_available(pass1, pass2):
+        # one lowercase one uppercase one number one special character at least 8 char long
+        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        if pass1 != pass2:
+            return RegistStatus.PASSNOTMATCH
+        elif not re.match(reg, pass1):
+            return RegistStatus.PASSNOTSECURE
+        return RegistStatus.PASSAVAILABLE
+
+    @staticmethod
+    def register(account_holder, kwargs):
+        email = kwargs["email"]
+        pass1 = kwargs["password2"]
+        pass2 = kwargs["password2"]
+
+        if account_holder.email_exist(email):
+            print("Email already exist")
+            return RegistStatus.EMAILALREADYEXIST
+        pass_status = Authenticator.password_available(pass1, pass2)
+        if pass_status == RegistStatus.PASSNOTMATCH:
+            print("Password not match")
+            return RegistStatus.PASSNOTMATCH
+        elif pass_status == RegistStatus.PASSNOTSECURE:
+            print("Password not secure must contain 1 lowercase, 1 uppercase, 1 number, 1 special character")
+            return RegistStatus.PASSNOTSECURE
+
+        return RegistStatus.SUCCESS
+
+    @staticmethod
+    def login(account_holder, email, password):
+        if not account_holder.email_exist(email):
+            return LoginStatus.EMAILNOTFOUND, None
+        if not account_holder.password_correct(email, password):
+            return LoginStatus.PASSNOTCORRECT, None
+
+        return LoginStatus.SUCCES
+
+
 class Account:
     def __init__(self, email, password):
         self.__email = email
@@ -104,21 +144,13 @@ class System:
         # kwargs have to have these fixed argument
         user_name = kwargs["user_name"]
         email = kwargs["email"]
-        register_as = kwargs["register_as"]
         pass1 = kwargs["password2"]
-        pass2 = kwargs["password2"]
+        register_as = kwargs["register_as"]
 
-        if self.__account_holder.email_exist(email):
-            print("Email already exist")
-            return RegistStatus.EMAILALREADYEXIST
+        status = Authenticator.register(self.__account_holder, kwargs)
 
-        pass_status = self.password_available(pass1,pass2)
-        if pass_status == RegistStatus.PASSNOTMATCH:
-            print("Password not match")
-            return RegistStatus.PASSNOTMATCH
-        elif pass_status == RegistStatus.PASSNOTSECURE:
-            print("Password not secure must contain 1 lowercase, 1 uppercase, 1 number, 1 special character")
-            return RegistStatus.PASSNOTSECURE
+        if status != RegistStatus.SUCCESS:
+            return status
 
         account = Account(email, pass1)
         self.__account_holder.add_account(account)
@@ -132,12 +164,10 @@ class System:
 
         return RegistStatus.SUCCESS
 
-
     def login(self, email, password):
-        if not self.__account_holder.email_exist(email):
-            return LoginStatus.EMAILNOTFOUND, None
-        if not self.__account_holder.password_correct(email, password):
-            return LoginStatus.PASSNOTCORRECT, None
+        status = Authenticator.login(email, password)
+        if status != LoginStatus.SUCCES:
+            return status
 
         # since user ID is a hash using email then we can hash the email to get user instead of ID
         user_id = IdGenerator.generate_id(email)
@@ -153,15 +183,6 @@ class System:
         if self.__current_user is None:
             return False
         return True
-
-    def password_available(self,pass1,pass2):
-        # one lowercase one uppercase one number one special character at least 8 char long
-        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-        if pass1 != pass2:
-            return RegistStatus.PASSNOTMATCH
-        elif not re.match(reg, pass1):
-            return RegistStatus.PASSNOTSECURE
-        return RegistStatus.PASSAVAILABLE
 
     # ==== Search ====
     def search_profile(self, **kwargs):
