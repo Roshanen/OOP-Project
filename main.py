@@ -64,9 +64,12 @@ steam.register(
 )
 
 # ==== Add friend ====
-Best = steam.search_profile(search_id=IdGenerator.generate_id("best@gmail.com"))
-Bass = steam.search_profile(search_id=IdGenerator.generate_id("bass@gmail.com"))
-Best.set_profile("https://avatars.akamai.steamstatic.com/b2edbc430cffa963966ebafc9e7844414a9c51c1_full.jpg")
+Best = steam.search_profile(
+    search_id=IdGenerator.generate_id("best@gmail.com"))
+Bass = steam.search_profile(
+    search_id=IdGenerator.generate_id("bass@gmail.com"))
+Best.set_profile(
+    "https://avatars.akamai.steamstatic.com/b2edbc430cffa963966ebafc9e7844414a9c51c1_full.jpg")
 Best.add_friend(Bass)
 Bass.add_friend(Best)
 
@@ -454,16 +457,6 @@ async def clear_friend(user_id):
     return RedirectResponse(url=url)
 
 
-@app.get("/reject_invite/{user_id}/{target_id}", tags=["Friend"])
-async def reject_invite(user_id, target_id):
-    current_user = steam.search_profile(search_id=user_id)
-    target = steam.search_profile(search_id=target_id)
-    current_user.remove_pending_list(target)
-    target.remove_invite_list(current_user)
-    url = app.url_path_for("pending_friend", user_id=user_id)
-    return RedirectResponse(url=url)
-
-
 @app.get("/accept_invite/{user_id}/{target_id}", tags=["Friend"])
 async def accept_invite(user_id, target_id):
     current_user = steam.search_profile(search_id=user_id)
@@ -475,6 +468,25 @@ async def accept_invite(user_id, target_id):
     url = app.url_path_for("pending_friend", user_id=user_id)
     return RedirectResponse(url=url)
 
+
+@app.get("/reject_invite/{user_id}/{target_id}", tags=["Friend"])
+async def reject_invite(user_id, target_id):
+    current_user = steam.search_profile(search_id=user_id)
+    target = steam.search_profile(search_id=target_id)
+    current_user.remove_invite_list(target)
+    target.remove_pending_list(current_user)
+    url = app.url_path_for("pending_friend", user_id=user_id)
+    return RedirectResponse(url=url)
+
+
+@app.get("/remove_pending/{user_id}/{target_id}", tags=["Friend"])
+async def remove_pending(user_id, target_id):
+    current_user = steam.search_profile(search_id=user_id)
+    target = steam.search_profile(search_id=target_id)
+    current_user.remove_pending_list(target)
+    target.remove_invite_list(current_user)
+    url = app.url_path_for("pending_friend", user_id=user_id)
+    return RedirectResponse(url=url)
 
 # ==================== Community Route ==================== #
 
@@ -539,5 +551,6 @@ async def send_message(target_id, message):
     current_user = steam.get_current_user()
     target = steam.search_profile(search_id=target_id)
     current_user.get_chat().send_message(message, target, current_user)
-    url = app.url_path_for("view_chat",user_id=current_user.get_id(), target_id=target_id)
+    url = app.url_path_for(
+        "view_chat", user_id=current_user.get_id(), target_id=target_id)
     return RedirectResponse(url=url)
