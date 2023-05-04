@@ -30,6 +30,16 @@
             	{% include "Templates/vertical-spotlight.html" %}
 			{% endfor %}
         </div>
+
+		<h2>Recently Add</h2>
+        <div class="recently-add">
+			{% for product in recently_add_product %}
+				{% set product_info = product.get_info() %}
+            	{% include "Templates/vertical-spotlight.html" %}
+			{% endfor %}
+        </div>
+
+
     </div>
 </body>
 </html>

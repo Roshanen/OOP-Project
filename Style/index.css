@@ -31,55 +31,11 @@ body {
     margin-top: 20px;
 }
 
-.find-by-tags {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    grid-column-gap: 5px;
-}
-
-.find-by-tag {
-    max-width: 100%;
-    background-color: #23262d;
-    border-radius: 4px;
-    padding: 10px;
-    text-align: center;
-}
-
-.find-by-tag img {
-    max-width: 100%;
-}
-
-.find-by-tag h3 {
-    position:absolute;
-    top: 0;
-}
-
-.quick-searches {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 10px;
-    width: 100%;
-    height: 70px;
-}
-
-.quick-search {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    padding: 5px 5px;
-    width: 100%;
-    height: 70px;
-    background-color: #23262d;
-    background-position: center;
-}
-
-.quick-search img{
-    width: 100%;
-    height: 100%;
+.recently-add {
+    display: grid;  
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin-top: 20px;
 }
 
 /* ========================= For spotlight ========================= */

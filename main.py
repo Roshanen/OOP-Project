@@ -97,10 +97,12 @@ async def index(request: Request):
 
     recommend_product = steam.get_recommend_product()
     discount_product = steam.get_discount_product()
+    recently_add_product = steam.get_recently_add_product()
 
     page_data["current_user"] = steam.get_current_user()
     page_data["discount_product"] = discount_product
     page_data["recommend_product"] = recommend_product
+    page_data["recently_add_product"] = recently_add_product
     page_data["logged_in"] = steam.is_logged_in()
     page_data["is_publisher"] = isinstance(steam.get_current_user(), Publisher)
 
