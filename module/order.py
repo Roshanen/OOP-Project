@@ -52,7 +52,7 @@ class Order:
     def calculate_total_cost(self):
         temp_cost = 0
         for product in self.__products:
-            temp_cost += product.get_price()
+            temp_cost += product.get_discounted_price()
         self.__total_cost = temp_cost
 
     def summalize(self,method, card_number, expiration_month, expiration_year, first_name, last_name,
