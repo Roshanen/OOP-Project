@@ -24,14 +24,15 @@
                 <div class="friend_block">
                     <img src="{{ item["sender"].get_profile() }}">
                     <div class="name">{{ item["sender"].get_name() }}</div>
+                    <div class="time">{{ item["date"] }}</div>
                 </div>
                 <div class="message">{{ item["text"]}}</div>
                 {% endfor %}
             </div>
             <div class="active-display">
-                <form>
-                    <input type="text">
-                    <input type="submit" value="send">
+                <form action="/send_message/{{ current_user.get_id() }}/{{ target.get_id() }}" method="get">
+                    <input type="text" name="message">
+                    <button type="submit">send</button>
                 </form>
             </div>
         </div>

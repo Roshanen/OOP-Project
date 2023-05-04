@@ -34,4 +34,18 @@ img{
 .friend_block{
     display: flex;
     flex-direction: row;
+    padding: 5px;
+}
+
+.friend_block *{
+    margin: 2px;
+}
+
+.time {
+    color: rgb(158, 158, 158);
+}
+
+.message {
+    margin-left: 5px;
+    padding-bottom: 10px;
 }
