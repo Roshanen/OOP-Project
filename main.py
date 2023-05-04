@@ -391,9 +391,8 @@ async def payment_detail(request: Request, user_id):
     return TEMPLATE.TemplateResponse("payment.html", page_data)
 
 
-@app.get("/confirmation/{user_id}", tags=["History"], response_class=HTMLResponse)
+@app.get("/confirmation/{user_id}", tags=["History"])
 async def confirm_purchase(
-    request: Request,
     user_id,
     method,
     card_number,
@@ -409,7 +408,6 @@ async def confirm_purchase(
     phone_number,
 ):
     user = steam.search_profile(search_id=user_id)
-    page_data = {"request": request, "user": user}
     cart = user.get_cart()
     library = user.get_library()
     history = user.get_purchase_history()
@@ -436,13 +434,14 @@ async def confirm_purchase(
     history.add_to_history(order)
     cart.remove_all_product()
 
-    return TEMPLATE.TemplateResponse("library.html", page_data)
+    url = app.url_path_for("library")
+    return RedirectResponse(url=url)
 
 
 @app.get("/purchase_history/{user_id}", tags=["History"], response_class=HTMLResponse)
 async def purchase_history(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
-    page_data = {"request": request, "user": user}
+    page_data = {"request": request, "user": user, "logged_in": steam.is_logged_in()}
     return TEMPLATE.TemplateResponse("purchase_history.html", page_data)
 
 
@@ -468,8 +467,8 @@ async def setting_profile(request: Request, user_id):
     return TEMPLATE.TemplateResponse("setting_profile.html", page_data)
 
 
-@app.get("/edit_profile/{user_id}", tags=["User"], response_class=HTMLResponse)
-async def edit_profile(request: Request, name, picture_profile, description, user_id):
+@app.get("/edit_profile/{user_id}", tags=["User"])
+async def edit_profile(name, picture_profile, description, user_id):
     user = steam.search_profile(search_id=user_id)
     if name != "":
         user.set_name(name)
@@ -480,11 +479,8 @@ async def edit_profile(request: Request, name, picture_profile, description, use
     if description != "":
         user.set_description(description)
 
-    page_data = {"request": request,
-                 "user": user,
-                 "logged_in": steam.is_logged_in()
-                 }
-    return TEMPLATE.TemplateResponse("profile.html", page_data)
+    url = app.url_path_for("view_profile", user_id=user_id)
+    return RedirectResponse(url=url)
 
 
 @app.get("/pending_friend/{user_id}", tags=["Friend"], response_class=HTMLResponse)
