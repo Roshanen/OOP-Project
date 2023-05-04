@@ -21,6 +21,8 @@ li a{
     padding: 8px 16px;
 }
 
+a, a:hover, a:focus, a:active { color: inherit; text-decoration: none;}
+
 .box1,.box2 span {
     padding: 5px 10px;
 }
