@@ -46,3 +46,11 @@ class ProductCatalog:
             product = self.__products_by_id[key]
 
         return product
+
+    def get_recently_add_product(self, n = 9):
+        products = []
+
+        for key in self.__products_by_id:
+            products.append(self.__products_by_id[key])
+
+        return products[:-n-1:-1]

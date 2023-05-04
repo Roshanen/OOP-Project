@@ -116,11 +116,14 @@ class System:
         product = self.get_product(product_id)
         self.__product_catalog.modify_product(new_info, product)
 
-    def get_discount_product(self, n = 10, discount = 0.1):
+    def get_discount_product(self, n = 6, discount = 0.1):
         return self.__product_catalog.get_discounted_product(n, discount)
 
     def get_recommend_product(self):
         return self.__product_catalog.get_recommend_product()
+
+    def get_recently_add_product(self, n = 9):
+        return self.__product_catalog.get_recently_add_product(n)
 
     # ==== User ====
     def __add_user(self,user):
