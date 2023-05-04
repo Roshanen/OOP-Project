@@ -1,24 +1,24 @@
-from utilities import IdGenerator
-from community import Rating
+from module.utilities import IdGenerator
+from module.community import Rating
 
 class Product:
     def __init__(self, info):
-            self.__info = {
-                "id" : IdGenerator.generate_id(info["name"]),
-                "name": info["name"],
-                "price": info["price"],
-                "os_support": info["os_support"],
-                "system_req": info["system_req"],
-                "pre_vid" : info["pre_vid"],
-                "cover_image": info["cover_image"],
-                "lang_sup": info["lang_sup"],
-                "age_rate": info["age_rate"],
-                "discount": info["discount"],
-                "description": info["description"],
-                "release_date": info["release_date"]
-            }
+        self.__info = {
+            "id" : IdGenerator.generate_id(info["name"]),
+            "name": info["name"],
+            "price": info["price"],
+            "os_support": info["os_support"],
+            "system_req": info["system_req"],
+            "pre_vid" : info["pre_vid"],
+            "cover_image": info["cover_image"],
+            "lang_sup": info["lang_sup"],
+            "age_rate": info["age_rate"],
+            "discount": info["discount"],
+            "description": info["description"],
+            "release_date": info["release_date"]
+        }
 
-            self.__rating = Rating()
+        self.__rating = Rating()
 
     def __repr__(self):
         return self.__info["name"]

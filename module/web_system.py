@@ -1,6 +1,6 @@
 import re
 from enum import Enum
-from utilities import IdGenerator, Search
+from module.utilities import IdGenerator, Search
 from module.productCatalog import ProductCatalog
 from module.user import User, UserHolder
 from module.publisher import Publisher
