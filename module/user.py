@@ -71,7 +71,7 @@ class User:
     def get_profile(self):
         return self.__profile_picture
 
-    def set_picture_profile(self, picture):
+    def set_profile(self, picture):
         self.__profile_picture = picture
 
     def get_description(self):
