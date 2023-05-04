@@ -47,7 +47,7 @@
                 {% for _ in current_user.get_pending_list() %}
                 <div><img src="{{ _.get_profile() }}"></div>
                 <div>{{ _.get_name() }}</div>
-                <a href="/reject_invite/{{ current_user.get_id()}}/{{ _.get_id() }}"><button type="button">Cancel invite</button></a>
+                <a href="/remove_pending/{{ current_user.get_id()}}/{{ _.get_id() }}"><button type="button">Cancel invite</button></a>
                 {% endfor %}
               </div>
           </span>

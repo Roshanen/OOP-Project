@@ -17,3 +17,7 @@
   .info_container .name {
     font-size: 42px;
   }
+
+  .add_friend {
+    background-color: rgb(115, 216, 14);
+  }

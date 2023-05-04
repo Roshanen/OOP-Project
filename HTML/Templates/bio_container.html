@@ -10,5 +10,25 @@
       <div class="name">{{ user.get_name() }}</div>
       <div class="bio">{{ user.get_description() }}</div>
     </div>
+    {% if current_user %}
+      {% if user in current_user.get_invite_list()  %}
+      <div>
+        <a href="/accept_invite/{{ current_user.get_id() }}/{{ user.get_id() }}"><button type="button">Accept</button></a>
+        <a href="/reject_invite/{{ current_user.get_id() }}/{{ user.get_id() }}"><button type="button">Cancel</button></a>
+      </div>
+      {% elif user in current_user.get_pending_list()  %}
+      <div>
+        <a href="/remove_pending/{{ current_user.get_id()}}/{{ _.get_id() }}"><button type="button">Cancel invite</button></a>
+      </div>
+      {% elif user in current_user.get_friend_list()  %}
+      <div>
+        <a href="/view_chat/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>chat</button></a>
+      </div>
+      {% elif not own_profile %}
+      <div>
+        <a class="add_friend" href="/add_friend/{{ current_user.get_id() }}/{{ user.get_id() }}"><button>add friend</button></a>
+      </div>
+      {% endif %}
+    {% endif %}
   </div>
 </body>
