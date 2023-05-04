@@ -13,7 +13,7 @@
                 <h3>Purchase Detail</h3>
                 <div>date: {{ order.get_paid_date() }}</div>
                 {% for product in order.get_products() %}
-                <div>name: {{ product.get_name() }}, price: {{ product.get_price()}} B</div>
+                <div>name: {{ product.get_name() }}, price: {{ product.get_discounted_price()}} B</div>
                 {% endfor %}
                 <div>total: {{ order.get_total_cost() }} B</div>
             </div>

@@ -21,5 +21,5 @@ class ShoppingCart:
     def calculate_total(self):
         price_sum = 0
         for product in self.get_products():
-            price_sum += product.get_price()
+            price_sum += product.get_discounted_price()
         return price_sum
