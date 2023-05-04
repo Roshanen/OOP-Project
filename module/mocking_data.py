@@ -197,7 +197,7 @@ cyberpunk_2077 = {
                 "Storage": "70 GB available space",
                 "Additional Notes": "In this game you will encounter a variety of visual effects that may provide seizures or loss of consciousness in a minority of people. If you or someone you know experiences any of the above symptoms while playing, stop and seek medical attention immediately."
             },
-            "pre_vid" : "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg?t=1680026109",
+            "pre_vid" : "https://cdn.cloudflare.steamstatic.com/steam/apps/256904408/movie480_vp9.webm?t=1662480409",
             "cover_image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg?t=1680026109",
             "lang_sup": ["English", "French", "Iitalian", "German", "Spanish - Spain", "Russian", "Japanese", "Portuguese - Brazil	", "Korean", "Turkish", "Hungarian", "Arabic", "Thai", "Czech"],
             "age_rate": "pegi 18",
