@@ -1,20 +1,22 @@
 import re
-from fuzzywuzzy import process
 from enum import Enum
-from utilities import IdGenerator
+from utilities import IdGenerator, Search
 from module.productCatalog import ProductCatalog
-from module.user import User
-from module.publisher import Publisher 
+from module.user import User, UserHolder
+from module.publisher import Publisher
+
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
     PASSNOTCORRECT = "password incorrect"
     SUCCES = "login success"
 
+
 class UserStatus(Enum):
     GUEST = 0
     LOGEDIN = 1
     PUBLISHER = 2
+
 
 class RegistStatus(Enum):
     EMAILALREADYEXIST = "e-mail already exist"
@@ -24,10 +26,56 @@ class RegistStatus(Enum):
     PASSAVAILABLE = "password available"
 
 
+class Authenticator:
+    @staticmethod
+    def password_available(pass1, pass2):
+        # one lowercase one uppercase one number one special character at least 8 char long
+        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        if pass1 != pass2:
+            return RegistStatus.PASSNOTMATCH
+        elif not re.match(reg, pass1):
+            return RegistStatus.PASSNOTSECURE
+        return RegistStatus.PASSAVAILABLE
+
+    @staticmethod
+    def register(account_holder, kwargs):
+        email = kwargs["email"]
+        pass1 = kwargs["password2"]
+        pass2 = kwargs["password2"]
+
+        if account_holder.email_exist(email):
+            print("Email already exist")
+            return RegistStatus.EMAILALREADYEXIST
+        pass_status = Authenticator.password_available(pass1, pass2)
+        if pass_status == RegistStatus.PASSNOTMATCH:
+            print("Password not match")
+            return RegistStatus.PASSNOTMATCH
+        elif pass_status == RegistStatus.PASSNOTSECURE:
+            print("Password not secure must contain 1 lowercase, 1 uppercase, 1 number, 1 special character")
+            return RegistStatus.PASSNOTSECURE
+
+        return RegistStatus.SUCCESS
+
+    @staticmethod
+    def login(account_holder, email, password):
+        if not account_holder.email_exist(email):
+            return LoginStatus.EMAILNOTFOUND, None
+        if not account_holder.password_correct(email, password):
+            return LoginStatus.PASSNOTCORRECT, None
+
+        return LoginStatus.SUCCES
+
+
 class Account:
     def __init__(self, email, password):
         self.__email = email
-        self.password = password
+        self.__password = password
+
+    def get_email(self):
+        return self.__email
+
+    def get_password(self):
+        return self.__password
 
 
 class AccountHolder:
@@ -37,46 +85,36 @@ class AccountHolder:
     def add_account(self, account):
         self.__user_account.append(account)
 
+    def email_exist(self, email):
+        for account in self.__user_account:
+            if email == account.get_email():
+                return True
+        return False
 
-class UserHolder:
-    def __init__(self):
-        self.__user: list[User] = []
-        self.__all_id = []
-        self.__all_user_name = []
-
-    def add_user(self, user:User):
-        self.__user.append(user)
-        self.__all_id.append(user.get_id())
-        self.__all_user_name.append(user.get_name())
-
-    def get_user(self, user_name:list[str] = None, user_id: list[str] = None):
-        pass
+    def password_correct(self, email, password):
+        for account in self.__user_account:
+            if email == account.get_email():
+                return password == account.get_password()
 
 
 class System:
-    def __init__(self, product_catalog, community, user_holder):
+    def __init__(self, product_catalog: ProductCatalog, community, user_holder: UserHolder, account_holder:AccountHolder):
         self.__community = community
         self.__product_catalog = product_catalog
         self.__user_holder = user_holder
-        self.__user_account = {}  # email:password
-        self.__user_by_id = {}
-        self.__user_by_name = {}
+        self.__account_holder = account_holder
         self.__current_user = None
 
-    def get_current_user(self) -> User:
-        return self.__current_user
-
-    def get_user_by_id(self, user_id):
-        return self.__user_by_id[user_id]
-
-    def get_all_user(self):
-        return self.__user_by_id
-
-    def add_product(self,product):
+    # ==== Product ====
+    def add_product(self, product):
         self.__product_catalog.add_product(product)
 
     def get_product(self,prod_id):
         return self.__product_catalog.get_product_by_id(prod_id)
+
+    def modify_product(self, new_info, product_id):
+        product = self.get_product(product_id)
+        self.__product_catalog.modify_product(new_info, product)
 
     def get_discount_product(self, n = 10, discount = 0.1):
         return self.__product_catalog.get_discounted_product(n, discount)
@@ -84,43 +122,39 @@ class System:
     def get_recommend_product(self):
         return self.__product_catalog.get_recommend_product()
 
+    # ==== User ====
     def __add_user(self,user):
-        self.__user_by_name[user.get_name()] = user
-        self.__user_by_id[user.get_id()] = user
+        self.__user_holder.add_user(user)
 
+    def get_current_user(self) -> User:
+        return self.__current_user
+
+    def add_to_cart(self, product, user):
+        user.add_to_cart(product)
+
+    def get_all_user(self):
+        return self.__user_holder.get_all_user()
+
+    # ????
     def verify_payment(self):
         return True
 
-    # view profile
-    def view_user_profile(self,user_id):
-        user = self.__user_by_id[user_id]
-        return user
-
     # LOGIN and REGISTER
-
     def register(self,**kwargs):
         # kwargs have to have these fixed argument
         user_name = kwargs["user_name"]
         email = kwargs["email"]
-        register_as = kwargs["register_as"]
         pass1 = kwargs["password2"]
-        pass2 = kwargs["password2"]
+        register_as = kwargs["register_as"]
 
-        if email in self.__user_account:
-            print("Email already exist")
-            return RegistStatus.EMAILALREADYEXIST
+        status = Authenticator.register(self.__account_holder, kwargs)
 
-        pass_status = self.password_available(pass1,pass2)
-        if pass_status == RegistStatus.PASSNOTMATCH:
-            print("Password not match")
-            return RegistStatus.PASSNOTMATCH
-        elif pass_status == RegistStatus.PASSNOTSECURE:
-            print("Password not secure must contain 1 lowercase, 1 uppercase, 1 number, 1 special character")
-            return RegistStatus.PASSNOTSECURE
+        if status != RegistStatus.SUCCESS:
+            return status
 
-        self.__user_account[email] = pass1
+        account = Account(email, pass1)
+        self.__account_holder.add_account(account)
 
-        # this will add user to self.user
         if register_as == "user":
             user = User(user_name, email)
             self.__add_user(user)
@@ -128,92 +162,34 @@ class System:
             publisher = Publisher(user_name, email)
             self.__add_user(publisher)
 
-        # print("Register success")
-        # print(user.get_name(),user.get_id())
         return RegistStatus.SUCCESS
 
-    def logout(self):
-        self.__current_user = None
+    def login(self, email, password):
+        status = Authenticator.login(email, password)
+        if status != LoginStatus.SUCCES:
+            return status
 
-    def login(self,email,password):
-        if email not in self.__user_account:
-            print("Email not found")
-            return LoginStatus.EMAILNOTFOUND, None
-        elif password != self.__user_account[email]:
-            print("Password incorrect")
-            return LoginStatus.PASSNOTCORRECT, None
-
-        print("Login success")
         # since user ID is a hash using email then we can hash the email to get user instead of ID
-        login_user = self.__user_by_id[IdGenerator.generate_id(email)]
+        user_id = IdGenerator.generate_id(email)
+        login_user = self.__user_holder.get_user_by_id(user_id)
         self.__current_user = login_user
 
         return LoginStatus.SUCCES, login_user
+
+    def logout(self):
+        self.__current_user = None
 
     def is_logged_in(self):
         if self.__current_user is None:
             return False
         return True
 
-    def password_available(self,pass1,pass2):
-        # use regex to check password
-        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-        if pass1 != pass2:
-            return RegistStatus.PASSNOTMATCH
-        elif not re.match(reg, pass1):
-            return RegistStatus.PASSNOTSECURE
-        return RegistStatus.PASSAVAILABLE
+    # ==== Search ====
+    def search_profile(self, **kwargs):
+        return Search.search_profile(self.__user_holder, kwargs)
 
-    # Searching
-
-    def search_profile(self,**kwargs):
-        # get id and name that user want to search
-        try:
-            search_id = kwargs["search_id"]
-        except KeyError:
-            search_id = None
-        try:
-            search_name = kwargs["search_name"]
-        except KeyError:
-            search_name = None
-
-        print("id",kwargs["search_id"])
-        if search_id:  # if there is id to search
-            try:
-                return self.__user_by_id[search_id]
-            except KeyError:
-                return []
-        elif search_name:  # if there is name to search
-            # the extract return tuple -> (str,similarity)
-            found_user_name = process.extract(search_name, self.__user_by_name.keys())
-            # keep the user that have similarity 55 percent or more
-            found_user = [self.__user_by_name[user[0]] for user in found_user_name if user[1] >= 55]
-            # if there occur some user
-            if found_user:
-                return found_user
-        # if there are no id or name to search
-        return []
-
-    def search_product(self,search_name="",):
-        if search_name != "":
-            found_product_name = process.extract(search_name, self.__product_catalog.get_all_products()["by_name"].keys())
-            found_product = [self.__product_catalog.get_product_by_name(product[0]) for product in found_product_name if product[1] > 55]
-            if found_product:
-                return found_product
-        return []
-
-    def view_profile(self,user_id):
-        return self.__user_by_id[user_id].get_info()
-
-    def view_product(self,prooduct_id):
-        return self.__product_catalog.get_product_by_id(prooduct_id)
-
-    def modify_product(self,new_info, product_id):
-        product = self.get_product(product_id)
-        self.__product_catalog.modify_product(new_info, product)
-
-    def add_to_cart(self, product, user):
-        user.add_to_cart(product)
+    def search_product(self, search_name = ""):
+        return Search.search_product(self.__product_catalog, search_name)
 
     # ================== About Board ================== #
     def get_board(self, board_name):
