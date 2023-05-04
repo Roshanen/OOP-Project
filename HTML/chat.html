@@ -2,40 +2,36 @@
 <html lang="en">
     <head>
         <title>Chat</title>
-        <link rel="stylesheet" href="../Style/chat.css">
-        <link rel="stylesheet" href="{{ url_for('Style', path='chat.css')
+        <link rel="stylesheet" href="../Style/chat.css?v=1">
+        <link rel="stylesheet" href="{{ url_for('Style', path='chat.css?v=1')
             }}">
         <link rel="icon" type="image/png" href="../Icon/favicon.png">
     </head>
     <body>
+        {% include "Templates/navbar.html" %}
         <div class="container">
             <div class="top-display">
                 <div class="user-display">
                     <span>
                         <img
-                            src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/items/650330/658d7a42b02f59a94b0ea2a97ee46b4323b66c78.gif">
-                        <a>{{username}}</a>
+                            src="{{ target.get_profile() }}">
+                        <a>{{ target.get_name() }}</a>
                     </span>
                 </div>
             </div>
             <div class="chat-box">
-
+                {% for item in chat %}
                 <div class="friend_block">
-                    <span>
-                        <img
-                            src="https://avatars.akamai.steamstatic.com/7481d552fb63de33f29b9be9936ff1dafadf877f_full.jpg">
-                        <div class="name">129000soulsกูหละวะ</div>
-                        <div class="message">
-                            message display here
-                        </div>
-                    </span>
+                    <img src="{{ item["sender"].get_profile() }}">
+                    <div class="name">{{ item["sender"].get_name() }}</div>
                 </div>
-
+                <div class="message">{{ item["text"]}}</div>
+                {% endfor %}
             </div>
             <div class="active-display">
                 <form>
                     <input type="text">
-                    <input type="submit">
+                    <input type="submit" value="send">
                 </form>
             </div>
         </div>

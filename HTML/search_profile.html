@@ -27,11 +27,16 @@
                     {% if current_user %}
                         {% set toSend = [] %}
                         {% for found in found_user %}
-                            {% if found == current_user or found in current_user.get_friend_list() or 
-                                found in current_user.get_pending_list() or found in current_user.get_invite_list() %}
-                                {{ toSend.append([found, False]) }}
+                            {% if found == current_user %}
+                                {{ toSend.append([found, 0]) }}
+                            {% elif found in current_user.get_pending_list() %}
+                                {{ toSend.append([found, 1]) }}
+                            {% elif found in current_user.get_invite_list() %}
+                                {{ toSend.append([found, 2]) }}
+                            {% elif found in current_user.get_friend_list() %}
+                                {{ toSend.append([found, 3]) }}
                             {% else %}
-                                {{ toSend.append([found, True]) }}
+                                {{ toSend.append([found, 4]) }}
                             {% endif %}
                         {% endfor %}
                         {% for found in toSend %}

@@ -11,12 +11,20 @@
             <div class="level">{{ found[0].get_level() }}</div>
         </div>
     </a>
-    {% if found[1] == True %}
-        <a
-        class="add_friend"
-        href="/send_invite/{{ current_user.get_id() }}/{{ found[0].get_id() }}"
-        >add friend</a
-        >
+    {% if found[1] == 4 %}
+        <a class="add_friend" href="/send_invite/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button class="add_friend" type="button">add friend</button></a>
+    {% elif found[1] == 3 %}
+        <div>already in friend list</div>
+        <a href="/view_chat/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button type="button">Chat</button></a>
+    {% elif found[1] == 2 %}
+    <div>send friend request to you</div>
+    <a href="/accept_invite/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button type="button">Accept</button></a>
+    <a href="/reject_invite/{{ current_user.get_id() }}/{{ found[0].get_id() }}"><button type="button">Cancel</button></a>
+    {% elif found[1] == 1 %}
+        <div>friend request pending</div>
+        <a href="/reject_invite/{{ current_user.get_id()}}/{{ found[0].get_id() }}"><button type="button">Cancel invite</button></a>
+    {% elif found[1] == 0 %}
+        <div>you</div>
     {% endif %} 
 {% else %}
     <a class="friend_block" href="/profile/{{ found.get_id() }}">

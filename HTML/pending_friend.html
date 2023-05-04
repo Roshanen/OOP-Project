@@ -22,7 +22,8 @@
       <div class="received">
         <div classs="top-bar">
           <span class="content">    
-              <span>RECEIVED INVITES </span><a class="ignore-all" href="/clear_invite/{{ current_user.get_id() }}">IGNORE ALL</a>
+              <span>RECEIVED INVITES </span>
+              <a href="/clear_invite/{{ current_user.get_id() }}"><button class="ignore-all" type="button">IGNORE ALL</button></a>
               <div class="box">
                 {% for _ in current_user.get_invite_list() %}
                 <div><img src="{{ _.get_profile() }}"></div>
