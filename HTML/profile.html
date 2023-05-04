@@ -31,7 +31,7 @@
             </div>
 
             <div class="profile_content">
-                <div class="proflie_left_col">
+                <div class="profile_left_col">
                     <div class="last_bought_product tab">
                         <div class="heading">
                             Last bought product
@@ -39,7 +39,7 @@
                         {% if user.get_purchase_history().get_history_list() != [] %}
                             <div class="time">{{ user.get_purchase_history().get_history_list()[-1].get_paid_date() }}</div>
                         {% else %}
-                            <div clas="time">None</div>
+                            <div class="time">None</div>
                         {% endif %}
                     </div>
                     {% set history_list = user.get_purchase_history().get_sorted_history() %}
@@ -50,7 +50,7 @@
                     {% endfor %}
 
                 </div>
-                <div class="proflie_right_col">
+                <div class="profile_right_col">
                     <div class="badge heading">Badge</div>
                     <div class="badge_container">
                         {% for _ in range(4) %}

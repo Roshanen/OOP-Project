@@ -72,7 +72,7 @@ class User:
     def get_profile(self):
         return self.__profile_picture
 
-    def set_picture_profile(self, picture):
+    def set_profile(self, picture):
         self.__profile_picture = picture
 
     def get_description(self):
@@ -83,6 +83,9 @@ class User:
 
     def get_level(self):
         return self.__level
+    
+    def level_up(self):
+        self.__level += 1
 
     def get_cart(self):
         return self.__cart

@@ -69,15 +69,17 @@ a{
     grid-gap: 10px;
 }
 
-.proflie_left_col {
+.profile_left_col {
     width: 100%;
     display: grid;
     grid-template-rows: 50px 100px 100px 100px;
     grid-row-gap: 20px;
 }
 
-.profile_right_col *{
-    margin: 100px;
+.profile_right_col {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
 }
 
 .last_bought_product {

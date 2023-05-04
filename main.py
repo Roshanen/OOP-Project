@@ -67,6 +67,7 @@ steam.register(
 )
 Best = steam.search_profile(search_id=IdGenerator.generate_id("best@gmail.com"))
 Bass = steam.search_profile(search_id=IdGenerator.generate_id("bass@gmail.com"))
+Best.set_profile("https://avatars.akamai.steamstatic.com/b2edbc430cffa963966ebafc9e7844414a9c51c1_full.jpg")
 Best.add_friend(Bass)
 Bass.add_friend(Best)
 
@@ -400,6 +401,7 @@ async def confirm_purchase(
     for product in cart.get_products():
         library.add_product(product)
         order.add_product(product)
+        user.level_up()
     order.summalize(
         method,
         card_number,
