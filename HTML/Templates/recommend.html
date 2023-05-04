@@ -6,7 +6,7 @@
 
 .recommend .cover img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -79,20 +79,6 @@
     </div>
     <div class="preview_tab">
         <div class="name">{{recommend_product.get_name()}}</div>
-        <div class="preview_pic">
-            <div class="pic pic1">
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1621690/ss_a2bdd0f177ec445419ce2ce57b8dca33bc09ae41.600x338.jpg?t=1679499536"></img>
-            </div>
-            <div class="pic pic2">
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1621690/ss_53f6400b44e4f2a3b6a16174535642bf9209610e.600x338.jpg?t=1679499536"></img>
-            </div>
-            <div class="pic pic3">
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1621690/ss_3deb4319186649d1b12bda2e0770444cd244dfc9.600x338.jpg?t=1679499536"></img>
-            </div>
-            <div class="pic pic4">
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1621690/ss_a65ea2c14f0d3743c7c3a2d4fb87e78df77a2f9f.600x338.jpg?t=1679499536"></img>
-            </div>
-        </div>
         <div class="footer">
             <div class="footer_text">
                 {% if recommend_product.get_price() == 0 %}
