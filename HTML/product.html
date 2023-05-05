@@ -40,14 +40,14 @@
 				<div class="pricing">  -{{  100 * product.get_discount() }}%</div>
 				{% if addable %}
 					<button type="submit" class="addbtn green_addbtn">Add to cart</button>
-					<div class="addbtn add_wishlist">
-						<a href="/add_to_wishlist/{{ product.get_id() }}">Add to wishlist</a>
-					</div>
+            {% if product not in current_user.get_wish_list() %}
+            <div class="addbtn add_wishlist"><a href="/add_to_wishlist/{{ product.get_id() }}">Add to wishlist</a></div>
+            {% else %}
+            <div class="addbtn add_wishlist grey_addbtn"><a>Add to wishlist</a></div>
+            {% endif %}
 				{% else %}
 					<a type="submit" class="addbtn grey_addbtn" disabled>Add to cart</a>
-					<div class="addbtn add_wishlist grey_addbtn">
-						<a>Add to wishlist</a>
-					</div>
+					<div class="addbtn add_wishlist grey_addbtn"><a>Add to wishlist</a></div>
 				{% endif %}
 			</form>
 		
