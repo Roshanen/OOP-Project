@@ -51,7 +51,7 @@
 					{% elif prod_in_user_cart %}		
 						<button class="addbtn grey_addbtn" disabled>Already in cart</button>
 					{% elif prod_in_library %}
-						<button class="addbtn grey_addbtn" disabled>Owned</button>
+						<button class="addbtn grey_addbtn" disabled>Already bought</button>
 					{% else %}
 						<a href="/add_to_wishlist/{{ product.get_id() }}"><button type="button" class="addbtn add_wishlist">Add to wishlist</button></a>
 					{% endif %}
@@ -64,9 +64,8 @@
 		</div>
 		
 		<div class="sysreq_tab">
-		<!-- {% for lang in product["lang_sup"] %}
-			<h2>{{lang}}</h2>
-		{% endfor %} -->
+			<h2>System Requirement</h2>
+			{% include "Templates/system_req.html" %}
 		</div>
   </div>
 </body>
