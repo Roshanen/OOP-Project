@@ -99,6 +99,9 @@ class User:
         
     def remove_wish_list(self, product):
         self.__wish_list.remove(product)
+        
+    def clear_wish_list(self):
+        self.__wish_list = []
 
     def get_cart(self):
         return self.__cart
