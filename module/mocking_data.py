@@ -2,9 +2,7 @@ from module.product import Product
 from module.user import User
 from module.factory import Badge
 
-keys = ["name", "price", "os_support", "system_req",
-        "pre_vid", "cover_image", "lang_sup",
-        "age_rate", "discount", "description"]
+keys = ["name", "price", "system_req", "pre_vid", "cover_image", "discount", "description"]
 
 fifa_23 = {
             "name": "EA SPORTS™ FIFA 23",
