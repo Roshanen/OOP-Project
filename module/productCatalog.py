@@ -17,11 +17,13 @@ class ProductCatalog:
     def delete_product(self, product):
         self.__products_by_id.pop(product.get_id())
 
+    def remove_product(self, product_id):
+        product_name = self.__products_by_id[product_id]
+        del self.__products_by_id[product_id]
+        del self.__products_by_name[product_name]
+
     def get_all_products(self):
-        result = {
-            "by_id": self.__products_by_id,
-            "by_name": self.__products_by_name
-        }
+        result = self.__products_by_id.items()
         return result
 
     def get_product_by_id(self, prod_id):

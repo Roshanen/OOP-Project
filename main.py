@@ -146,51 +146,37 @@ async def add_product(request: Request):
 
 @app.get("/modify_product", tags=["Publisher"], response_class=HTMLResponse)
 async def modify_product(request: Request):
-    page_data = {"request": request}
-    user = steam.get_current_user()
 
-    page_data["logged_in"] = steam.is_logged_in()
-    page_data["is_publisher"] = True
-    page_data["product_info_keys"] = keys
-    if user:
-        page_data["own_products"] = user.get_all_own_products()
-
-    return TEMPLATE.TemplateResponse("add_product.html", page_data)
+    return RedirectResponse("smt")
 
 
-@app.get("/delete_product", tags=["Publisher"], response_class=HTMLResponse)
-async def delete_product(request: Request):
-    page_data = {"request": request}
-    user = steam.get_current_user()
-
-    page_data["logged_in"] = steam.is_logged_in()
-    page_data["is_publisher"] = True
-    page_data["product_info_keys"] = keys
-    if user:
-        page_data["own_products"] = user.get_all_own_products()
-
-    return TEMPLATE.TemplateResponse("add_product.html", page_data)
+@app.get("/remove_product/{product_id}", tags=["Publisher"], response_class=HTMLResponse)
+async def remove_product(product_id):
+    steam.remove_product(product_id)
+    url = app.url_path_for("shop")
+    return RedirectResponse(url)
 
 
 @app.get("/add_product_to_catalog", tags=["Publisher"], response_class=HTMLResponse)
-async def add_product_to_catalog(request: Request, name, price, os_support, system_req, pre_vid,
+async def add_product_to_catalog(name, price, os_support, system_req, pre_vid,
                                  cover_image, lang_sup, age_rate, discount, description):
-    page_data = {"request": request}
     user = steam.get_current_user()
 
-    page_data["user"] = user
-    page_data["is_publisher"] = True
+    if user is None:
+        url = app.url_path_for("login")
+        return RedirectResponse(url)
 
     info = {"name": name, "price": int(price), "os_support": os_support, "system_req": system_req, "pre_vid": pre_vid,
             "cover_image": cover_image, "lang_sup": lang_sup, "age_rate": age_rate, "discount": float(discount),
             "description": description, "release_date": datetime.datetime.now()}
 
     product = Product(info)
-    print("> ", product)
     steam.add_product(product)
     user.add_product(product)
 
-    return TEMPLATE.TemplateResponse("add_product.html", page_data)
+
+    url = app.url_path_for("shop")
+    return RedirectResponse(url)
 
 
 @app.get("/library", tags=["Library"], response_class=HTMLResponse)

@@ -118,6 +118,9 @@ class System:
         product = self.get_product(product_id)
         self.__product_catalog.modify_product(new_info, product)
 
+    def remove_product(self, product_id):
+        self.__product_catalog.remove_product(product_id)
+
     def get_discount_product(self, n = 6, discount = 0.1):
         return self.__product_catalog.get_discounted_product(n, discount)
 
