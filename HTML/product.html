@@ -47,17 +47,17 @@
 						<button type="submit" class="addbtn green_addbtn">Add to cart</button>
 					{% endif %}
 					{% if prod_in_wish_list %}
-						<button class="addbtn grey_addbtn" disabled>
-							Already in wishlist
-						</button>
+						<button class="addbtn grey_addbtn" disabled>Already in wishlist</button>
+					{% elif prod_in_user_cart %}		
+						<button class="addbtn grey_addbtn" disabled>Already in cart</button>
+					{% elif prod_in_library %}
+						<button class="addbtn grey_addbtn" disabled>Owned</button>
 					{% else %}
-						<button class="addbtn add_wishlist">
-							<a href="/add_to_wishlist/{{ product.get_id() }}">Add to wishlist</a>
-						</button>
+						<a href="/add_to_wishlist/{{ product.get_id() }}"><button type="button" class="addbtn add_wishlist">Add to wishlist</button></a>
 					{% endif %}
 				{% else %}
 					<button type="submit" class="addbtn grey_addbtn" disabled>Please Login</button>
-					<button class="addbtn grey_addbtn"><a>Please Login</a></button>
+					<button class="addbtn grey_addbtn" disabled><a>Please Login</a></button>
 				{% endif %}
 			</form>
 		
