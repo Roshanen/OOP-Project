@@ -20,13 +20,13 @@
             <a href="/profile/{{ current_user.get_id() }}">Profile</a>
             {% set invite_count = current_user.get_invite_list()|length %}
             {% if current_user.get_invite_list() != [] %}
-                <a class="invite_notification" href="/pending_friend/{{ current_user.get_id() }}">
-                    <img src="../../Icon/letter.png">
+                <a class="invite_notification noti" href="/pending_friend/{{ current_user.get_id() }}">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3885/3885190.png">
                     {{ invite_count }}
                 </a>
-            {% else %}
-                <a class="no_invite_notification" href="/pending_friend/{{ current_user.get_id() }}">
-                    <img src="../../Icon/letter.png">
+                {% else %}
+                <a class="no_invite_notification noti" href="/pending_friend/{{ current_user.get_id() }}">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3885/3885190.png">
                     {{ invite_count }}
                 </a>
             {% endif %}
