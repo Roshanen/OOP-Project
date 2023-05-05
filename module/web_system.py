@@ -6,16 +6,11 @@ from module.user import User, UserHolder
 from module.publisher import Publisher
 from module.factory import BadgeFactory
 
+
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
     PASSNOTCORRECT = "password incorrect"
     SUCCES = "login success"
-
-
-class UserStatus(Enum):
-    GUEST = 0
-    LOGEDIN = 1
-    PUBLISHER = 2
 
 
 class RegistStatus(Enum):
