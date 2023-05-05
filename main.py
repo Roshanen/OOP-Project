@@ -283,7 +283,7 @@ async def search_profile(request: Request, keyword=""):
 
 # login register
 
-
+# ==================== System Route ==================== #
 @app.get("/login", tags=["System"], response_class=HTMLResponse)
 async def login(request: Request, status=None):
     page_data = {"request": request, "status": status}
@@ -332,7 +332,7 @@ async def verify_register(request: Request, register_as, user_name, email, passw
         # new front-end
         return TEMPLATE.TemplateResponse("register.html", page_data)
 
-
+# ==================== Cart Route ==================== #
 @app.get("/remove_from_cart/{user_id}/{product_id}", tags=["Cart"])
 async def remove_from_cart(product_id, user_id):
     product = steam.get_product(product_id)
@@ -341,7 +341,7 @@ async def remove_from_cart(product_id, user_id):
     url = app.url_path_for("cart", user_id=user_id)
     return RedirectResponse(url=url)
 
-
+# ==================== Payment Route ==================== #
 @app.get("/payment/{user_id}", tags=["Payment"], response_class=HTMLResponse)
 async def payment_detail(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
@@ -351,7 +351,7 @@ async def payment_detail(request: Request, user_id):
     return TEMPLATE.TemplateResponse("payment.html", page_data)
 
 
-@app.get("/confirmation/{user_id}", tags=["History"])
+@app.get("/confirmation/{user_id}", tags=["Payment"])
 async def confirm_purchase(user_id, method, card_number, expiration_month, expiration_year, first_name, last_name,
                            billing_address1, billing_address2, country, city, postal_code, phone_number):
     if steam.verify_payment():
@@ -374,7 +374,7 @@ async def confirm_purchase(user_id, method, card_number, expiration_month, expir
     url = app.url_path_for("library")
     return RedirectResponse(url=url)
 
-
+# ==================== Purchase History Route ==================== #
 @app.get("/purchase_history/{user_id}", tags=["History"], response_class=HTMLResponse)
 async def purchase_history(request: Request, user_id):
     current_user = steam.search_profile(search_id=user_id)
@@ -398,7 +398,7 @@ async def view_order(request: Request, order_id):
     }
     return TEMPLATE.TemplateResponse("order_history.html", page_data)
 
-
+# ==================== Edit Profile Route ==================== #
 @app.get("/setting_profile/{user_id}", tags=["User"], response_class=HTMLResponse)
 async def setting_profile(request: Request):
     current_user = steam.get_current_user()
@@ -425,7 +425,7 @@ async def edit_profile(name, picture_profile, description, user_id):
     url = app.url_path_for("view_profile", user_id=user_id)
     return RedirectResponse(url=url)
 
-
+# ==================== Friend Route ==================== #
 @app.get("/pending_friend/{user_id}", tags=["Friend"], response_class=HTMLResponse)
 async def pending_friend(request: Request):
     current_user = steam.get_current_user()
