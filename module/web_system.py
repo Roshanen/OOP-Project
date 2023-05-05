@@ -114,9 +114,8 @@ class System:
     def get_product(self,prod_id):
         return self.__product_catalog.get_product_by_id(prod_id)
 
-    def modify_product(self, new_info, product_id):
-        product = self.get_product(product_id)
-        self.__product_catalog.modify_product(new_info, product)
+    def remove_product(self, product_id):
+        self.__product_catalog.remove_product(product_id)
 
     def get_discount_product(self, n = 6, discount = 0.1):
         return self.__product_catalog.get_discounted_product(n, discount)
