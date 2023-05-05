@@ -35,7 +35,7 @@
 
 		<div class="buytab">
 			<h3>Play {{ product.get_name() }}</h3>
-			<form class="right_col" action="/add_to_cart" method="get">
+			<form class="right_col" action="/add_to_cart/{{ product.get_id() }}" method="get">
 				<div class="pricing">{{ product.get_discounted_price() }} THB</div>
 				<div class="pricing">  -{{  100 * product.get_discount() }}%</div>
 				{% if addable %}
