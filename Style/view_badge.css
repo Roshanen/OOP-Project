@@ -11,3 +11,14 @@ body {
     padding: 20px;
     --background-color:antiquewhite;
 }
+
+.badge-collection {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.display-box {
+    width: 200px;
+}

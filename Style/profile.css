@@ -114,3 +114,8 @@ a{
     grid-template-rows: repeat(6,1fr);
     grid-gap: 10px;
 }
+
+.badge_container {
+    width: 100%;
+    height: auto;
+}

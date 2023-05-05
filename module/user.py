@@ -23,14 +23,14 @@ class User:
         self.__library = Library()
         self.__purchase_history = PurchaseHistory()
         self.__chat = Chat(self)
-        self.__badge = []
+        self.__badges = []
 
     def __repr__(self):
         return self.__name
 
     def get_name(self):
         return self.__name
-    
+
     def set_name(self, name):
         self.__name = name
 
@@ -39,37 +39,37 @@ class User:
 
     def get_invite_list(self):
         return self.__invite_list
-    
+
     def add_invite_list(self, user):
         self.__invite_list.append(user)
-        
+
     def clear_pending_list(self):
         self.__pending_list = []
-        
+
     def remove_invite_list(self, user):
         self.__invite_list.remove(user)
-        
+
     def clear_invite_list(self):
         self.__invite_list = []
-        
+
     def get_pending_list(self):
         return self.__pending_list
-    
+
     def add_pending_list(self, user):
         self.__pending_list.append(user)
-        
+
     def remove_pending_list(self, user):
         self.__pending_list.remove(user)
 
     def add_friend(self, user):
         self.__friend_list.append(user)
-        
+
     def remove_friend_list(self, user):
         self.__friend_list.remove(user)
-        
+
     def get_friend_list(self):
         return self.__friend_list
-    
+
     def get_email(self):
         return self.__email
 
@@ -81,26 +81,26 @@ class User:
 
     def get_description(self):
         return self.__description
-    
+
     def set_description(self, description):
         self.__description = description
 
     def get_level(self):
         return self.__level
-    
+
     def level_up(self):
         self.__level += 1
-        
+
     def get_wish_list(self):
         return self.__wish_list
-    
+
     def add_wish_list(self, product):
         if product not in self.__wish_list:
             self.__wish_list.append(product)
-        
+
     def remove_wish_list(self, product):
         self.__wish_list.remove(product)
-        
+
     def clear_wish_list(self):
         self.__wish_list = []
 
@@ -116,25 +116,28 @@ class User:
 
     def get_library(self):
         return self.__library
-    
+
     def get_purchase_history(self):
         return self.__purchase_history
-    
+
     def get_chat(self):
         return self.__chat
 
-    def request_item(self, factory):
-        factory.check_condition(self)
-
     def add_badge(self, badge):
         if badge != None:
-            self.__badge.append(badge)
-            
+            self.__badges.append(badge)
+
+    def get_badges(self):
+        return self.__badges
+
     def create_order(self, product_list=None):
         self.__order = Order(product_list)
-        
+
     def get_order(self):
         return self.__order
+
+    def get_product_number(self):
+        return len(self.__library.get_all_products())
 
 
 class UserHolder:
@@ -143,7 +146,7 @@ class UserHolder:
         self.__all_id = []
         self.__all_user_name = []
 
-    def add_user(self, user:User):
+    def add_user(self, user: User):
         self.__user.append(user)
         self.__all_id.append(user.get_id())
         self.__all_user_name.append(user.get_name())

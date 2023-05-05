@@ -23,7 +23,10 @@ class ProductCatalog:
         del self.__products_by_name[product_name]
 
     def get_all_products(self):
-        result = self.__products_by_id.items()
+        result = {
+            "by_id": self.__products_by_id,
+            "by_name": self.__products_by_name
+        }
         return result
 
     def get_product_by_id(self, prod_id):
