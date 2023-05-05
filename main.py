@@ -216,14 +216,17 @@ async def view_product(request: Request, product_id):
 
     current_user = steam.get_current_user()
     is_publisher = isinstance(current_user, Publisher)
-    addable = bool(current_user)
-    if addable:
-        if (product in current_user.view_cart()
-                or product in current_user.get_library().get_all_products()):
-            addable = False
+
+    prod_in_user_cart, prod_in_library, prod_in_wish_list = False, False, False
+    if current_user:
+        prod_in_user_cart = product in current_user.view_cart()
+        prod_in_library = product in current_user.get_library().get_all_products()
+        prod_in_wish_list = product in current_user.get_wish_list()
 
     page_data["product"] = product
-    page_data["addable"] = addable
+    page_data["prod_in_user_cart"] = prod_in_user_cart
+    page_data["prod_in_library"] = prod_in_library
+    page_data["prod_in_wish_list"] = prod_in_wish_list
     page_data["current_user"] = current_user
     page_data["is_publisher"] = is_publisher
     page_data["logged_in"] = steam.is_logged_in()
