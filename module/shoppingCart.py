@@ -8,9 +8,6 @@ class ShoppingCart:
     def remove_product(self, product):
         self.__products.remove(product)
 
-    def add_to_wishlist(self, product):
-        pass
-
     def add_products(self, products):
         if products not in self.__products:
             self.__products.append(products)

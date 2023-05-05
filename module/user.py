@@ -14,6 +14,7 @@ class User:
         self.__profile_picture = profile_picture
         self.__description = description
         self.__level = level
+        self.__wish_list = []
         self.__invite_list = []
         self.__pending_list = []
         self.__friend_list = []
@@ -89,6 +90,15 @@ class User:
     
     def level_up(self):
         self.__level += 1
+        
+    def get_wish_list(self):
+        return self.__wish_list
+    
+    def add_wish_list(self, product):
+        self.__wish_list.append(product)
+        
+    def remove_wish_list(self, product):
+        self.__wish_list.remove(product)
 
     def get_cart(self):
         return self.__cart
