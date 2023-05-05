@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>View badge</title>
-        <link rel="stylesheet" href="../Style/view_badge.css">
-        <link rel="stylesheet" href="{{ url_for('Style', path='view_badge.css')
-            }}">
-        <link rel="icon" type="image/png" href="../Icon/favicon.png">
-    </head>
-    <body>
-        <div class="container">
-            <div class="display-profile">
-                <img
-                    src="https://avatars.cloudflare.steamstatic.com/7481d552fb63de33f29b9be9936ff1dafadf877f_full.jpg">
-                <span>{{profilename}}</span>
-            </div>
-            <div class="top-bar">Badges</div>
-            <div class="badge-collection">
-                <div class="display-box">
-                    <div class="game=name">{{gamename}}</div>
-                    <div class="display-badges">
-                        <img src="None">
-                    </div>
-                </div>
-            </div>
+  <head>
+    <title>View badge</title>
+    <link rel="stylesheet" href="../Style/view_badge.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('Style', path='view_badge.css')
+            }}"
+    />
+    <link rel="icon" type="image/png" href="../Icon/favicon.png" />
+  </head>
+  <body>
+    {% include "Templates/navbar.html" %}
+    <div class="container">
+      <div class="display-profile">
+        <img src="{{ user.get_profile() }}" />
+      </div>
+      <h2 class="top-bar"><span>{{ user.get_name()}}</span>'s Badges</h2>
+      <div class="badge-collection">
+        {% for _ in user.get_badges() %}
+        <div class="display-box">
+            <img src="{{ _.get_picture() }}" />
+          <div class="game=name">Name: {{ _.get_name() }}</div>
+          <span class="display-badges">Got date: {{ _.get_got_date() }}</span>
+          <span class="display-badges">Description: {{ _.get_description() }}</span>
         </div>
-    </body>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
 </html>
