@@ -147,9 +147,3 @@ a, a:active, a:focus{
   justify-content: center;
   align-items: center;
 }
-
-.sysreq {
-  width: 100px;
-  height: 100px;
-  background-color: #254163;
-}

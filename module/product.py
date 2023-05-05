@@ -20,6 +20,9 @@ class Product:
     def __repr__(self):
         return self.__info["name"]
 
+    def get_system_req(self):
+        return self.__info["system_req"]
+
     def get_from_info(self, key):
         try:
             return self.__info[key]

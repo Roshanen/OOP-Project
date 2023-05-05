@@ -230,6 +230,7 @@ async def view_product(request: Request, product_id):
     page_data["current_user"] = current_user
     page_data["is_publisher"] = is_publisher
     page_data["logged_in"] = steam.is_logged_in()
+    page_data["system_req"] = product.get_system_req()
 
     return TEMPLATE.TemplateResponse("product.html", page_data)
 

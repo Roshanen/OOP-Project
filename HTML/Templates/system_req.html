@@ -1,0 +1,49 @@
+<style>
+    /* Style the table */
+    table {
+      box-shadow: 10px 8px 18px -9px rgba(0,0,0,0.66);
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    thead{
+        width: 100%;
+    }
+
+    table th {
+      background-color: #171a21;
+      border: 1px solid #1b2838;
+      padding: 10px;
+    }
+    
+    table td {
+      border: 1px solid #1b2838;
+      padding: 10px;
+    }
+    
+    /* Alternate row colors */
+    table tr:nth-child(even) {
+      background-color: #1c2733;
+    }
+    
+    table tr:nth-child(odd) {
+      background-color: #222b38;
+    }
+</style>
+<table class="sysreq">
+    <thead>
+        <tr>
+            <th>Hardware</th>
+            <th>Spec</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, value in system_req.items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
