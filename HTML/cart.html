@@ -17,8 +17,8 @@
 
             <div class="in_cart_container">
 
+                {% for item in current_user.get_cart().get_products() %}
                 <div class="product_in_cart">
-                    {% for item in current_user.get_cart().get_products() %}
                     {% set product = item %}
                     <div class="prod_container">
                         <div class="cover"> <img
@@ -31,8 +31,8 @@
                         <div class="price">{{ product.get_discounted_price() }}</div>
                         <a href="/remove_from_cart/{{ current_user.get_id() }}/{{ product.get_id() }}"><button>Delete</button></a>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
 
                 <div class="summary_container">
                     <div class="price_container">

@@ -20,7 +20,8 @@
     display: grid;
     width: 600px;
     height: 100px;
-    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 5px;
     grid-template-columns: 3fr 4fr 1fr 1.5fr;
     grid-template-rows: 1fr;
     grid-column-gap: 10px;
@@ -64,6 +65,17 @@
     transition: color 0.15s ease;
 }
 
+.modify, .remove {
+    color: #000F18;
+    outline: none;
+    /* margin-right: 6px; */
+    width: 40px;
+    height: 30px;
+    padding: 0 6px 0 6px;
+    text-decoration: none;
+    background-color: #fff;
+}
+
 </style>
 
 <a class="horizon_spotlight spotlight" href="/product/{{ product.get_id() }}">
@@ -74,9 +86,9 @@
         {{ product.get_name() }}
     </div>
     {% if product.get_price() != 0 %}
-    <div class="price">{{ product.get_discounted_price() }} THB</div>
+        <div class="price">{{ product.get_discounted_price() }} THB</div>
     {% else %}
-    <div class="price">Free</div>
+        <div class="price">Free</div>
     {% endif %}
     {% if product.get_discount() != 0 %}
         <div class="discount">-{{ product.get_discount() * 100 }}%</div>
@@ -84,3 +96,7 @@
         <div class="discount"></div>
     {% endif %}
 </a>
+{% if is_publisher %}
+    <a href="/modify_product/{{ product.get_id() }}" class="modify">Modify</a>
+    <a href="/remove_product/{{ product.get_id() }}" class="remove">Remove</a>
+{% endif %}
