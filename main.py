@@ -398,7 +398,7 @@ async def add_to_wishlist(product_id):
     product = steam.get_product(product_id)
     current_user = steam.get_current_user()
     current_user.add_wish_list(product)
-    url = app.url_path_for("view_wish_list")
+    url = app.url_path_for("view_product", product_id = product_id)
     return RedirectResponse(url=url)
 
 
