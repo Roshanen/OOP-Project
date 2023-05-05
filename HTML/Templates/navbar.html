@@ -17,6 +17,11 @@
             {% endif %}
             <a href="/cart/{{ current_user.get_id() }}">Viewcart</a>
             <a href="/profile/{{ current_user.get_id() }}">Profile</a>
+            {% if current_user.get_invite_list() != [] %}
+                <a class="invite_notification" href="/pending_friend/{{ current_user.get_id() }}">A<a>
+            {% else %}
+                <a class="no_invite_notification" href="/pending_friend/{{ current_user.get_id() }}">B<a>
+            {% endif %}
         {% endif %}
     </div>
 
