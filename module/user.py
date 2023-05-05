@@ -95,7 +95,8 @@ class User:
         return self.__wish_list
     
     def add_wish_list(self, product):
-        self.__wish_list.append(product)
+        if product not in self.__wish_list:
+            self.__wish_list.append(product)
         
     def remove_wish_list(self, product):
         self.__wish_list.remove(product)
