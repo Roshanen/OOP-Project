@@ -8,6 +8,7 @@ from module.mocking_data import *
 from module.product import Product
 from module.publisher import Publisher
 from module.productCatalog import ProductCatalog
+from module.utilities import *
 
 app = FastAPI()
 TEMPLATE = Jinja2Templates("HTML")
@@ -143,19 +144,22 @@ async def add_product(request: Request):
 
     return TEMPLATE.TemplateResponse("add_product.html", page_data)
 
+
 @app.get("/submit_product", tags=["Publisher"], response_class=HTMLResponse)
-async def submit_product(name, price, os_support, system_req, pre_vid,
-                                 cover_image, lang_sup, age_rate, discount, description):
+async def submit_product(name, price, system_req, pre_vid,
+                         cover_image, discount, description):
     user = steam.get_current_user()
 
     if user is None:
         url = app.url_path_for("login")
         return RedirectResponse(url)
-
-    info = {"name": name, "price": int(price), "os_support": os_support, "system_req": system_req, "pre_vid": pre_vid,
-            "cover_image": cover_image, "lang_sup": lang_sup, "age_rate": age_rate, "discount": float(discount),
+    
+    info = {"name": name, "price": price, "system_req": system_req, "pre_vid": pre_vid,
+            "cover_image": cover_image, "discount": discount,
             "description": description, "release_date": datetime.datetime.now()}
 
+    info = VerifyProductInfo.verify(info)
+    
     product = Product(info)
     steam.add_product(product)
     user.add_product(product)
@@ -163,32 +167,29 @@ async def submit_product(name, price, os_support, system_req, pre_vid,
     url = app.url_path_for("shop")
     return RedirectResponse(url)
 
+
 @app.get("/modify_product/{product_id}", tags=["Publisher"], response_class=HTMLResponse)
 async def modify_product(request: Request, product_id):
-    page_data = {"request": request, "product_info_keys": keys, "product_id": product_id}
+    page_data = {"request": request,
+                 "product_info_keys": keys, "product_id": product_id}
 
     return TEMPLATE.TemplateResponse("modify_product.html", page_data)
 
+
 @app.get("/modifying_product/{product_id}", tags=["Publisher"], response_class=HTMLResponse)
-async def modify_product(product_id, name, price, os_support, system_req, pre_vid,
-                         cover_image, lang_sup, age_rate, discount, description):
-    new_info = {
-        "name": name,
-        "price": price,
-        "os_support": os_support,
-        "system_req": system_req,
-        "pre_vid": pre_vid,
-        "cover_image": cover_image,
-        "lang_sup": lang_sup,
-        "age_rate": age_rate,
-        "discount": discount,
-        "description": description,
-    }
+async def modify_product(product_id, name, price, system_req, pre_vid,
+                         cover_image, discount, description):
+    new_info = {"name": name, "price": price, "system_req": system_req, "pre_vid": pre_vid,
+                "cover_image": cover_image, "discount": discount, "description": description}
     product = steam.get_product(product_id)
+    
+    new_info = VerifyProductInfo.verify(new_info)
+    
     product.modify(new_info)
 
     url = app.url_path_for("shop")
     return RedirectResponse(url)
+
 
 @app.get("/remove_product/{product_id}", tags=["Publisher"], response_class=HTMLResponse)
 async def remove_product(product_id):
@@ -197,6 +198,7 @@ async def remove_product(product_id):
     publisher.remove_product(product_id)
     url = app.url_path_for("shop")
     return RedirectResponse(url)
+
 
 @app.get("/library", tags=["Library"], response_class=HTMLResponse)
 async def library(request: Request):
@@ -209,6 +211,8 @@ async def library(request: Request):
     return TEMPLATE.TemplateResponse("library.html", page_data)
 
 # about product
+
+
 @app.get("/product/{product_id}", tags=["Product"], response_class=HTMLResponse)
 async def view_product(request: Request, product_id):
     page_data = {"request": request}
@@ -251,7 +255,7 @@ async def search_product(request: Request, keyword=""):
 
 
 @app.get("/cart/{user_id}", tags=["Cart"], response_class=HTMLResponse)
-async def cart(request: Request, user_id):
+async def cart(request: Request):
     page_data = {"request": request}
     current_user = steam.get_current_user()
     is_publisher = isinstance(current_user, Publisher)
@@ -398,7 +402,7 @@ async def add_to_wishlist(product_id):
     product = steam.get_product(product_id)
     current_user = steam.get_current_user()
     current_user.add_wish_list(product)
-    url = app.url_path_for("view_product", product_id = product_id)
+    url = app.url_path_for("view_product", product_id=product_id)
     return RedirectResponse(url=url)
 
 
@@ -468,7 +472,8 @@ async def send_badge():
 async def view_badges(request: Request, user_id):
     user = steam.search_profile(search_id=user_id)
     badges = user.get_badges()
-    page_data = {"request": request, "user": user, "logged_in": steam.is_logged_in(), "current_user": steam.get_current_user() }
+    page_data = {"request": request, "user": user, "logged_in": steam.is_logged_in(
+    ), "current_user": steam.get_current_user()}
     return TEMPLATE.TemplateResponse("view_badge.html", page_data)
 
 # ==================== Purchase History Route ==================== #

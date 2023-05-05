@@ -60,13 +60,18 @@ class VerifyProductInfo:
             info["price"] = float(info["price"])
         except ValueError:
             info["price"] = 0
+
         sys_req_dict = {}
         list_for_dict = info["system_req"].split(",")
-        for i in range(0,len(list_for_dict),2):
-            sys_req_dict[i] = list_for_dict[i+1]
+        if len(list_for_dict) % 2 == 0 and len(list_for_dict) > 0:
+            for i in range(0,len(list_for_dict),2):
+                sys_req_dict[i] = list_for_dict[i+1]
 
         info["system_req"] = sys_req_dict
+        
         try:
             info["discount"] = float(info["discount"])
         except ValueError:
             info["discount"] = 0
+            
+        return info
