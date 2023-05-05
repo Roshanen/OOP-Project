@@ -10,7 +10,10 @@ class Publisher(User):
             self.__own_product.append(product)
 
     def remove_product(self, product_id):
-        pass
+        for i, product in enumerate(self.__own_product):
+            if product.get_id() == product_id:
+                del self.__own_product[i]
+                break
 
     def get_all_own_products(self):
         return self.__own_product

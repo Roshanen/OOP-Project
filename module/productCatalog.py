@@ -18,7 +18,7 @@ class ProductCatalog:
         self.__products_by_id.pop(product.get_id())
 
     def remove_product(self, product_id):
-        product_name = self.__products_by_id[product_id]
+        product_name = self.__products_by_id[product_id].get_name()
         del self.__products_by_id[product_id]
         del self.__products_by_name[product_name]
 

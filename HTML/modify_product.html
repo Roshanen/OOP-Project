@@ -12,13 +12,11 @@
 
     <div class="wraper">
         <h2>Modify Product</h2>
-        <form action="/modify_product_in_catalog" method="get">
+        <form action="/modifying_product/{{ product_id }}" method="get">
             <div class="container">
                 {% for key in product_info_keys %}
                     <h2>{{ key }}</h2>
                     <input type="text" placeholder="Enter {{ key }}" name="{{ key }}">
-                    <h2>{{ detail }}</h2>
-                    <input type="text" placeholder="Enter {{ detail }}" name="{{ detail }}">
                 {% endfor %}
 
                 <button type="submit">Submit</button>
