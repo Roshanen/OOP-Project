@@ -51,16 +51,14 @@
 
                 </div>
                 <div class="profile_right_col">
-                    <div class="badge heading">Badge</div>
+                    <a href="/view_badges/{{ user.get_id() }}" class="badge heading">Badge</a>
                     <div class="badge_container">
-                        {% for _ in range(4) %}
-                        <img
-                            src="https://community.akamai.steamstatic.com/public/images/badges/01_community/community02_54.png">
+                        {% set badges = user.get_badges()|length %}
+                        {% for index in range([badges,6]|min) %}
+                            {% set _ = user.get_badges()[index] %}
+                            <img src="{{ _.get_picture() }}">
                         {% endfor %}
                     </div>
-                    <div class="product heading">Product</div>
-                    <div class="inventory heading">Inventory</div>
-                    <div class="screenshot heading">Screenshot</div>
                     {% if own_profile %}
                     <a class="pending heading" href="/pending_friend/{{ user.get_id() }}">Pending Friends</a>
                     {% endif %}
@@ -68,8 +66,8 @@
 
                     <div class="friend_container">
                         {% set friend_length = user.get_friend_list()|length %}
-                        {% for _ in range([friend_length,6]|min) %}
-                            {% set friend = user.get_friend_list()[_] %}
+                        {% for index in range([friend_length,6]|min) %}
+                            {% set friend = user.get_friend_list()[index] %}
                             {% include "Templates/friend_block.html" %}
                         {% endfor %}
                     </div>
