@@ -41,4 +41,17 @@ body {
 
 .navbar .login {
     width: fit-content;
-}   
+}
+
+.no_invite_notification, .invite_notification {
+    margin: auto 0;
+    width: fit-content;
+    height: fit-content;
+    background-color: #4d5364;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.invite_notification {
+    background-color: rgb(115, 216, 14);
+}
