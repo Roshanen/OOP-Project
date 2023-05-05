@@ -9,66 +9,55 @@
 <body>
   {% include "Templates/navbar.html" %}
 	<div class="container">
-    <!--============================================================= Showcase ============================================================= -->
-    <!--============================================================= Showcase ============================================================= -->
-    <!--============================================================= Showcase ============================================================= -->
-    <!--============================================================= Showcase ============================================================= -->
-    <!--============================================================= Showcase ============================================================= -->
 		<h2>{{ product.get_name() }}</h2>
-    <div class="showcase">
-      <div class="gallery">
-        <div class="vid">
-          	<iframe src="{{ product.get_preview_vid() }}" title="YouTube video player" 
-			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-			allowfullscreen>
-		</iframe>
-        </div>
-        <div class="pic"></div>
-      </div>
-      <div class="descriptions">
-        <div class="cover">
-          <img src="{{ product.get_cover() }}">
-        </div>
-        <div class="description"> 
-          {{ product.get_description() }}
-        </div>
-        <div class="review"></div>
-        <div class="tags"></div>
-        
-      </div>
-    </div>
-    <!--============================================================= Buy Tab ============================================================= -->
-    <!--============================================================= Buy Tab ============================================================= -->
-    <!--============================================================= Buy Tab ============================================================= -->
-    <!--============================================================= Buy Tab ============================================================= -->
-    <!--============================================================= Buy Tab ============================================================= -->
-    <div class="buytab">
-      <h3>Play {{ product.get_name() }}</h3>
-      <div class="prod price">{{ product.get_discounted_price() }} THB  -{{  100 * product.get_discount() }}%</div>
-      <div class="prod discount"></div>
-        <div class="buttons">
-        {% if addable %}
-          <button type="submit" class="prod addbtn green_addbtn">Add to cart</button>
-          <div class="add2wishlist">
-            <a href="/add_to_wishlist/{{ product.get_id() }}" class="to_wishlist">Add to wishlist</a>
-          </div>
-        {% else %}
-          <a href="/add_to_cart/{{ product.get_id() }}" class="prod addbtn grey_addbtn" disabled>Add to cart</a>
-        {% endif %}
-        </div>
-    </div>
-    <!--============================================================= Sys req ============================================================= -->
-    <!--============================================================= Sys req ============================================================= -->
-    <!--============================================================= Sys req ============================================================= -->
-    <!--============================================================= Sys req ============================================================= -->
-    <!--============================================================= Sys req ============================================================= -->
+		<div class="showcase">
+		<div class="gallery">
+			<div class="vid">
+				<iframe src="{{ product.get_preview_vid() }}" title="YouTube video player" 
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+				allowfullscreen>
+			</iframe>
+			</div>
+			<div class="pic"></div>
+		</div>
+		<div class="descriptions">
+			<div class="cover">
+			<img src="{{ product.get_cover() }}">
+			</div>
+			<div class="description"> 
+			{{ product.get_description() }}
+			</div>
+			<div class="review"></div>
+			<div class="tags"></div>
 
-    <div class="sysreq_tab">
-      <!-- {% for lang in product["lang_sup"] %}
-          <h2>{{lang}}</h2>
-      {% endfor %} -->
-    </div>
+		</div>
+		</div>
 
+		<div class="buytab">
+			<h3>Play {{ product.get_name() }}</h3>
+			<form class="right_col" action="/add_to_cart" method="get">
+				<div class="pricing">{{ product.get_discounted_price() }} THB</div>
+				<div class="pricing">  -{{  100 * product.get_discount() }}%</div>
+				{% if addable %}
+					<button type="submit" class="addbtn green_addbtn">Add to cart</button>
+					<div class="addbtn add_wishlist">
+						<a href="/add_to_wishlist/{{ product.get_id() }}">Add to wishlist</a>
+					</div>
+				{% else %}
+					<a type="submit" class="addbtn grey_addbtn" disabled>Add to cart</a>
+					<div class="addbtn add_wishlist grey_addbtn">
+						<a>Add to wishlist</a>
+					</div>
+				{% endif %}
+			</form>
+		
+		</div>
+		
+		<div class="sysreq_tab">
+		<!-- {% for lang in product["lang_sup"] %}
+			<h2>{{lang}}</h2>
+		{% endfor %} -->
+		</div>
   </div>
 </body>
 </html>
