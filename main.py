@@ -126,7 +126,7 @@ async def shop(request: Request):
     if user:
         page_data["own_products"] = user.get_all_own_products()
 
-    return TEMPLATE.TemplateResponse("view_own_product.html", page_data)
+    return TEMPLATE.TemplateResponse("shop.html", page_data)
 
 
 @app.get("/add_product", tags=["Publisher"], response_class=HTMLResponse)
@@ -536,9 +536,7 @@ async def submit_post(board_name, image, game_name):
     return RedirectResponse(url=url)
 
 
-@app.get(
-    "/rate_up/{board_name}/{post_id}", tags=["Community"], response_class=HTMLResponse
-)
+@app.get("/rate_up/{board_name}/{post_id}", tags=["Community"], response_class=HTMLResponse)
 async def rate_up(board_name, post_id):
     current_user = steam.get_current_user()
     board = steam.get_board(board_name)
