@@ -7,12 +7,9 @@ class Product:
             "id" : IdGenerator.generate_id(info["name"]),
             "name": info["name"],
             "price": info["price"],
-            "os_support": info["os_support"],
             "system_req": info["system_req"],
             "pre_vid" : info["pre_vid"],
             "cover_image": info["cover_image"],
-            "lang_sup": info["lang_sup"],
-            "age_rate": info["age_rate"],
             "discount": info["discount"],
             "description": info["description"],
             "release_date": info["release_date"]
