@@ -34,9 +34,7 @@
         </div>
         <div class="review"></div>
         <div class="tags"></div>
-        <div class="add2wishlist">
-
-        </div>
+        
       </div>
     </div>
     <!--============================================================= Buy Tab ============================================================= -->
@@ -46,16 +44,18 @@
     <!--============================================================= Buy Tab ============================================================= -->
     <div class="buytab">
       <h3>Play {{ product.get_name() }}</h3>
-      <form class="addtocart" action="/add_to_cart/{{ product.get_id() }}" method="get">
-        <div class="prod price">{{ product.get_discounted_price() }} THB</div>
-        <div class="prod discount">-{{  100 * product.get_discount() }}%</div>
+      <div class="prod price">{{ product.get_discounted_price() }} THB  -{{  100 * product.get_discount() }}%</div>
+      <div class="prod discount"></div>
+        <div class="buttons">
         {% if addable %}
           <button type="submit" class="prod addbtn green_addbtn">Add to cart</button>
+          <div class="add2wishlist">
+            <a href="/add_to_wishlist/{{ product.get_id() }}" class="to_wishlist">Add to wishlist</a>
+          </div>
         {% else %}
-          <button class="prod addbtn grey_addbtn" disabled>Add to cart</button>
+          <a href="/add_to_cart/{{ product.get_id() }}" class="prod addbtn grey_addbtn" disabled>Add to cart</a>
         {% endif %}
-      </form>
-      <div class="to_wishlist">Add to wishlist</div>
+        </div>
     </div>
     <!--============================================================= Sys req ============================================================= -->
     <!--============================================================= Sys req ============================================================= -->
