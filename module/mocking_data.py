@@ -1,6 +1,6 @@
 from module.product import Product
 from module.user import User
-
+from module.factory import Badge
 
 keys = ["name", "price", "os_support", "system_req",
         "pre_vid", "cover_image", "lang_sup",
@@ -391,3 +391,17 @@ all_product_info = [fifa_23, planet_zoo, sea_of_thieves_2023, xcom_2, no_man_sky
                football_manager_2023, this_war_of_mine, twelve_minutes, cyberpunk_2077,
                detroit_become_human, phasmophobia, grand_theft_auto_V, rainbow_six,
                pubg, let_build_a_zoo, tribes_of_midgard, dota_2]
+
+badge1 = Badge("Slime Bunny", 'https://steamuserimages-a.akamaihd.net/ugc/170415821560894203/7FAC8319EA6E62FE667D9C86385E1695939986EF/', "cute slimy", 1,)
+badge2 = Badge("Platinyan", 'https://steamuserimages-a.akamaihd.net/ugc/170415189367767268/B111AFFA6F311AC28DE69EE1A3B2BE6ED807D2FF/', "not platinum...", 5,)
+badge3 = Badge("Kitten", 'https://steamuserimages-a.akamaihd.net/ugc/170415189369495447/6931908A7FEF2C14A5C4BC5DE4C9B96DC344FA4B/', "cute slimy", 1,)
+badge4 = Badge("Singularity Sheep", 'https://steamuserimages-a.akamaihd.net/ugc/83722891606505516/E141B8530C583D134B96E675B6D8CB8FECF37FC7/', "les go galaxy", 3,)
+badge5 = Badge("RIP", 'https://steamuserimages-a.akamaihd.net/ugc/170415189368228132/CF8BA7AE6AB983F74493F74488C2F3636539D1D9/', "You has died peacefully", 10,)
+
+badge6 = Badge("Da King", 'https://steamuserimages-a.akamaihd.net/ugc/83721528723411114/4C3AE9EAD5F24AF3A48DAA3A7110EFFAD8B11872/', "Golden Crown", 1,)
+badge7 = Badge("Sugar Rush!", 'https://steamuserimages-a.akamaihd.net/ugc/170415189368247427/45096CC689596C69818168804BE921E267C04247/', "Sweet", 60,)
+badge8 = Badge("Golden Apple", 'https://steamuserimages-a.akamaihd.net/ugc/83722391142833651/BB950C023CC5535D1E4BF00C0F882B602DE1BA95/', "Effect: Regeneration", 1,)
+badge9 = Badge("Holy Nuts!", 'https://steamuserimages-a.akamaihd.net/ugc/825693460684574511/97FEF8CBF732834FF9D761B69A2481550CB1C1C8/', "Shiny Nuts!", 3,)
+badge10 = Badge("Crystal", 'https://steamuserimages-a.akamaihd.net/ugc/170415672419600768/EEF2D0600569B6CF21A23DBC7F1119DF40FD663D/', "Beautiful crystal", 7,)
+
+all_badge = [badge1, badge2, badge3, badge4, badge5, badge6, badge7, badge8, badge9, badge10]

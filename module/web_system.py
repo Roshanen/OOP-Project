@@ -4,7 +4,7 @@ from module.utilities import IdGenerator, Search
 from module.productCatalog import ProductCatalog
 from module.user import User, UserHolder
 from module.publisher import Publisher
-
+from module.factory import BadgeFactory
 
 class LoginStatus(Enum):
     EMAILNOTFOUND = "e-mail not found"
@@ -98,11 +98,13 @@ class AccountHolder:
 
 
 class System:
-    def __init__(self, product_catalog: ProductCatalog, community, user_holder: UserHolder, account_holder:AccountHolder):
+    def __init__(self, product_catalog: ProductCatalog, community, user_holder: UserHolder
+                 , account_holder:AccountHolder, badge_factory: BadgeFactory):
         self.__community = community
         self.__product_catalog = product_catalog
         self.__user_holder = user_holder
         self.__account_holder = account_holder
+        self.__badge_factory = badge_factory
         self.__current_user = None
 
     # ==== Product ====
