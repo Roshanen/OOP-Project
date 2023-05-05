@@ -13,14 +13,14 @@
     {% include "Templates/navbar.html" %}
     <div class="container">
         <div class="profile_pic">
-            <img src="{{ current_user.get_profile() }}" />
+            <img src="{{ user.get_profile() }}" />
           </div>
           <div class="info_container">
-            <div class="name">{{ current_user.get_name() }}</div>
+            <div class="name">{{ user.get_name() }}</div>
           </div>
         <h2>Friend List</h2>
         <div class="display_zone">
-            {% for friend in current_user.get_friend_list() %}
+            {% for friend in user.get_friend_list() %}
                 {% include "Templates/friend_block.html" %}
             {% endfor %}
         </div>

@@ -248,6 +248,8 @@ async def add_to_cart(product_id):
     current_user = steam.get_current_user()
     if current_user:
         steam.add_to_cart(product, current_user)
+    if product in current_user.get_wish_list():
+        current_user.remove_wish_list(product)
     url = app.url_path_for("view_product", product_id=product_id)
     return RedirectResponse(url=url)
 
@@ -282,6 +284,7 @@ async def view_profile(request: Request, user_id):
 async def search_profile(request: Request, keyword=""):
     page_data = {"request": request}
     found_user = steam.search_profile(search_name=keyword, search_id="")
+    print(found_user)
     current_user = steam.get_current_user()
     is_publisher = isinstance(current_user, Publisher)
     page_data["found_user"] = found_user
@@ -461,10 +464,13 @@ async def view_order(request: Request, order_id):
 @app.get("/setting_profile/{user_id}", tags=["User"], response_class=HTMLResponse)
 async def setting_profile(request: Request):
     current_user = steam.get_current_user()
+    user = current_user
     page_data = {
+        "user": user,
         "request": request,
         "current_user": current_user,
         "logged_in": steam.is_logged_in(),
+        "own_profile": True
     }
     return TEMPLATE.TemplateResponse("setting_profile.html", page_data)
 
@@ -561,9 +567,10 @@ async def remove_friend(user_id, target_id):
 
 
 @app.get("/friend_list/{user_id}", tags=["Friend"])
-async def friend_list(request: Request):
+async def friend_list(request: Request, user_id):
+    user = steam.search_profile(search_id=user_id)
     page_data = {"request": request, "current_user": steam.get_current_user(
-    ), "logged_in": steam.is_logged_in}
+    ), "user": user, "logged_in": steam.is_logged_in()}
     return TEMPLATE.TemplateResponse("friend_list.html", page_data)
 
 # ==================== Community Route ==================== #

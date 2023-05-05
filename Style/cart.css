@@ -25,6 +25,7 @@ body {
     background-color: #23262E;
     display: flex;
     justify-content: space-between;
+    margin: 5px 0;
 }
 
 .prod_container {

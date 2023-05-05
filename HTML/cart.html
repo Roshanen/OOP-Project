@@ -37,7 +37,7 @@
                 <div class="summary_container">
                     <div class="price_container">
                         <div class="price_header">Summary</div>
-                        <div class="sum">{{ current_user.get_cart().calculate_total() }}</div>
+                        <div class="sum">{{'%0.2f'| format(current_user.get_cart().calculate_total()|float)}} B</div>
                     </div>
                     {% if current_user.get_cart().get_products() != [] %}
                     <div class="button_container">

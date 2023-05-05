@@ -116,13 +116,12 @@ a, a:active, a:focus{
   border: none;background: rgb(106,106,106);
   background: linear-gradient(90deg, rgba(106,106,106,0.08167016806722693) 0%, rgba(83,83,83,0.14329481792717091) 100%);}
 
-.to_wishlist:hover {
-  background-color:#303f50;
+.add_wishlist {
+    background-color:#1b2838;
 }
 
-.add_wishlist {
-  width: 100%;
-  background-color:#1b2838;
+.add_wishlist:hover {
+  background-color:#303f50;
 }
 
 .green_addbtn{
