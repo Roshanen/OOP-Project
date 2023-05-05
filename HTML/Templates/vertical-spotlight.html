@@ -3,8 +3,7 @@
     width: 100%;
     height: 50px;
     background-color:#3c6e8b;
-    display: flex;
-    align-items: center;
+    padding: 10px;
 }
 
 .vertical_spotlight {
@@ -17,7 +16,6 @@
     display: grid;
     grid-template-columns: min-content min-content min-content;
     grid-template-rows: 1fr;
-    margin-left: 20px;
 }
 
 .footer_content {
@@ -27,6 +25,11 @@
     text-align: center;
     color:rgb(145, 255, 0);
     background-color:#1B2838;
+}
+
+.footer h4 {
+    text-overflow: ellipsis;
+    margin: 0;
 }
 
 .footer .discount {
@@ -57,14 +60,18 @@
         <img src='{{product_info["cover_image"]}}'>
     </div>
     <div class="footer">
+        <h4>
+            {{ product_info["name"][:20] }}
+            {% if product_info["name"]|length > 20 %}...{% endif %}
+        </h4>
         <div class="footer_text">
             {% if product.get_discount() != 0 %}
-                <div class="footer_content discount">-{{ product.get_discount() * 100 }}%</div>
+            <div class="footer_content discount">-{{ product.get_discount() * 100 }}%</div>
             {% endif %}
             {% if product.get_price() != 0 %}
-                <div class="footer_content price">{{ product.get_discounted_price() }} THB</div>
+            <div class="footer_content price">{{ product.get_discounted_price() }} THB</div>
             {% else %}
-                <div class="footer_content price">Free</div>
+            <div class="footer_content price">Free</div>
             {% endif %}
         </div>
     </div>
