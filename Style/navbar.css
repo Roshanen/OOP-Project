@@ -6,8 +6,8 @@ body {
     height: 100px;
     background-color:#171a21;
     display: grid;
-    grid-template-columns: 180px 400px 100px;
-    grid-gap: 40px;
+    grid-template-columns: 180px 560px 100px;
+    grid-gap: 10px;
     align-items: center;
     justify-content: center;
 }
@@ -24,7 +24,7 @@ body {
 }
 
 .navbar .navigate {
-    width: 400px;
+    width: 560px;
     height: 100%;
     display: flex;
     grid-gap: 10px;
