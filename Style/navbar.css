@@ -45,8 +45,8 @@ body {
 
 .no_invite_notification, .invite_notification {
     margin: auto 0;
-    width: fit-content;
-    height: fit-content;
+    width: 30px;
+    height: 30px;
     background-color: #4d5364;
     border-radius: 5px;
     padding: 3px;
@@ -54,4 +54,16 @@ body {
 
 .invite_notification {
     background-color: rgb(115, 216, 14);
+}
+
+.noti img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.noti {
+    width: 100%;
+    display: flex;
+    grid-gap: 8px;
 }
