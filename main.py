@@ -443,8 +443,26 @@ async def confirm_purchase(user_id, method, card_number, expiration_month, expir
         history.add_to_history(order)
         cart.remove_all_product()
 
+    url = app.url_path_for("send_badge", user_id=user_id)
+    return RedirectResponse(url=url)
+
+# ==================== Badge Route ==================== #
+
+
+@app.get("/send_badge/{user_id}", tags=["Badge"])
+async def send_badge():
+    current_user = steam.get_current_user()
+    badge_factory.verify_condition(current_user)
     url = app.url_path_for("library")
     return RedirectResponse(url=url)
+
+
+@app.get("/view_badges/{user_id}", tags=["Badge"])
+async def view_badges(request: Request, user_id):
+    user = steam.search_profile(search_id=user_id)
+    badges = user.get_badges()
+    page_data = {"request": request, "user": user, "logged_in": steam.is_logged_in(), "current_user": steam.get_current_user() }
+    return TEMPLATE.TemplateResponse("view_badge.html", page_data)
 
 # ==================== Purchase History Route ==================== #
 
