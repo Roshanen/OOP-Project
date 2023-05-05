@@ -169,3 +169,7 @@ class UserHolder:
 
     def get_all_user_name(self):
         return self.__all_user_name
+
+    def user_change_name(self, old_name, new_name):
+        self.__all_user_name.remove(old_name)
+        self.__all_user_name.append(new_name)

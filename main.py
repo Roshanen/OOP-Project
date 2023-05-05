@@ -518,10 +518,11 @@ async def setting_profile(request: Request):
 async def edit_profile(name, picture_profile, description, user_id):
     current_user = steam.get_current_user()
     if name != "":
+        user_holder.user_change_name(current_user.get_name(), name)
         current_user.set_name(name)
 
     if picture_profile != "":
-        current_user.set_picture_profile(picture_profile)
+        current_user.set_profile(picture_profile)
 
     if description != "":
         current_user.set_description(description)
