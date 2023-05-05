@@ -11,6 +11,7 @@
 <body>
   {% include "Templates/navbar.html" %}
   <div class="container">
+    <h2>{{ current_user.get_name() }}'s Wish List</h2>
     {% for product in wish_list %}
       {% include "Templates/horizon_spotlight.html" %}
     {% endfor %}
